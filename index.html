@@ -73,134 +73,132 @@ Added veg VegX product
     <!-- PRODUCT CARDS BELOW -->
     
 
-<div class="card">
-    <img src="images/products/Cleaned & Chopped Drumstick.png">
-    <div class="title">Cleaned & Chopped Drumstick</div>
-    <div class="price">₹50</div>
-</div>
+<style>
+.product {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 15px;
+  margin: 15px 0;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
 
-<div class="card">
-    <img src="images/products/Potato.png">
-    <div class="title">Potato</div>
-    <div class="price">₹30</div>
-</div>
+.product img {
+  width: 120px;
+  height: 120px;
+  border-radius: 10px;
+  object-fit: cover;
+}
 
-<div class="card">
-    <img src="images/products/Onion.png">
-    <div class="title">Onion</div>
-    <div class="price">₹40</div>
-</div>
+.qty-box {
+  width: 60px;
+  padding: 5px;
+  font-size: 16px;
+}
 
-<div class="card">
-    <img src="images/products/Tomato.png">
-    <div class="title">Tomato</div>
-    <div class="price">₹30</div>
-</div>
+.add-btn {
+  background: green;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  font-size: 16px;
+}
 
-<div class="card">
-    <img src="images/products/Lemon.jpg">
-    <div class="title">Lemon</div>
-    <div class="price">₹10</div>
-</div>
+.cart-btn {
+  background: #ff9800;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  width: 100%;
+  margin-top: 20px;
+  font-size: 18px;
+}
+</style>
 
-<div class="card">
-    <img src="images/products/Cleaned methi.png">
-    <div class="title">Cleaned Methi</div>
-    <div class="price">₹25</div>
-</div>
+<div id="product-list"></div>
 
-<div class="card">
-    <img src="images/products/Cleaned & Chopped French Beans.jpg">
-    <div class="title">Cleaned & Chopped French Beans</div>
-    <div class="price">₹50</div>
-</div>
+<button class="cart-btn" onclick="checkout()">Checkout on WhatsApp</button>
 
-<div class="card">
-    <img src="images/products/Mixed Pulav Vegetables.png">
-    <div class="title">Mixed Pulav Vegetables</div>
-    <div class="price">₹55</div>
-</div>
+<script>
+const products = [
+  { name: "French Beans", price: 50, image: "Cleaned & Chopped French Beans.jpg" },
+  { name: "Cluster Beans", price: 60, image: "Cleaned & Chopped Cluster Beans.jpg" },
+  { name: "Drumsticks", price: 40, image: "Cleaned & Chopped Drumstick.png" },
+  { name: "Green Peas", price: 55, image: "Cleaned & Shelled Green Peas .jpg" },
+  { name: "Mix P Veg", price: 60, image: "Mixed Pulav Vegetables.png" },
+  { name: "Bottle Gourd", price: 45, image: "Cleaned & Chopped Bottle Gourd.png" },
+  { name: "Ridge Gourd", price: 45, image: "Cleaned & Chopped Ridg Gourd.jpg" },
+  { name: "Sponge Gourd", price: 40, image: "Cleaned & Cut Sponge Gourd.jpg" },
+  { name: "Bitter Gourd", price: 50, image: "Cleaned & Chopped Bitter Gourd.png" },
+  { name: "Pumpkin", price: 35, image: "Cleaned and cut Red Pumpkin.png" },
+  { name: "Bhendi", price: 50, image: "Cleaned & Chopped Lady Finger .jpg" },
+  { name: "Cabbage", price: 30, image: "Cleaned & Chopped Cabbage.jpg" },
+  { name: "Cauliflower", price: 40, image: "Cleaned & Chopped Cauliflower.jpg" },
+  { name: "Capsicum", price: 60, image: "Cleaned & Chopped Capsicum Green.jpg" },
+  { name: "Carrot", price: 50, image: "Cleaned & Chopped Carrot .png" },
+  { name: "Potato", price: 20, image: "Potato.png" },
+  { name: "Onion", price: 20, image: "Onion.png" },
+  { name: "Tomato", price: 20, image: "Tomato.png" },
+  { name: "Lemon", price: 15, image: "Lemon.jpg" },
+  { name: "Methi", price: 20, image: "Cleaned methi.png" },
+  { name: "Pudina", price: 15, image: "Cleaned Pudina.jpg" },
+  { name: "Palak", price: 25, image: "Cleaned Palak.png" },
+  { name: "Coriander", price: 10, image: "Cleaned coriander.png" }
+];
 
-<div class="card">
-    <img src="images/products/Cleaned Pudina.jpg">
-    <div class="title">Cleaned Pudina</div>
-    <div class="price">₹15</div>
-</div>
+let cart = [];
 
-<div class="card">
-    <img src="images/products/Cleaned Palak.png">
-    <div class="title">Cleaned Palak</div>
-    <div class="price">₹20</div>
-</div>
+function renderProducts() {
+  let html = "";
+  products.forEach((p, i) => {
+    html += `
+      <div class="product">
+        <img src="images/${p.image}" alt="${p.name}">
+        <div>
+          <h3>${p.name}</h3>
+          <p>₹${p.price}</p>
+          <input type="number" id="qty${i}" class="qty-box" value="1" min="1">
+          <button class="add-btn" onclick="addToCart(${i})">Add</button>
+        </div>
+      </div>
+    `;
+  });
+  document.getElementById("product-list").innerHTML = html;
+}
 
-<div class="card">
-    <img src="images/products/Cleaned coriander.png">
-    <div class="title">Cleaned Coriander</div>
-    <div class="price">₹10</div>
-</div>
+function addToCart(index) {
+  const qty = document.getElementById("qty" + index).value;
+  const item = products[index];
 
-<div class="card">
-    <img src="images/products/Cleaned & Chopped Capsicum Green.jpg">
-    <div class="title">Cleaned & Chopped Capsicum Green</div>
-    <div class="price">₹45</div>
-</div>
+  cart.push(`${item.name} – ${qty} qty – ₹${item.price * qty}`);
 
-<div class="card">
-    <img src="images/products/Cleaned and cut Red Pumpkin.png">
-    <div class="title">Cleaned & Cut Red Pumpkin</div>
-    <div class="price">₹30</div>
-</div>
+  alert(item.name + " added!");
+}
 
-<div class="card">
-    <img src="images/products/Cleaned & Cut Sponge Gourd.jpg">
-    <div class="title">Cleaned & Cut Sponge Gourd</div>
-    <div class="price">₹35</div>
-</div>
+function checkout() {
+  if (cart.length === 0) {
+    alert("Cart is empty!");
+    return;
+  }
 
-<div class="card">
-    <img src="images/products/Cleaned & Chopped Ridg Gourd.jpg">
-    <div class="title">Cleaned & Chopped Ridge Gourd</div>
-    <div class="price">₹35</div>
-</div>
+  const message = `
+🛒 *New VegX Order*  
+-----------------------  
+${cart.join("\n")}
+-----------------------  
+📍 Address:  
+📞 Mobile:
+  `;
 
-<div class="card">
-    <img src="images/products/Cleaned & Shelled Green Peas .jpg">
-    <div class="title">Cleaned & Shelled Green Peas</div>
-    <div class="price">₹60</div>
-</div>
+  window.open(
+    `https://wa.me/7208487215?text=${encodeURIComponent(message)}`
+  );
+}
 
-<div class="card">
-    <img src="images/products/Cleaned & Chopped Carrot .png">
-    <div class="title">Cleaned & Chopped Carrot</div>
-    <div class="price">₹40</div>
-</div>
-
-<div class="card">
-    <img src="images/products/Cleaned & Chopped Bottle Gourd.png">
-    <div class="title">Cleaned & Chopped Bottle Gourd</div>
-    <div class="price">₹30</div>
-</div>
-
-<div class="card">
-    <img src="images/products/Cleaned & Chopped Bitter Gourd.png">
-    <div class="title">Cleaned & Chopped Bitter Gourd</div>
-    <div class="price">₹40</div>
-</div>
-
-<div class="card">
-    <img src="images/products/Cleaned & Chopped Cauliflower.jpg">
-    <div class="title">Cleaned & Chopped Cauliflower</div>
-    <div class="price">₹50</div>
-</div>
-
-<div class="card">
-    <img src="images/products/Cleaned & Chopped Lady Finger .jpg">
-    <div class="title">Cleaned & Chopped Lady Finger</div>
-    <div class="price">₹40</div>
-</div>
-
-<div class="card">
-    <img src="images/products/Cleaned & Chopped Cluster Beans.jpg">
-    <div class="title">Cleaned & Chopped Cluster Beans</div>
-    <div class="price">₹60</div>
-</div>
+renderProducts();
+      </script>
