@@ -1,193 +1,195 @@
 const products = [
-    // -------- Daily Veg (1kg) --------
-    {
-        id: 1,
-        category: "Daily Veg",
-        name: "Onion",
-        weight: "1kg",
-        price: 35,
-        image: "images/products/onion.jpg"
-    },
-    {
-        id: 2,
-        category: "Daily Veg",
-        name: "Potato",
-        weight: "1kg",
-        price: 30,
-        image: "images/products/potato.jpg"
-    },
-    {
-        id: 3,
-        category: "Daily Veg",
-        name: "Tomato",
-        weight: "1kg",
-        price: 35,
-        image: "images/products/tomato.jpg"
-    },
+  // 1. Daily Veg (1kg)
+  {
+    id: 1,
+    name: "Onion",
+    price: 35,
+    weight: "1kg",
+    category: "Daily Veg",
+    image: "images/products/Onion.png",
+  },
+  {
+    id: 2,
+    name: "Potato",
+    price: 30,
+    weight: "1kg",
+    category: "Daily Veg",
+    image: "images/products/Potato.png",
+  },
+  {
+    id: 3,
+    name: "Tomato",
+    price: 35,
+    weight: "1kg",
+    category: "Daily Veg",
+    image: "images/products/Tomato.png",
+  },
 
-    // -------- Cleaned & Chopped (300gm) --------
-    {
-        id: 4,
-        category: "Cleaned & Chopped",
-        name: "French Beans",
-        weight: "300gm",
-        price: 50,
-        image: "images/products/french_beans.jpg"
-    },
-    {
-        id: 5,
-        category: "Cleaned & Chopped",
-        name: "Cluster Beans",
-        weight: "300gm",
-        price: 60,
-        image: "images/products/cluster_beans.jpg"
-    },
-    {
-        id: 6,
-        category: "Cleaned & Chopped",
-        name: "Drumsticks",
-        weight: "300gm",
-        price: 40,
-        image: "images/products/drumsticks.jpg"
-    },
-    {
-        id: 7,
-        category: "Cleaned & Chopped",
-        name: "Green Peas",
-        weight: "300gm",
-        price: 55,
-        image: "images/products/green_peas.jpg"
-    },
-    {
-        id: 8,
-        category: "Cleaned & Chopped",
-        name: "Carrot",
-        weight: "300gm",
-        price: 40,
-        image: "images/products/carrot.jpg"
-    },
-    {
-        id: 9,
-        category: "Cleaned & Chopped",
-        name: "Cabbage",
-        weight: "300gm",
-        price: 35,
-        image: "images/products/cabbage.jpg"
-    },
-    {
-        id: 10,
-        category: "Cleaned & Chopped",
-        name: "Bottle Gourd",
-        weight: "300gm",
-        price: 40,
-        image: "images/products/bottle_gourd.jpg"
-    },
-    {
-        id: 11,
-        category: "Cleaned & Chopped",
-        name: "Bitter Gourd",
-        weight: "300gm",
-        price: 60,
-        image: "images/products/bitter_gourd.jpg"
-    },
-    {
-        id: 12,
-        category: "Cleaned & Chopped",
-        name: "Lady Finger",
-        weight: "300gm",
-        price: 60,
-        image: "images/products/lady_finger.jpg"
-    },
+  // 2. Cleaned & Chopped (300gm)
+  {
+    id: 4,
+    name: "French Beans",
+    price: 50,
+    weight: "300gm",
+    category: "Cleaned & Chopped",
+    image: "images/products/Cleaned & Chopped French Beans.jpg",
+  },
+  {
+    id: 5,
+    name: "Cluster Beans",
+    price: 60,
+    weight: "300gm",
+    category: "Cleaned & Chopped",
+    image: "images/products/Cleaned & Chopped Cluster Beans.jpg",
+  },
+  {
+    id: 6,
+    name: "Drumsticks",
+    price: 40,
+    weight: "300gm",
+    category: "Cleaned & Chopped",
+    image: "images/products/Cleaned & Chopped Drumstick.png",
+  },
+  {
+    id: 7,
+    name: "Green Peas",
+    price: 55,
+    weight: "300gm",
+    category: "Cleaned & Chopped",
+    image: "images/products/Cleaned & Shelled Green Peas.jpg",
+  },
+  {
+    id: 8,
+    name: "Carrot",
+    price: 40,
+    weight: "300gm",
+    category: "Cleaned & Chopped",
+    image: "images/products/Cleaned & Chopped Carrot.png",
+  },
+  {
+    id: 9,
+    name: "Cabbage",
+    price: 35,
+    weight: "300gm",
+    category: "Cleaned & Chopped",
+    image: "images/products/Cleaned Cabbage.png",
+  },
+  {
+    id: 10,
+    name: "Bottle Gourd",
+    price: 40,
+    weight: "300gm",
+    category: "Cleaned & Chopped",
+    image: "images/products/Cleaned & Chopped Bottle Gourd.png",
+  },
+  {
+    id: 11,
+    name: "Bitter Gourd",
+    price: 60,
+    weight: "300gm",
+    category: "Cleaned & Chopped",
+    image: "images/products/Cleaned & Chopped Bitter Gourd.png",
+  },
+  {
+    id: 12,
+    name: "Lady Finger",
+    price: 60,
+    weight: "300gm",
+    category: "Cleaned & Chopped",
+    image: "images/products/Cleaned & Chopped Lady Finger.jpg",
+  },
+  {
+    id: 13,
+    name: "Ridge Gourd",
+    price: 60,
+    weight: "300gm",
+    category: "Cleaned & Chopped",
+    image: "images/products/Cleaned & Chopped Rudg Gourd.jpg",
+  },
+  {
+    id: 14,
+    name: "Sponge Gourd",
+    price: 40,
+    weight: "300gm",
+    category: "Cleaned & Chopped",
+    image: "images/products/Cleaned & Cut Sponge Gourd.jpg",
+  },
+  {
+    id: 15,
+    name: "Cauliflower",
+    price: 60,
+    weight: "300gm",
+    category: "Cleaned & Chopped",
+    image: "images/products/Cleaned & Chopped Cauliflower.jpg",
+  },
+  {
+    id: 16,
+    name: "Pulav Mix",
+    price: 50,
+    weight: "300gm",
+    category: "Cleaned & Chopped",
+    image: "images/products/Mixed Pulav Vegetables.png",
+  },
 
-    // -------- Leafy Veg --------
-    {
-        id: 13,
-        category: "Leafy Veg",
-        name: "Pudina",
-        weight: "100gm",
-        price: 15,
-        image: "images/products/pudina.jpg"
-    },
-    {
-        id: 14,
-        category: "Leafy Veg",
-        name: "Coriander",
-        weight: "200gm",
-        price: 20,
-        image: "images/products/coriander.jpg"
-    },
-    {
-        id: 15,
-        category: "Leafy Veg",
-        name: "Palak",
-        weight: "200gm",
-        price: 20,
-        image: "images/products/palak.jpg"
-    },
-    {
-        id: 16,
-        category: "Leafy Veg",
-        name: "Methi",
-        weight: "200gm",
-        price: 20,
-        image: "images/products/methi.jpg"
-    },
+  // 3. Leafy Veg
+  {
+    id: 17,
+    name: "Pudina",
+    price: 15,
+    weight: "100gm",
+    category: "Leafy Veg",
+    image: "images/products/Cleaned Pudina.jpg",
+  },
+  {
+    id: 18,
+    name: "Coriander",
+    price: 20,
+    weight: "200gm",
+    category: "Leafy Veg",
+    image: "images/products/Cleaned coriander.png",
+  },
+  {
+    id: 19,
+    name: "Palak",
+    price: 20,
+    weight: "200gm",
+    category: "Leafy Veg",
+    image: "images/products/Cleaned Palak.png",
+  },
+  {
+    id: 20,
+    name: "Methi",
+    price: 20,
+    weight: "200gm",
+    category: "Leafy Veg",
+    image: "images/products/Cleaned methi.png",
+  },
 
-    // -------- Others --------
-    {
-        id: 17,
-        category: "Others",
-        name: "Lemon",
-        weight: "3 pcs",
-        price: 15,
-        image: "images/products/lemon.jpg"
-    },
-    {
-        id: 18,
-        category: "Others",
-        name: "Capsicum",
-        weight: "300gm",
-        price: 30,
-        image: "images/products/capsicum.jpg"
-    },
-    {
-        id: 19,
-        category: "Others",
-        name: "Red Pumpkin",
-        weight: "300gm",
-        price: 30,
-        image: "images/products/red_pumpkin.jpg"
-    },
-    {
-        id: 20,
-        category: "Others",
-        name: "Ridge Gourd",
-        weight: "300gm",
-        price: 60,
-        image: "images/products/ridge_gourd.jpg"
-    },
-    {
-        id: 21,
-        category: "Others",
-        name: "Sponge Gourd",
-        weight: "300gm",
-        price: 40,
-        image: "images/products/sponge_gourd.jpg"
-    },
-    {
-        id: 22,
-        category: "Others",
-        name: "Cauliflower",
-        weight: "300gm",
-        price: 60,
-        image: "images/products/cauliflower.jpg"
-    },
-    {
-        id: 23,
-        category: "Others",
-        name: "Pulav Mix",
-        weight: "300gm",
-        price: 50,
-        image: "images/products/pulav_mix.jpg"
-    }
+  // 4. Others
+  {
+    id: 21,
+    name: "Lemon",
+    price: 15,
+    weight: "3 pcs",
+    category: "Others",
+    image: "images/products/Lemon.jpg",
+  },
+  {
+    id: 22,
+    name: "Capsicum",
+    price: 30,
+    weight: "300gm",
+    category: "Others",
+    image: "images/products/Capsicum.png",
+  },
+  {
+    id: 23,
+    name: "Red Pumpkin",
+    price: 30,
+    weight: "300gm",
+    category: "Others",
+    image: "images/products/Red Pumpkin.jpg",
+  },
 ];
+
+export default products;
