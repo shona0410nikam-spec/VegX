@@ -1,78 +1,163 @@
 
-  <script>
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>VEG X – Cleaned & Chopped Vegetables</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+  font-family: Arial, sans-serif;
+  background:#f5f5f5;
+  margin:0;
+}
+header{
+  background:#2e7d32;
+  color:#fff;
+  padding:15px;
+  font-size:20px;
+  font-weight:bold;
+}
+.product{
+  background:#fff;
+  margin:10px;
+  padding:10px;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.product img{
+  width:90px;
+  height:90px;
+  object-fit:cover;
+  border-radius:8px;
+}
+.product-details{
+  flex:1;
+}
+.qty{
+  width:50px;
+}
+.add-btn{
+  background:#2e7d32;
+  color:#fff;
+  border:none;
+  padding:8px 12px;
+  border-radius:6px;
+  cursor:pointer;
+}
+.checkout{
+  background:#ff9800;
+  color:#fff;
+  border:none;
+  width:95%;
+  margin:15px;
+  padding:15px;
+  font-size:18px;
+  border-radius:10px;
+  cursor:pointer;
+}
+.total{
+  font-size:18px;
+  margin:10px;
+}
+</style>
+</head>
+
+<body>
+
+<header>VEG X – Cleaned & Chopped Vegetables</header>
+
+<div id="product-list"></div>
+
+<div class="total">
+  Cart Total: ₹ <span id="cartTotal">0</span>
+</div>
+
+<button class="checkout" onclick="checkout()">Checkout on WhatsApp</button>
+
+<script>
 const products = [
-  {name:"Onion", weight:"1kg", price:35, image:"images/Onion.png"},
-  {name:"Potato", weight:"1kg", price:30, image:"images/Potato.png"},
-  {name:"Tomato", weight:"1kg", price:35, image:"images/Tomato.png"},
+  {name:"Onion", weight:"1kg", price:35, image:"Onion.png"},
+  {name:"Potato", weight:"1kg", price:30, image:"Potato.png"},
+  {name:"Tomato", weight:"1kg", price:35, image:"Tomato.png"},
 
-  {name:"French Beans", weight:"300gm", price:50, image:"images/French Beans.png"},
-  {name:"Cluster Beans", weight:"300gm", price:60, image:"images/Cluster Beans.png"},
-  {name:"Drumsticks", weight:"300gm", price:40, image:"images/Drumsticks.png"},
-  {name:"Green Peas", weight:"300gm", price:55, image:"images/Green Peas.png"},
-  {name:"Carrot", weight:"300gm", price:40, image:"images/Carrot.png"},
-  {name:"Cabbage", weight:"300gm", price:35, image:"images/Cabbage.png"},
-  {name:"Bottle Gourd", weight:"300gm", price:40, image:"images/Bottle Gourd.png"},
-  {name:"Bitter Gourd", weight:"300gm", price:60, image:"images/Bitter Gourd.png"},
-  {name:"Lady Finger", weight:"300gm", price:60, image:"images/Lady Finger.png"},
+  {name:"French Beans", weight:"300gm", price:50, image:"Cleaned & Chopped French Beans.jpg"},
+  {name:"Cluster Beans", weight:"300gm", price:60, image:"Cleaned & Chopped Cluster Beans.jpg"},
+  {name:"Drumsticks", weight:"300gm", price:40, image:"Cleaned & Chopped Drumstick.png"},
+  {name:"Green Peas", weight:"300gm", price:55, image:"Cleaned & Shelled Green Peas.jpg"},
+  {name:"Carrot", weight:"300gm", price:40, image:"Cleaned & Chopped Carrot.png"},
+  {name:"Cabbage", weight:"300gm", price:35, image:"Cleaned & Chopped Cabbage.jpg"},
+  {name:"Bottle Gourd", weight:"300gm", price:40, image:"Cleaned & Chopped Bottle Gourd.png"},
+  {name:"Bitter Gourd", weight:"300gm", price:60, image:"Cleaned & Chopped Bitter Gourd.png"},
+  {name:"Lady Finger", weight:"300gm", price:60, image:"Cleaned & Chopped Lady Finger.jpg"},
 
-  {name:"Pudina", weight:"100gm", price:15, image:"images/Pudina.png"},
-  {name:"Coriander", weight:"200gm", price:20, image:"images/Coriander.png"},
-  {name:"Palak", weight:"200gm", price:20, image:"images/Palak.png"},
-  {name:"Methi", weight:"200gm", price:20, image:"images/Methi.png"},
+  {name:"Pudina", weight:"100gm", price:15, image:"Cleaned Pudina.jpg"},
+  {name:"Coriander", weight:"200gm", price:20, image:"Cleaned coriander.png"},
+  {name:"Palak", weight:"200gm", price:20, image:"Cleaned Palak.png"},
+  {name:"Methi", weight:"200gm", price:20, image:"Cleaned methi.png"},
 
-  {name:"Lemon", weight:"3 pcs", price:15, image:"images/Lemon.png"},
-  {name:"Capsicum", weight:"300gm", price:30, image:"images/Capsicum.png"},
-  {name:"Red Pumpkin", weight:"300gm", price:30, image:"images/Red Pumpkin.png"},
-  {name:"Ridge Gourd", weight:"300gm", price:60, image:"images/Ridge Gourd.png"},
-  {name:"Sponge Gourd", weight:"300gm", price:40, image:"images/Sponge Gourd.png"},
-  {name:"Cauliflower", weight:"300gm", price:60, image:"images/Cauliflower.png"},
-  {name:"Pulav Mix", weight:"300gm", price:50, image:"images/Pulav Mix.png"}
+  {name:"Lemon", weight:"3 pcs", price:15, image:"Lemon.jpg"},
+  {name:"Capsicum", weight:"300gm", price:30, image:"Cleaned & Chopped Capsicum Green.jpg"},
+  {name:"Red Pumpkin", weight:"300gm", price:30, image:"Cleaned and cut Red Pumpkin.png"},
+  {name:"Ridge Gourd", weight:"300gm", price:60, image:"Cleaned & Chopped Ridge Gourd.jpg"},
+  {name:"Sponge Gourd", weight:"300gm", price:40, image:"Cleaned & Cut Sponge Gourd.jpg"},
+  {name:"Cauliflower", weight:"300gm", price:60, image:"Cleaned & Chopped Cauliflower.jpg"},
+  {name:"Pulav Mix", weight:"300gm", price:50, image:"Mixed Pulav Vegetables.png"}
 ];
 
 let cart = [];
 let total = 0;
 
-function renderProducts() {
+function renderProducts(){
   let html = "";
-  products.forEach((p, i) => {
+  products.forEach((p,i)=>{
     html += `
       <div class="product">
-        <img src="${p.image}">
-        <h3>${p.name}</h3>
-        <p>${p.weight} | ₹${p.price}</p>
-        <input type="number" id="qty${i}" value="1" min="1">
-        <button onclick="addToCart(${i})">Add</button>
+        <img src="images/products/${p.image}">
+        <div class="product-details">
+          <b>${p.name}</b><br>
+          ${p.weight} – ₹${p.price}<br>
+          Qty:
+          <input type="number" id="qty${i}" class="qty" value="1" min="1">
+        </div>
+        <button class="add-btn" onclick="addToCart(${i})">Add</button>
       </div>
     `;
   });
   document.getElementById("product-list").innerHTML = html;
 }
 
-function addToCart(i) {
-  const qty = document.getElementById("qty"+i).value;
-  const item = products[i];
-  const price = item.price * qty;
-  cart.push(`${item.name} (${item.weight}) x ${qty} = ₹${price}`);
-  total += price;
-  document.getElementById("cart-total").innerText = total;
+function addToCart(i){
+  let qty = document.getElementById("qty"+i).value;
+  let item = products[i];
+  let cost = item.price * qty;
+  total += cost;
+  document.getElementById("cartTotal").innerText = total;
+  cart.push(`${item.name} ${item.weight} x${qty} = ₹${cost}`);
 }
 
-function checkout() {
-  if(cart.length === 0){
+function checkout(){
+  if(cart.length===0){
     alert("Cart is empty");
     return;
   }
-  const msg =
-`Veg X Order
-----------------
+  let msg =
+`🛒 VEG X Order
+
 ${cart.join("\n")}
-----------------
+
 Total: ₹${total}
 
 Address:
 Mobile:`;
-  window.open("https://wa.me/917208487215?text=" + encodeURIComponent(msg));
+  window.open("https://wa.me/7208487215?text="+encodeURIComponent(msg));
 }
 
 renderProducts();
-      </script>
+</script>
+
+</body>
+</html>
