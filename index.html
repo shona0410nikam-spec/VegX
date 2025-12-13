@@ -124,81 +124,53 @@ Added veg VegX product
 
 <button class="cart-btn" onclick="checkout()">Checkout on WhatsApp</button>
 
-<script>
-const products = [
-  { name: "French Beans", price: 50, image: "Cleaned & Chopped French Beans.jpg" },
-  { name: "Cluster Beans", price: 60, image: "Cleaned & Chopped Cluster Beans.jpg" },
-  { name: "Drumsticks", price: 40, image: "Cleaned & Chopped Drumstick.png" },
-  { name: "Green Peas", price: 55, image: "Cleaned & Shelled Green Peas .jpg" },
-  { name: "Mix P Veg", price: 60, image: "Mixed Pulav Vegetables.png" },
-  { name: "Bottle Gourd", price: 45, image: "Cleaned & Chopped Bottle Gourd.png" },
-  { name: "Ridge Gourd", price: 45, image: "Cleaned & Chopped Ridg Gourd.jpg" },
-  { name: "Sponge Gourd", price: 40, image: "Cleaned & Cut Sponge Gourd.jpg" },
-  { name: "Bitter Gourd", price: 50, image: "Cleaned & Chopped Bitter Gourd.png" },
-  { name: "Pumpkin", price: 35, image: "Cleaned and cut Red Pumpkin.png" },
-  { name: "Bhendi", price: 50, image: "Cleaned & Chopped Lady Finger .jpg" },
-  { name: "Cabbage", price: 30, image: "Cleaned & Chopped Cabbage.jpg" },
-  { name: "Cauliflower", price: 40, image: "Cleaned & Chopped Cauliflower.jpg" },
-  { name: "Capsicum", price: 60, image: "Cleaned & Chopped Capsicum Green.jpg" },
-  { name: "Carrot", price: 50, image: "Cleaned & Chopped Carrot .png" },
-  { name: "Potato", price: 20, image: "Potato.png" },
-  { name: "Onion", price: 20, image: "Onion.png" },
-  { name: "Tomato", price: 20, image: "Tomato.png" },
-  { name: "Lemon", price: 15, image: "Lemon.jpg" },
-  { name: "Methi", price: 20, image: "Cleaned methi.png" },
-  { name: "Pudina", price: 15, image: "Cleaned Pudina.jpg" },
-  { name: "Palak", price: 25, image: "Cleaned Palak.png" },
-  { name: "Coriander", price: 10, image: "Cleaned coriander.png" }
-];
+<script src="data/products.js"></script>
 
+<script>
 let cart = [];
 
-function renderProducts() {
-  let html = "";
-  products.forEach((p, i) => {
-    html += `
-      <div class="product">
-        <img src="images/${p.image}" alt="${p.name}">
-        <div>
-          <h3>${p.name}</h3>
-          <p>₹${p.price}</p>
-          <input type="number" id="qty${i}" class="qty-box" value="1" min="1">
-          <button class="add-btn" onclick="addToCart(${i})">Add</button>
-        </div>
-      </div>
-    `;
-  });
-  document.getElementById("product-list").innerHTML = html;
-}
+const container = document.getElementById("product-list");
+
+products.forEach((p, index) => {
+  const div = document.createElement("div");
+  div.className = "product";
+
+  div.innerHTML = `
+    <img src="${p.image}" alt="${p.name}">
+    <h3>${p.name}</h3>
+    <p>${p.weight}</p>
+    <p>₹${p.price}</p>
+    <input type="number" id="qty-${index}" value="1" min="1">
+    <button class="add-btn" onclick="addToCart(${index})">Add</button>
+  `;
+
+  container.appendChild(div);
+});
 
 function addToCart(index) {
-  const qty = document.getElementById("qty" + index).value;
-  const item = products[index];
+  const qty = document.getElementById("qty-" + index).value;
+  const p = products[index];
 
-  cart.push(`${item.name} – ${qty} qty – ₹${item.price * qty}`);
-
-  alert(item.name + " added!");
+  cart.push(`${p.name} (${p.weight}) x ${qty} = ₹${p.price * qty}`);
+  alert(p.name + " added");
 }
 
 function checkout() {
   if (cart.length === 0) {
-    alert("Cart is empty!");
+    alert("Cart is empty");
     return;
   }
 
-  const message = `
-🛒 *New VegX Order*  
------------------------  
+  const message =
+`New VEG X Order
+
 ${cart.join("\n")}
------------------------  
-📍 Address:  
-📞 Mobile:
-  `;
+
+Address:
+Mobile:`;
 
   window.open(
-    `https://wa.me/7208487215?text=${encodeURIComponent(message)}`
+    "https://wa.me/917208487215?text=" + encodeURIComponent(message)
   );
 }
-
-renderProducts();
-      </script>
+</script>
