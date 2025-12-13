@@ -1,176 +1,78 @@
-Added veg VegX product 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VEG X – Cleaned & Chopped Vegetables</title>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background: #f5f5f5;
-            padding-bottom: 40px;
-        }
-        header {
-            background: #2e7d32;
-            padding: 20px;
-            text-align: center;
-            color: white;
-            font-size: 28px;
-            font-weight: bold;
-        }
-        .container {
-            width: 95%;
-            margin: auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 18px;
-            margin-top: 25px;
-        }
-        .card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            padding: 10px;
-            text-align: center;
-        }
-        .card img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            border-radius: 10px;
-        }
-        .title {
-            font-size: 16px;
-            margin: 10px 0 5px;
-            font-weight: bold;
-        }
-        .price {
-            font-size: 15px;
-            color: #333;
-            margin-bottom: 10px;
-        }
-        .order-btn {
-            background: #2e7d32;
-            color: white;
-            padding: 8px 14px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 14px;
-            display: inline-block;
-        }
-    </style>
-</head>
+  <script>
+const products = [
+  {name:"Onion", weight:"1kg", price:35, image:"images/Onion.png"},
+  {name:"Potato", weight:"1kg", price:30, image:"images/Potato.png"},
+  {name:"Tomato", weight:"1kg", price:35, image:"images/Tomato.png"},
 
-<body>
+  {name:"French Beans", weight:"300gm", price:50, image:"images/French Beans.png"},
+  {name:"Cluster Beans", weight:"300gm", price:60, image:"images/Cluster Beans.png"},
+  {name:"Drumsticks", weight:"300gm", price:40, image:"images/Drumsticks.png"},
+  {name:"Green Peas", weight:"300gm", price:55, image:"images/Green Peas.png"},
+  {name:"Carrot", weight:"300gm", price:40, image:"images/Carrot.png"},
+  {name:"Cabbage", weight:"300gm", price:35, image:"images/Cabbage.png"},
+  {name:"Bottle Gourd", weight:"300gm", price:40, image:"images/Bottle Gourd.png"},
+  {name:"Bitter Gourd", weight:"300gm", price:60, image:"images/Bitter Gourd.png"},
+  {name:"Lady Finger", weight:"300gm", price:60, image:"images/Lady Finger.png"},
 
-<header>VEG X – Cleaned & Chopped Vegetables</header>
+  {name:"Pudina", weight:"100gm", price:15, image:"images/Pudina.png"},
+  {name:"Coriander", weight:"200gm", price:20, image:"images/Coriander.png"},
+  {name:"Palak", weight:"200gm", price:20, image:"images/Palak.png"},
+  {name:"Methi", weight:"200gm", price:20, image:"images/Methi.png"},
 
-<div class="container">
+  {name:"Lemon", weight:"3 pcs", price:15, image:"images/Lemon.png"},
+  {name:"Capsicum", weight:"300gm", price:30, image:"images/Capsicum.png"},
+  {name:"Red Pumpkin", weight:"300gm", price:30, image:"images/Red Pumpkin.png"},
+  {name:"Ridge Gourd", weight:"300gm", price:60, image:"images/Ridge Gourd.png"},
+  {name:"Sponge Gourd", weight:"300gm", price:40, image:"images/Sponge Gourd.png"},
+  {name:"Cauliflower", weight:"300gm", price:60, image:"images/Cauliflower.png"},
+  {name:"Pulav Mix", weight:"300gm", price:50, image:"images/Pulav Mix.png"}
+];
 
-    <!-- PRODUCT CARDS BELOW -->
-    
-
-<style>
-.product {
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  padding: 15px;
-  margin: 15px 0;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.product img {
-  width: 120px;
-  height: 120px;
-  border-radius: 10px;
-  object-fit: cover;
-}
-
-.qty-box {
-  width: 60px;
-  padding: 5px;
-  font-size: 16px;
-}
-
-.add-btn {
-  background: green;
-  color: white;
-  padding: 8px 14px;
-  border-radius: 8px;
-  cursor: pointer;
-  border: none;
-  font-size: 16px;
-}
-
-.cart-btn {
-  background: #ff9800;
-  color: white;
-  padding: 10px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  border: none;
-  width: 100%;
-  margin-top: 20px;
-  font-size: 18px;
-}
-</style>
-
-<div id="product-list"></div>
-
-<button class="cart-btn" onclick="checkout()">Checkout on WhatsApp</button>
-
-<script src="data/products.js"></script>
-
-<script>
 let cart = [];
+let total = 0;
 
-const container = document.getElementById("product-list");
+function renderProducts() {
+  let html = "";
+  products.forEach((p, i) => {
+    html += `
+      <div class="product">
+        <img src="${p.image}">
+        <h3>${p.name}</h3>
+        <p>${p.weight} | ₹${p.price}</p>
+        <input type="number" id="qty${i}" value="1" min="1">
+        <button onclick="addToCart(${i})">Add</button>
+      </div>
+    `;
+  });
+  document.getElementById("product-list").innerHTML = html;
+}
 
-products.forEach((p, index) => {
-  const div = document.createElement("div");
-  div.className = "product";
-
-  div.innerHTML = `
-    <img src="${p.image}" alt="${p.name}">
-    <h3>${p.name}</h3>
-    <p>${p.weight}</p>
-    <p>₹${p.price}</p>
-    <input type="number" id="qty-${index}" value="1" min="1">
-    <button class="add-btn" onclick="addToCart(${index})">Add</button>
-  `;
-
-  container.appendChild(div);
-});
-
-function addToCart(index) {
-  const qty = document.getElementById("qty-" + index).value;
-  const p = products[index];
-
-  cart.push(`${p.name} (${p.weight}) x ${qty} = ₹${p.price * qty}`);
-  alert(p.name + " added");
+function addToCart(i) {
+  const qty = document.getElementById("qty"+i).value;
+  const item = products[i];
+  const price = item.price * qty;
+  cart.push(`${item.name} (${item.weight}) x ${qty} = ₹${price}`);
+  total += price;
+  document.getElementById("cart-total").innerText = total;
 }
 
 function checkout() {
-  if (cart.length === 0) {
+  if(cart.length === 0){
     alert("Cart is empty");
     return;
   }
-
-  const message =
-`New VEG X Order
-
+  const msg =
+`Veg X Order
+----------------
 ${cart.join("\n")}
+----------------
+Total: ₹${total}
 
 Address:
 Mobile:`;
-
-  window.open(
-    "https://wa.me/917208487215?text=" + encodeURIComponent(message)
-  );
+  window.open("https://wa.me/917208487215?text=" + encodeURIComponent(msg));
 }
-</script>
+
+renderProducts();
+      </script>
