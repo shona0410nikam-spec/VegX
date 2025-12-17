@@ -7,67 +7,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-body{
-  font-family: Arial, sans-serif;
-  background:#f4f4f4;
-  margin:0;
-}
-header{
-  background:#2e7d32;
-  color:#fff;
-  padding:15px;
-  font-size:20px;
-  font-weight:bold;
-}
-.offer{
-  background:#fff3cd;
-  padding:10px;
-  text-align:center;
-  font-weight:bold;
-}
-.product{
-  background:#fff;
-  margin:10px;
-  padding:10px;
-  border-radius:12px;
-  display:flex;
-  gap:10px;
-}
-.product img{
-  width:90px;
-  height:90px;
-  border-radius:10px;
-  object-fit:cover;
-}
-.qty{
-  width:50px;
-}
-.cart{
-  background:#fff;
-  margin:10px;
-  padding:15px;
-  border-radius:12px;
-}
-button{
-  background:#2e7d32;
-  color:#fff;
-  border:none;
-  padding:10px;
-  border-radius:8px;
-  cursor:pointer;
-}
-.checkout{
-  background:#ff9800;
-  width:100%;
-  margin-top:10px;
-  font-size:16px;
-}
-input,textarea,select{
-  width:100%;
-  padding:8px;
-  margin:5px 0;
-}
-.hidden{display:none;}
+body{font-family:Arial;background:#f5f5f5;margin:0}
+header{background:#2e7d32;color:#fff;padding:15px;font-size:20px}
+.container{padding:15px}
+.card{background:#fff;border-radius:10px;padding:10px;margin-bottom:12px;display:flex;gap:10px}
+.card img{width:90px;height:90px;border-radius:8px;object-fit:cover}
+.btn{background:#2e7d32;color:#fff;border:none;padding:8px 12px;border-radius:6px}
+input{padding:8px;width:100%;margin-bottom:8px}
+.total{background:#fff;padding:15px;border-radius:10px;margin-top:15px}
+.checkout{background:#ff9800;color:#fff;border:none;padding:14px;width:100%;font-size:16px;border-radius:8px}
 </style>
 </head>
 
@@ -75,99 +23,68 @@ input,textarea,select{
 
 <header>🥬 VEG X – Cleaned & Chopped Vegetables</header>
 
-<div id="offerBox" class="offer hidden"></div>
+<div class="container" id="productList"></div>
 
-<div id="productList"></div>
+<div class="container">
+  <div class="total">
+    <p>Subtotal: ₹<span id="subtotal">0</span></p>
+    <p>Delivery: ₹<span id="delivery">50</span></p>
+    <h3>Total: ₹<span id="total">0</span></h3>
 
-<div class="cart">
-  <b>Subtotal:</b> ₹<span id="subtotal">0</span><br>
-  <b>Delivery:</b> ₹<span id="delivery">0</span><br>
-  <b>Total:</b> ₹<span id="total">0</span><br><br>
+    <input placeholder="Your Name">
+    <input placeholder="Mobile Number">
+    <textarea placeholder="Delivery Address"></textarea>
 
-  <input id="cname" placeholder="Your Name">
-  <input id="cmobile" placeholder="Mobile Number">
-  <textarea id="caddress" placeholder="Delivery Address"></textarea>
-
-  <button class="checkout" onclick="checkout()">Checkout on WhatsApp</button>
-  <p id="minMsg" style="color:red;"></p>
+    <button class="checkout">Checkout on WhatsApp</button>
+  </div>
 </div>
 
 <script>
-let cart = [];
+/* ===== PRODUCTS ===== */
+let products = JSON.parse(localStorage.getItem("vegx_products"));
 
-/* LOAD DATA */
-const products = JSON.parse(localStorage.getItem("vegx_products")) || [];
-const minOrder = Number(localStorage.getItem("vegx_min_order")) || 299;
-const deliveryCharge = Number(localStorage.getItem("vegx_delivery_charge")) || 50;
-const offer = localStorage.getItem("vegx_offer");
-
-if(offer){
-  document.getElementById("offerBox").innerText = offer;
-  document.getElementById("offerBox").classList.remove("hidden");
+if(!products){
+  products = [
+    {
+      name:"Cleaned & Chopped Cabbage",
+      weight:"300gm",
+      price:40,
+      image:"images/cabbage.png",
+      active:true
+    }
+  ];
+  localStorage.setItem("vegx_products",JSON.stringify(products));
 }
 
-/* RENDER PRODUCTS */
+/* ===== RENDER ===== */
 const list = document.getElementById("productList");
+let subtotal = 0;
+
 products.forEach((p,i)=>{
   if(!p.active) return;
 
-  list.innerHTML += `
-    <div class="product">
-      <img src="${p.image}" onerror="this.src='https://via.placeholder.com/90'">
-      <div style="flex:1">
-        <b>${p.name}</b><br>
-        ${p.weight} – ₹${p.price}<br>
-        Qty <input class="qty" type="number" min="0" value="0"
-          onchange="updateCart(${i},this.value)">
-      </div>
+  const div = document.createElement("div");
+  div.className="card";
+  div.innerHTML=`
+    <img src="${p.image}">
+    <div>
+      <b>${p.name}</b><br>
+      ${p.weight} – ₹${p.price}<br>
+      Qty: <input type="number" value="0" min="0" onchange="update(${i},this.value)">
     </div>
   `;
+  list.appendChild(div);
 });
 
-/* CART */
-function updateCart(index,qty){
-  cart[index] = qty;
-  calculate();
-}
-
-function calculate(){
-  let sub = 0;
-  cart.forEach((q,i)=>{
-    if(q>0) sub += q * products[i].price;
+function update(i,qty){
+  subtotal = 0;
+  document.querySelectorAll("input[type=number]").forEach((q,idx)=>{
+    subtotal += q.value * products[idx].price;
   });
-
-  document.getElementById("subtotal").innerText = sub;
-  document.getElementById("delivery").innerText = sub>=minOrder ? deliveryCharge : 0;
-  document.getElementById("total").innerText =
-    sub + (sub>=minOrder ? deliveryCharge : 0);
-
-  document.getElementById("minMsg").innerText =
-    sub<minOrder ? "Minimum order ₹"+minOrder+" required" : "";
-}
-
-/* CHECKOUT */
-function checkout(){
-  let sub = Number(document.getElementById("subtotal").innerText);
-  if(sub < minOrder){
-    alert("Minimum order ₹"+minOrder);
-    return;
-  }
-
-  let msg = "VEG X Order:%0A";
-  cart.forEach((q,i)=>{
-    if(q>0){
-      msg += products[i].name+" x "+q+" = ₹"+(q*products[i].price)+"%0A";
-    }
-  });
-
-  msg += "%0ATotal: ₹"+document.getElementById("total").innerText;
-  msg += "%0AName: "+cname.value;
-  msg += "%0AMobile: "+cmobile.value;
-  msg += "%0AAddress: "+caddress.value;
-
-  window.open("https://wa.me/91XXXXXXXXXX?text="+msg,"_blank");
+  document.getElementById("subtotal").innerText=subtotal;
+  document.getElementById("total").innerText=subtotal+50;
 }
 </script>
 
 </body>
-</html>
+  </html>
