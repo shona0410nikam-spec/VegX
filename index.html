@@ -1,24 +1,28 @@
-<!DOCTYPE html><html lang="en">
+
+<!-- FULL FINAL INDEX.HTML CODE --><!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>VEG X – Fresh & Clean Vegetables</title>
-<meta name="viewport" content="width=device-width, initial-scale=1"><style>
-body{font-family:Arial, sans-serif;background:#f4f4f4;margin:0}
-header{background:#2e7d32;color:#fff;padding:15px;font-size:20px;font-weight:bold;text-align:center}
-.section{margin:10px}
-.section h3{margin:10px 5px;color:#2e7d32}
-.product{background:#fff;margin:8px 0;padding:10px;border-radius:10px;display:flex;gap:10px;align-items:center}
-.product img{width:80px;height:80px;object-fit:cover;border-radius:8px;background:#eee}
+<title>VEG X – Fresh, Clean & Chopped Vegetables</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{font-family:Arial;margin:0;background:#f5f5f5}
+header{background:#2e7d32;color:#fff;padding:15px;text-align:center;font-size:20px;font-weight:bold}
+.product{background:#fff;margin:10px;padding:10px;border-radius:10px;display:flex;gap:10px;align-items:center}
+.product img{width:90px;height:90px;border-radius:8px;object-fit:cover;background:#ddd}
 .details{flex:1}
-.add-btn{background:#2e7d32;color:#fff;border:none;padding:8px 12px;border-radius:6px}
 .qty{width:50px}
-.cart{background:#fff;padding:10px;margin:10px;border-radius:10px}
-.checkout{background:#ff9800;color:#fff;border:none;width:100%;padding:15px;font-size:18px;border-radius:10px}
-.admin-btn{position:fixed;bottom:20px;right:20px;background:#000;color:#fff;padding:10px 15px;border-radius:20px;text-decoration:none}
-</style></head>
-<body><header>🥬 VEG X – Fresh, Clean & Chopped Vegetables</header><div id="productList"></div><div class="cart">
-<b>🛒 Cart</b><br>
-Total: ₹<span id="total">0</span><br><br>
+.add{background:#2e7d32;color:#fff;border:none;padding:8px 14px;border-radius:6px}
+.cart{background:#fff;margin:10px;padding:10px;border-radius:10px}
+.checkout{width:100%;padding:14px;background:#ff9800;color:#fff;border:none;border-radius:10px;font-size:18px}
+.notice{color:#c62828;font-weight:bold}
+</style>
+</head>
+<body>
+<header>🥬 VEG X – Fresh, Clean & Chopped Vegetables</header>
+<div id="list"></div>
+<div class="cart">
+<b>Total: ₹<span id="total">0</span></b><br>
+<small>Minimum order ₹299 | Delivery charge ₹50</small><br><br>
 <select id="area">
 <option value="">Select Area</option>
 <option>Kalyan</option>
@@ -26,64 +30,53 @@ Total: ₹<span id="total">0</span><br><br>
 <option>Bhiwandi</option>
 </select><br><br>
 <button class="checkout" onclick="checkout()">Checkout on WhatsApp</button>
-</div><a href="admin.html" class="admin-btn">ADMIN</a>
-
+<p id="msg" class="notice"></p>
+</div>
 <script>
-let minOrder=299;
-let deliveryCharge=50;
-let cartTotal=0;
-let cart=[];
-
 const products=[
-{cat:"Daily Vegetables",name:"Onion",wt:"1kg",price:35,img:"images/products/Onion.jpg"},
-{cat:"Daily Vegetables",name:"Potato",wt:"1kg",price:30,img:"images/products/Potato.jpg"},
-{cat:"Daily Vegetables",name:"Tomato",wt:"1kg",price:35,img:"images/products/Tomato.jpg"},
-
-{cat:"Chopped Vegetables",name:"French Beans",wt:"300gm",price:50,img:"images/products/Cleaned & Chopped French Beans.jpg"},
-{cat:"Chopped Vegetables",name:"Cluster Beans",wt:"300gm",price:60,img:"images/products/Cleaned & Chopped Cluster Beans.jpg"},
-{cat:"Chopped Vegetables",name:"Drumsticks",wt:"300gm",price:40,img:"images/products/Cleaned & Chopped Drumstick.png"},
-
-{cat:"New Products",name:"Fresh Coconut Grated",wt:"200gm",price:40,img:"images/products/Fresh coconut Grated.jpg"},
-{cat:"New Products",name:"Green Chilli",wt:"100gm",price:15,img:"images/products/Green Chilli.png"},
-{cat:"New Products",name:"Garlic Peeled",wt:"100gm",price:35,img:"images/products/Garlic Peeled.jpg"}
+{name:"Onion",w:"1kg",p:35,img:"images/products/Onion.png"},
+{name:"Potato",w:"1kg",p:30,img:"images/products/Potato.png"},
+{name:"Tomato",w:"1kg",p:35,img:"images/products/Tomato.png"},
+{name:"French Beans",w:"300gm",p:50,img:"images/products/Cleaned & Chopped French Beans.jpg"},
+{name:"Cluster Beans",w:"300gm",p:60,img:"images/products/Cleaned & Chopped Cluster Beans.jpg"},
+{name:"Drumsticks",w:"300gm",p:40,img:"images/products/Cleaned & Chopped Drumstick.png"},
+{name:"Green Peas",w:"300gm",p:55,img:"images/products/Cleaned & Shelled Green Peas .jpg"},
+{name:"Carrot",w:"300gm",p:40,img:"images/products/Cleaned & Chopped Carrot .png"},
+{name:"Cabbage",w:"300gm",p:35,img:"images/products/Cleaned & Chopped Cabbage .jpg"},
+{name:"Bottle Gourd",w:"300gm",p:40,img:"images/products/Cleaned & Chopped Bottle Gourd.png"},
+{name:"Bitter Gourd",w:"300gm",p:60,img:"images/products/Cleaned & Chopped Bitter Gourd.png"},
+{name:"Lady Finger",w:"300gm",p:60,img:"images/products/Cleaned & Chopped Lady Finger .jpg"},
+{name:"Pudina",w:"100gm",p:15,img:"images/products/Cleaned Pudina.jpg"},
+{name:"Coriander",w:"200gm",p:20,img:"images/products/Cleaned coriander.png"},
+{name:"Palak",w:"200gm",p:20,img:"images/products/Cleaned Palak.png"},
+{name:"Methi",w:"200gm",p:20,img:"images/products/Cleaned methi.png"},
+{name:"Lemon",w:"3 pcs",p:15,img:"images/products/Lemon.jpg"},
+{name:"Capsicum",w:"300gm",p:30,img:"images/products/Cleaned & Chopped Capsicum Green.jpg"},
+{name:"Red Pumpkin",w:"300gm",p:30,img:"images/products/Cleaned and cut Red Pumpkin.png"},
+{name:"Ridge Gourd",w:"300gm",p:60,img:"images/products/Cleaned & Chopped Ridge Gourd.jpg"},
+{name:"Sponge Gourd",w:"300gm",p:40,img:"images/products/Cleaned & Cut Sponge Gourd.jpg"},
+{name:"Cauliflower",w:"300gm",p:60,img:"images/products/Cleaned & Chopped Cauliflower.jpg"},
+{name:"Pulav Mix",w:"300gm",p:50,img:"images/products/Mixed Pulav Vegetables.png"},
+{name:"Fresh Coconut Grated",w:"200gm",p:40,img:"images/products/Fresh coconut Grated.jpg"},
+{name:"Green Chilli",w:"100gm",p:15,img:"images/products/Green Chilli.png"},
+{name:"Garlic Peeled",w:"100gm",p:35,img:"images/products/Garlic Peeled.jpg"}
 ];
-
-function render(){
-let html="";
-let cats=[...new Set(products.map(p=>p.cat))];
-cats.forEach(c=>{
-html+=`<div class='section'><h3>${c}</h3>`;
-products.filter(p=>p.cat===c).forEach((p,i)=>{
-html+=`<div class='product'>
-<img src='${p.img}' onerror="this.src='https://via.placeholder.com/80'">
-<div class='details'><b>${p.name}</b><br>${p.wt} – ₹${p.price}<br>
-Qty <input type='number' id='q${i}' class='qty' value='1' min='1'></div>
-<button class='add-btn' onclick='add(${i})'>Add</button>
-</div>`;
-});
-html+='</div>';
-});
-document.getElementById('productList').innerHTML=html;
-}
-
-function add(i){
-let q=document.getElementById('q'+i).value;
-let p=products[i];
-let cost=p.price*q;
-cartTotal+=cost;
-cart.push(`${p.name} x${q} = ₹${cost}`);
-document.getElementById('total').innerText=cartTotal;
-}
-
+let cart=[],total=0;
+const list=document.getElementById('list');
+products.forEach((x,i)=>{
+list.innerHTML+=`<div class='product'>
+<img src='${x.img}' onerror="this.src='https://via.placeholder.com/90'">
+<div class='details'><b>${x.name}</b><br>${x.w} – ₹${x.p}<br>Qty <input id='q${i}' type='number' value='1' min='1' class='qty'></div>
+<button class='add' onclick='add(${i})'>Add</button>
+</div>`});
+function add(i){let q=+document.getElementById('q'+i).value;total+=products[i].p*q;cart.push(products[i].name+' x'+q);document.getElementById('total').innerText=total}
 function checkout(){
-if(cartTotal<minOrder){alert('Minimum order ₹'+minOrder);return;}
-let area=document.getElementById('area').value;
-if(!area){alert('Select delivery area');return;}
-let final=cartTotal+deliveryCharge;
-let msg=`VEG X Order\n\n${cart.join("\n")}\n\nSubtotal: ₹${cartTotal}\nDelivery: ₹${deliveryCharge}\nTotal: ₹${final}\nArea: ${area}`;
-window.open('https://wa.me/7208487215?text='+encodeURIComponent(msg));
+if(total<299){msg.innerText='Minimum order ₹299 required';return}
+if(!area.value){msg.innerText='Please select delivery area';return}
+let t=total+50;
+let text='VEG X Order%0A'+cart.join('%0A')+`%0ATotal ₹${total}%0ADelivery ₹50%0AGrand Total ₹${t}%0AArea: ${area.value}%0AAddress:%0AMobile:`;
+window.open('https://wa.me/7208487215?text='+text)
 }
-
-render();
-</script></body>
+</script>
+</body>
 </html>
