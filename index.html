@@ -1,31 +1,220 @@
-<hr>
 
-<h3>Order Summary</h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VEG X – Fresh Vegetables</title>
 
-<p>Shopping Amount: ₹<span id="productTotal">0</span></p>
-<p>Delivery Charges: ₹<span id="deliveryCharge">50</span></p>
-
-<h3>Total: ₹<span id="grandTotal">0</span></h3>
-
-<p id="minMsg" style="color:red;font-weight:bold;"></p>
-
-<hr>
-
-<h3>Customer Details</h3>
-
-<input type="text" id="custName" placeholder="Your Name" style="width:100%;padding:8px;"><br><br>
-
-<input type="tel" id="custMobile" placeholder="Mobile Number" style="width:100%;padding:8px;"><br><br>
-
-<textarea id="custAddress" placeholder="Delivery Address" style="width:100%;padding:8px;"></textarea><br><br>
-
-<button onclick="checkout()" style="
+<style>
+body{
+  font-family: Arial, sans-serif;
+  background:#f5f5f5;
+  margin:0;
+  padding:0;
+}
+header{
+  background:#2e7d32;
+  color:white;
+  padding:15px;
+  text-align:center;
+  font-size:20px;
+  font-weight:bold;
+}
+.container{
+  padding:15px;
+}
+.product{
+  background:white;
+  border-radius:10px;
+  padding:10px;
+  display:flex;
+  gap:10px;
+  margin-bottom:10px;
+}
+.product img{
+  width:90px;
+  height:90px;
+  object-fit:cover;
+  border-radius:8px;
+}
+.product h4{
+  margin:0;
+}
+.qty{
+  width:50px;
+}
+.add-btn{
+  background:#2e7d32;
+  color:white;
+  border:none;
+  padding:6px 12px;
+  border-radius:6px;
+}
+.summary{
+  background:white;
+  border-radius:10px;
+  padding:15px;
+  margin-top:15px;
+}
+input, textarea{
   width:100%;
+  padding:8px;
+  margin-top:8px;
+}
+.checkout{
   background:#25D366;
   color:white;
-  padding:12px;
   font-size:18px;
+  padding:12px;
   border:none;
-  border-radius:6px;">
-  Checkout on WhatsApp
-</button>
+  border-radius:8px;
+  width:100%;
+  margin-top:10px;
+}
+.warning{
+  color:red;
+  font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<header>🥬 VEG X – Fresh, Clean & Chopped Vegetables</header>
+
+<div class="container">
+
+<!-- PRODUCTS -->
+<div class="product">
+  <img src="https://i.imgur.com/4YQZ6jM.jpg">
+  <div>
+    <h4>Onion – 1kg ₹35</h4>
+    Qty <input type="number" class="qty" data-price="35" value="0" onchange="updateTotal()">
+  </div>
+</div>
+
+<div class="product">
+  <img src="https://i.imgur.com/9G3W7kG.jpg">
+  <div>
+    <h4>Potato – 1kg ₹30</h4>
+    Qty <input type="number" class="qty" data-price="30" value="0" onchange="updateTotal()">
+  </div>
+</div>
+
+<div class="product">
+  <img src="https://i.imgur.com/Qq9b7QZ.jpg">
+  <div>
+    <h4>Tomato – 1kg ₹35</h4>
+    Qty <input type="number" class="qty" data-price="35" value="0" onchange="updateTotal()">
+  </div>
+</div>
+
+<div class="product">
+  <img src="https://i.imgur.com/3WZp9pY.jpg">
+  <div>
+    <h4>French Beans – 300gm ₹50</h4>
+    Qty <input type="number" class="qty" data-price="50" value="0" onchange="updateTotal()">
+  </div>
+</div>
+
+<div class="product">
+  <img src="https://i.imgur.com/wH2gP2E.jpg">
+  <div>
+    <h4>Cauliflower – 300gm ₹60</h4>
+    Qty <input type="number" class="qty" data-price="60" value="0" onchange="updateTotal()">
+  </div>
+</div>
+
+<div class="product">
+  <img src="https://i.imgur.com/MQpQ1oO.jpg">
+  <div>
+    <h4>Pulav Mix – 300gm ₹50</h4>
+    Qty <input type="number" class="qty" data-price="50" value="0" onchange="updateTotal()">
+  </div>
+</div>
+
+<div class="product">
+  <img src="https://i.imgur.com/dC9Z7zF.jpg">
+  <div>
+    <h4>Fresh Coconut Grated – 200gm ₹40</h4>
+    Qty <input type="number" class="qty" data-price="40" value="0" onchange="updateTotal()">
+  </div>
+</div>
+
+<div class="product">
+  <img src="https://i.imgur.com/4a6dZzC.jpg">
+  <div>
+    <h4>Green Chilli – 100gm ₹15</h4>
+    Qty <input type="number" class="qty" data-price="15" value="0" onchange="updateTotal()">
+  </div>
+</div>
+
+<div class="product">
+  <img src="https://i.imgur.com/TxkH3Gq.jpg">
+  <div>
+    <h4>Garlic Peeled – 100gm ₹35</h4>
+    Qty <input type="number" class="qty" data-price="35" value="0" onchange="updateTotal()">
+  </div>
+</div>
+
+<!-- SUMMARY -->
+<div class="summary">
+  <p>Shopping Amount: ₹<span id="productTotal">0</span></p>
+  <p>Delivery Charges: ₹50</p>
+  <h3>Total: ₹<span id="grandTotal">0</span></h3>
+  <p class="warning" id="minMsg"></p>
+
+  <h3>Customer Details</h3>
+  <input id="name" placeholder="Name">
+  <input id="mobile" placeholder="Mobile Number">
+  <textarea id="address" placeholder="Delivery Address"></textarea>
+
+  <button class="checkout" onclick="checkout()">Checkout on WhatsApp</button>
+</div>
+
+</div>
+
+<script>
+const MIN_ORDER = 299;
+const DELIVERY = 50;
+
+function updateTotal(){
+  let total = 0;
+  document.querySelectorAll(".qty").forEach(q=>{
+    total += (q.value * q.dataset.price);
+  });
+  document.getElementById("productTotal").innerText = total;
+  if(total >= MIN_ORDER){
+    document.getElementById("grandTotal").innerText = total + DELIVERY;
+    document.getElementById("minMsg").innerText = "";
+  }else{
+    document.getElementById("grandTotal").innerText = total;
+    document.getElementById("minMsg").innerText = "Minimum order ₹299 required";
+  }
+}
+
+function checkout(){
+  let total = parseInt(document.getElementById("productTotal").innerText);
+  if(total < MIN_ORDER){
+    alert("Minimum order ₹299 required");
+    return;
+  }
+  let name = nameField.value;
+  let mobile = mobileField.value;
+  let address = addressField.value;
+  if(!name || !mobile || !address){
+    alert("Please fill all details");
+    return;
+  }
+  let msg = `VEG X Order%0AName:${name}%0AMobile:${mobile}%0AAddress:${address}%0ATotal:₹${total+DELIVERY}`;
+  window.open("https://wa.me/91XXXXXXXXXX?text="+msg);
+}
+
+const nameField = document.getElementById("name");
+const mobileField = document.getElementById("mobile");
+const addressField = document.getElementById("address");
+</script>
+
+</body>
+  </html>
