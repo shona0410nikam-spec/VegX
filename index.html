@@ -1,131 +1,190 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="mr">
 <head>
 <meta charset="UTF-8">
 <title>VEG X – Fresh Vegetables</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-body{font-family:Arial;background:#f5f5f5;margin:0}
-header{background:#2e7d32;color:#fff;padding:15px;font-size:20px;font-weight:bold;text-align:center}
-.offer{background:#ff9800;color:#fff;text-align:center;padding:10px;font-weight:bold}
-.product{background:#fff;margin:10px;padding:10px;border-radius:10px;display:flex;gap:10px;align-items:center}
-.product img{width:90px;height:90px;border-radius:8px;object-fit:cover}
-.product input{width:50px}
-.product button{background:#2e7d32;color:#fff;border:none;padding:8px 12px;border-radius:6px}
-.summary{background:#fff;margin:10px;padding:10px;border-radius:10px;font-size:16px}
-.checkout{background:#2e7d32;color:#fff;border:none;width:95%;margin:10px;padding:15px;font-size:18px;border-radius:10px}
-.form{background:#fff;margin:10px;padding:10px;border-radius:10px}
-.form input,.form textarea,.form select{width:100%;margin-bottom:8px;padding:8px}
+body{font-family:Arial;background:#f5f5f5;margin:0;padding:0}
+header{background:#2e7d32;color:#fff;padding:12px;text-align:center}
+section{padding:15px}
+.card{background:#fff;padding:12px;margin-bottom:12px;border-radius:8px}
+.product{display:flex;gap:10px;align-items:center}
+.product img{width:80px;height:80px;object-fit:cover;border-radius:6px}
+button{background:#2e7d32;color:#fff;border:none;padding:8px 12px;border-radius:6px}
+input,select{padding:7px;width:100%;margin:5px 0}
+.hidden{display:none}
+.cart-item{display:flex;justify-content:space-between;margin:6px 0}
+.admin-btn{position:fixed;bottom:15px;right:15px;background:#000}
+.logout{background:#c62828}
 </style>
 </head>
 
 <body>
 
-<header>🥬 VEG X – Fresh Vegetables</header>
+<header>
+<h2>🥬 VEG X – Fresh & Clean Vegetables</h2>
+<div id="offerText"></div>
+</header>
 
-<div class="offer">🔥 Minimum Order ₹299 | Delivery Charge ₹50</div>
+<!-- PRODUCTS -->
+<section id="shop"></section>
 
-<div id="product-list"></div>
+<!-- CART -->
+<section class="card">
+<h3>🛒 Cart</h3>
+<div id="cart"></div>
+<p><b>Total: ₹<span id="total">0</span></b></p>
 
-<div class="summary">
-  Cart Total: ₹ <span id="total">0</span><br>
-  Delivery: ₹50<br>
-  <b>Payable: ₹ <span id="payable">0</span></b>
+<select id="area">
+<option value="">Select Delivery Area</option>
+</select>
+
+<button onclick="checkout()">Checkout</button>
+<p id="msg" style="color:red"></p>
+</section>
+
+<!-- ADMIN PANEL -->
+<section id="admin" class="hidden">
+<div class="card">
+<h3>🔐 Admin Login</h3>
+<input type="password" id="adminPass" placeholder="Password">
+<button onclick="login()">Login</button>
 </div>
 
-<div class="form">
-  <input id="name" placeholder="Customer Name">
-  <input id="mobile" placeholder="Mobile Number">
-  <textarea id="address" placeholder="Address"></textarea>
+<div id="adminPanel" class="hidden">
 
-  <select id="area">
-    <option>Kalyan</option>
-    <option>Dombivli</option>
-    <option>Bhiwandi</option>
-  </select>
+<div class="card">
+<h3>🏷️ Offer Banner</h3>
+<input id="offerInput" placeholder="Free delivery above ₹499">
+<button onclick="saveOffer()">Save</button>
 </div>
 
-<button class="checkout" onclick="checkout()">Checkout on WhatsApp</button>
+<div class="card">
+<h3>📍 Delivery Areas</h3>
+<input id="areaInput" placeholder="Add area">
+<button onclick="addArea()">Add</button>
+<ul id="areaList"></ul>
+</div>
+
+<div class="card">
+<h3>⚙️ Order Settings</h3>
+<input id="minOrder" type="number" placeholder="Minimum Order">
+<input id="deliveryCharge" type="number" placeholder="Delivery Charge">
+<button onclick="saveSettings()">Save</button>
+</div>
+
+<div class="card">
+<h3>🎟️ Coupon</h3>
+<input id="couponCode" placeholder="Code (VEGX99)">
+<input id="couponValue" type="number" placeholder="Discount">
+<button onclick="saveCoupon()">Save</button>
+</div>
+
+<button class="logout" onclick="logout()">Logout</button>
+</div>
+</section>
+
+<button class="admin-btn" onclick="openAdmin()">ADMIN</button>
 
 <script>
-const MIN_ORDER = 299;
-const DELIVERY = 50;
-const WHATSAPP = "7208487215";
-
-const products = [
-  {n:"Onion",w:"1kg",p:35,i:"Onion.png"},
-  {n:"Potato",w:"1kg",p:30,i:"Potato.png"},
-  {n:"Tomato",w:"1kg",p:35,i:"Tomato.png"},
-
-  {n:"French Beans",w:"300gm",p:50,i:"Cleaned & Chopped French Beans.jpg"},
-  {n:"Cluster Beans",w:"300gm",p:60,i:"Cleaned & Chopped Cluster Beans.jpg"},
-  {n:"Drumstick",w:"300gm",p:40,i:"Cleaned & Chopped Drumstick.png"},
-  {n:"Green Peas",w:"300gm",p:55,i:"Cleaned & Shelled Green Peas .jpg"},
-  {n:"Lady Finger",w:"300gm",p:60,i:"Cleaned & Chopped Lady Finger .jpg"},
-
-  {n:"Pudina",w:"100gm",p:15,i:"Cleaned Pudina.jpg"},
-  {n:"Coriander",w:"200gm",p:20,i:"Cleaned coriander.png"},
-  {n:"Palak",w:"200gm",p:20,i:"Cleaned Palak.png"},
-  {n:"Methi",w:"200gm",p:20,i:"Cleaned methi.png"},
-
-  {n:"Lemon",w:"3 pcs",p:15,i:"Lemon.jpg"},
-  {n:"Capsicum",w:"300gm",p:30,i:"Cleaned & Chopped Capsicum Green.jpg"},
-  {n:"Pumpkin",w:"300gm",p:30,i:"Cleaned and cut Red Pumpkin.png"},
-  {n:"Ridge Gourd",w:"300gm",p:60,i:"Cleaned & Chopped Ridge Gourd.jpg"},
-  {n:"Sponge Gourd",w:"300gm",p:40,i:"Cleaned & Cut Sponge Gourd.jpg"},
-  {n:"Cauliflower",w:"300gm",p:60,i:"Cleaned & Chopped Cauliflower.jpg"},
-  {n:"Pulav Mix",w:"300gm",p:50,i:"Mixed Pulav Vegetables.png"},
-
-  {n:"Fresh Coconut",w:"200gm",p:40,i:"Fresh coconut Grated.jpg"},
-  {n:"Green Chilli",w:"100gm",p:15,i:"Green Chilli.png"},
-  {n:"Garlic Peeled",w:"100gm",p:35,i:"Garlic Peeled.jpg"}
+/* ---------- DATA ---------- */
+const products=[
+{name:"Onion",price:40,weight:"1kg",img:"images/products/onion.jpg"},
+{name:"Potato",price:30,weight:"1kg",img:"images/products/potato.jpg"},
+{name:"Tomato",price:35,weight:"1kg",img:"images/products/tomato.jpg"},
+{name:"Fresh Coconut Grated",price:40,weight:"200gm",img:"images/products/Fresh coconut Grated.jpg"},
+{name:"Green Chilli",price:15,weight:"100gm",img:"images/products/Green Chilli.png"},
+{name:"Garlic Peeled",price:35,weight:"100gm",img:"images/products/Garlic Peeled.jpg"}
 ];
 
-let cart=[], total=0;
+let cart=[];
+let settings=JSON.parse(localStorage.getItem("settings")) || {min:299,delivery:50};
+let coupon=JSON.parse(localStorage.getItem("coupon")) || {code:"VEGX99",value:99};
 
-function render(){
-  let html="";
-  products.forEach((x,i)=>{
-    html+=`
-    <div class="product">
-      <img src="images/products/${x.i}">
-      <div>
-        <b>${x.n}</b><br>
-        ${x.w} – ₹${x.p}<br>
-        Qty <input type="number" id="q${i}" value="1" min="1">
-      </div>
-      <button onclick="add(${i})">Add</button>
-    </div>`;
-  });
-  document.getElementById("product-list").innerHTML=html;
+/* ---------- SHOP ---------- */
+function loadShop(){
+let html="";
+products.forEach((p,i)=>{
+html+=`
+<div class="card product">
+<img src="${p.img}">
+<div>
+<b>${p.name}</b><br>${p.weight}<br>₹${p.price}<br>
+<button onclick="add(${i})">Add</button>
+</div>
+</div>`;
+});
+document.getElementById("shop").innerHTML=html;
 }
-render();
 
+/* ---------- CART ---------- */
 function add(i){
-  let q=+document.getElementById("q"+i).value;
-  total += products[i].p * q;
-  cart.push(`${products[i].n} x${q}`);
-  document.getElementById("total").innerText=total;
-  document.getElementById("payable").innerText=total + DELIVERY;
+cart.push(products[i]);
+renderCart();
 }
-
+function renderCart(){
+let t=0,html="";
+cart.forEach(p=>{t+=p.price;html+=`<div class="cart-item">${p.name} ₹${p.price}</div>`});
+document.getElementById("cart").innerHTML=html;
+document.getElementById("total").innerText=t;
+}
 function checkout(){
-  if(total < MIN_ORDER){
-    alert("Minimum order ₹299 required");
-    return;
-  }
-  let msg = `VEG X ORDER
-${cart.join("\n")}
-Total: ₹${total + DELIVERY}
-
-Name: ${name.value}
-Mobile: ${mobile.value}
-Area: ${area.value}
-Address: ${address.value}`;
-
-  window.open("https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent(msg));
+let total=cart.reduce((s,p)=>s+p.price,0);
+if(total<settings.min){msg(`Minimum order ₹${settings.min}`);return;}
+if(!area.value){msg("Select delivery area");return;}
+msg("Order placed ✅");
 }
+
+/* ---------- ADMIN ---------- */
+function openAdmin(){admin.classList.toggle("hidden")}
+function login(){
+if(adminPass.value==="1234"){
+adminPanel.classList.remove("hidden");
+}else alert("Wrong password");
+}
+function logout(){adminPanel.classList.add("hidden")}
+
+function saveOffer(){
+localStorage.setItem("offer",offerInput.value);
+loadOffer();
+}
+function loadOffer(){
+offerText.innerText=localStorage.getItem("offer")||"";
+}
+function addArea(){
+let a=areaInput.value;
+let list=JSON.parse(localStorage.getItem("areas"))||[];
+list.push(a);
+localStorage.setItem("areas",JSON.stringify(list));
+loadAreas();
+}
+function loadAreas(){
+let list=JSON.parse(localStorage.getItem("areas"))||[];
+area.innerHTML='<option value="">Select Area</option>';
+areaList.innerHTML="";
+list.forEach(a=>{
+area.innerHTML+=`<option>${a}</option>`;
+areaList.innerHTML+=`<li>${a}</li>`;
+});
+}
+function saveSettings(){
+settings={min:+minOrder.value,delivery:+deliveryCharge.value};
+localStorage.setItem("settings",JSON.stringify(settings));
+alert("Saved");
+}
+function saveCoupon(){
+coupon={code:couponCode.value,value:+couponValue.value};
+localStorage.setItem("coupon",JSON.stringify(coupon));
+alert("Coupon saved");
+}
+function msg(t){document.getElementById("msg").innerText=t}
+
+/* INIT */
+loadShop();
+loadOffer();
+loadAreas();
 </script>
 
 </body>
