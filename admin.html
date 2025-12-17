@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>VEG X – Admin Panel</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{font-family:Arial;background:#f5f5f5;padding:20px}
+h2{color:#2e7d32}
+input,button{padding:8px;margin:5px 0;width:100%}
+button{background:#2e7d32;color:#fff;border:none;border-radius:6px}
+.box{background:#fff;padding:15px;border-radius:10px;margin-bottom:15px}
+.product{display:flex;gap:10px;align-items:center;margin-bottom:8px}
+.product input{width:60px}
+</style>
+</head>
+
+<body>
+
+<h2>🔐 VEG X Admin Panel</h2>
+
+<div id="loginBox" class="box">
+  <input type="password" id="password" placeholder="Enter Admin Password">
+  <button onclick="login()">Login</button>
+</div>
+
+<div id="adminPanel" style="display:none">
+
+  <div class="box">
+    <h3>🔥 Offer Banner</h3>
+    <input id="offerText" placeholder="Example: Free delivery above ₹499">
+    <button onclick="saveOffer()">Save Offer</button>
+  </div>
+
+  <div class="box">
+    <h3>🚚 Delivery Areas</h3>
+    <input id="newArea" placeholder="Add new area">
+    <button onclick="addArea()">Add Area</button>
+    <ul id="areaList"></ul>
+  </div>
+
+  <div class="box">
+    <h3>🥕 Products Control</h3>
+    <div id="productList"></div>
+  </div>
+
+</div>
+
+<script src="admin.js"></script>
+</body>
+</html>
