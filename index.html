@@ -3,34 +3,30 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<title>VEG X – Cleaned & Chopped Vegetables</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>VEG X – Fresh Vegetables</title>
 
 <style>
 body{
   font-family: Arial, sans-serif;
   background:#f5f5f5;
   margin:0;
-  padding:0;
 }
 header{
   background:#2e7d32;
-  color:white;
+  color:#fff;
   padding:15px;
-  text-align:center;
   font-size:20px;
   font-weight:bold;
 }
-.container{
-  padding:15px;
-}
 .product{
-  background:white;
-  border-radius:10px;
+  background:#fff;
+  margin:10px;
   padding:10px;
+  border-radius:10px;
   display:flex;
+  align-items:center;
   gap:10px;
-  margin-bottom:10px;
 }
 .product img{
   width:90px;
@@ -38,42 +34,38 @@ header{
   object-fit:cover;
   border-radius:8px;
 }
-.product h4{
-  margin:0;
+.product-details{
+  flex:1;
 }
 .qty{
   width:50px;
 }
 .add-btn{
   background:#2e7d32;
-  color:white;
+  color:#fff;
   border:none;
-  padding:6px 12px;
+  padding:8px 12px;
   border-radius:6px;
-}
-.summary{
-  background:white;
-  border-radius:10px;
-  padding:15px;
-  margin-top:15px;
-}
-input, textarea{
-  width:100%;
-  padding:8px;
-  margin-top:8px;
+  cursor:pointer;
 }
 .checkout{
-  background:#25D366;
-  color:white;
-  font-size:18px;
-  padding:12px;
+  background:#ff9800;
+  color:#fff;
   border:none;
-  border-radius:8px;
-  width:100%;
-  margin-top:10px;
+  width:95%;
+  margin:15px;
+  padding:15px;
+  font-size:18px;
+  border-radius:10px;
+  cursor:pointer;
 }
-.warning{
-  color:red;
+.total{
+  font-size:16px;
+  margin:10px;
+}
+.note{
+  margin:10px;
+  color:#d32f2f;
   font-weight:bold;
 }
 </style>
@@ -81,139 +73,115 @@ input, textarea{
 
 <body>
 
-<header>🥬 VEG X – Fresh, Clean & Chopped Vegetables</header>
+<header>VEG X – Cleaned & Chopped Vegetables</header>
 
-<div class="container">
+<div class="note">Minimum Order Value ₹299 | Delivery Charges ₹50</div>
 
-<!-- PRODUCTS -->
-<div class="product">
-  <img src="https://i.imgur.com/4YQZ6jM.jpg">
-  <div>
-    <h4>Onion – 1kg ₹35</h4>
-    Qty <input type="number" class="qty" data-price="35" value="0" onchange="updateTotal()">
-  </div>
+<div id="product-list"></div>
+
+<div class="total">
+  Subtotal: ₹ <span id="cartTotal">0</span><br>
+  Delivery: ₹ <span id="delivery">0</span><br>
+  <b>Grand Total: ₹ <span id="grandTotal">0</span></b>
 </div>
 
-<div class="product">
-  <img src="https://i.imgur.com/9G3W7kG.jpg">
-  <div>
-    <h4>Potato – 1kg ₹30</h4>
-    Qty <input type="number" class="qty" data-price="30" value="0" onchange="updateTotal()">
-  </div>
-</div>
-
-<div class="product">
-  <img src="https://i.imgur.com/Qq9b7QZ.jpg">
-  <div>
-    <h4>Tomato – 1kg ₹35</h4>
-    Qty <input type="number" class="qty" data-price="35" value="0" onchange="updateTotal()">
-  </div>
-</div>
-
-<div class="product">
-  <img src="https://i.imgur.com/3WZp9pY.jpg">
-  <div>
-    <h4>French Beans – 300gm ₹50</h4>
-    Qty <input type="number" class="qty" data-price="50" value="0" onchange="updateTotal()">
-  </div>
-</div>
-
-<div class="product">
-  <img src="https://i.imgur.com/wH2gP2E.jpg">
-  <div>
-    <h4>Cauliflower – 300gm ₹60</h4>
-    Qty <input type="number" class="qty" data-price="60" value="0" onchange="updateTotal()">
-  </div>
-</div>
-
-<div class="product">
-  <img src="https://i.imgur.com/MQpQ1oO.jpg">
-  <div>
-    <h4>Pulav Mix – 300gm ₹50</h4>
-    Qty <input type="number" class="qty" data-price="50" value="0" onchange="updateTotal()">
-  </div>
-</div>
-
-<div class="product">
-  <img src="https://i.imgur.com/dC9Z7zF.jpg">
-  <div>
-    <h4>Fresh Coconut Grated – 200gm ₹40</h4>
-    Qty <input type="number" class="qty" data-price="40" value="0" onchange="updateTotal()">
-  </div>
-</div>
-
-<div class="product">
-  <img src="https://i.imgur.com/4a6dZzC.jpg">
-  <div>
-    <h4>Green Chilli – 100gm ₹15</h4>
-    Qty <input type="number" class="qty" data-price="15" value="0" onchange="updateTotal()">
-  </div>
-</div>
-
-<div class="product">
-  <img src="https://i.imgur.com/TxkH3Gq.jpg">
-  <div>
-    <h4>Garlic Peeled – 100gm ₹35</h4>
-    Qty <input type="number" class="qty" data-price="35" value="0" onchange="updateTotal()">
-  </div>
-</div>
-
-<!-- SUMMARY -->
-<div class="summary">
-  <p>Shopping Amount: ₹<span id="productTotal">0</span></p>
-  <p>Delivery Charges: ₹50</p>
-  <h3>Total: ₹<span id="grandTotal">0</span></h3>
-  <p class="warning" id="minMsg"></p>
-
-  <h3>Customer Details</h3>
-  <input id="name" placeholder="Name">
-  <input id="mobile" placeholder="Mobile Number">
-  <textarea id="address" placeholder="Delivery Address"></textarea>
-
-  <button class="checkout" onclick="checkout()">Checkout on WhatsApp</button>
-</div>
-
-</div>
+<button class="checkout" onclick="checkout()">Checkout on WhatsApp</button>
 
 <script>
-const MIN_ORDER = 299;
-const DELIVERY = 50;
+const products = [
+  {name:"Onion", weight:"1kg", price:35, image:"Onion.png"},
+  {name:"Potato", weight:"1kg", price:30, image:"Potato.png"},
+  {name:"Tomato", weight:"1kg", price:35, image:"Tomato.png"},
+
+  {name:"French Beans", weight:"300gm", price:50, image:"Cleaned & Chopped French Beans.jpg"},
+  {name:"Cluster Beans", weight:"300gm", price:60, image:"Cleaned & Chopped Cluster Beans.jpg"},
+  {name:"Drumsticks", weight:"300gm", price:40, image:"Cleaned & Chopped Drumstick.png"},
+  {name:"Green Peas", weight:"300gm", price:55, image:"Cleaned & Shelled Green Peas .jpg"},
+  {name:"Carrot", weight:"300gm", price:40, image:"Cleaned & Chopped Carrot .png"},
+  {name:"Cabbage", weight:"300gm", price:35, image:"Cleaned & Chopped Cabbage .jpg"},
+  {name:"Bottle Gourd", weight:"300gm", price:40, image:"Cleaned & Chopped Bottle Gourd.png"},
+  {name:"Bitter Gourd", weight:"300gm", price:60, image:"Cleaned & Chopped Bitter Gourd.png"},
+  {name:"Lady Finger", weight:"300gm", price:60, image:"Cleaned & Chopped Lady Finger .jpg"},
+
+  {name:"Pudina", weight:"100gm", price:15, image:"Cleaned Pudina.jpg"},
+  {name:"Coriander", weight:"200gm", price:20, image:"Cleaned coriander.png"},
+  {name:"Palak", weight:"200gm", price:20, image:"Cleaned Palak.png"},
+  {name:"Methi", weight:"200gm", price:20, image:"Cleaned methi.png"},
+
+  {name:"Lemon", weight:"3 pcs", price:15, image:"Lemon.jpg"},
+  {name:"Capsicum", weight:"300gm", price:30, image:"Cleaned & Chopped Capsicum Green.jpg"},
+  {name:"Red Pumpkin", weight:"300gm", price:30, image:"Cleaned and cut Red Pumpkin.png"},
+  {name:"Ridge Gourd", weight:"300gm", price:60, image:"Cleaned & Chopped Ridge Gourd.jpg"},
+  {name:"Sponge Gourd", weight:"300gm", price:40, image:"Cleaned & Cut Sponge Gourd.jpg"},
+  {name:"Cauliflower", weight:"300gm", price:60, image:"Cleaned & Chopped Cauliflower.jpg"},
+  {name:"Pulav Mix", weight:"300gm", price:50, image:"Mixed Pulav Vegetables.png"},
+
+  /* NEW PRODUCTS */
+  {name:"Fresh Coconut (Grated)", weight:"200gm", price:40, image:"Fresh coconut Grated.jpg"},
+  {name:"Green Chilli", weight:"100gm", price:15, image:"Green Chilli.png"},
+  {name:"Garlic (Peeled)", weight:"100gm", price:35, image:"Garlic Peeled.jpg"}
+];
+
+let cart = [];
+let subtotal = 0;
+
+function renderProducts(){
+  let html = "";
+  products.forEach((p,i)=>{
+    html += `
+      <div class="product">
+        <img src="images/products/${p.image}">
+        <div class="product-details">
+          <b>${p.name}</b><br>
+          ${p.weight} – ₹${p.price}<br>
+          Qty:
+          <input type="number" id="qty${i}" class="qty" value="1" min="1">
+        </div>
+        <button class="add-btn" onclick="addToCart(${i})">Add</button>
+      </div>
+    `;
+  });
+  document.getElementById("product-list").innerHTML = html;
+}
+
+function addToCart(i){
+  let qty = Number(document.getElementById("qty"+i).value);
+  let item = products[i];
+  let cost = item.price * qty;
+  subtotal += cost;
+  cart.push(`${item.name} ${item.weight} x${qty} = ₹${cost}`);
+  updateTotal();
+}
 
 function updateTotal(){
-  let total = 0;
-  document.querySelectorAll(".qty").forEach(q=>{
-    total += (q.value * q.dataset.price);
-  });
-  document.getElementById("productTotal").innerText = total;
-  if(total >= MIN_ORDER){
-    document.getElementById("grandTotal").innerText = total + DELIVERY;
-    document.getElementById("minMsg").innerText = "";
-  }else{
-    document.getElementById("grandTotal").innerText = total;
-    document.getElementById("minMsg").innerText = "Minimum order ₹299 required";
-  }
+  document.getElementById("cartTotal").innerText = subtotal;
+  let delivery = subtotal >= 299 ? 50 : 0;
+  document.getElementById("delivery").innerText = delivery;
+  document.getElementById("grandTotal").innerText = subtotal + delivery;
 }
 
 function checkout(){
-  let total = parseInt(document.getElementById("productTotal").innerText);
-  if(total < MIN_ORDER){
-    alert("Minimum order ₹299 required");
+  if(subtotal < 299){
+    alert("Minimum shopping amount is ₹299");
     return;
   }
-  let name = nameField.value;
-  let mobile = mobileField.value;
-  let address = addressField.value;
-  if(!name || !mobile || !address){
-    alert("Please fill all details");
-    return;
-  }
-  let msg = `VEG X Order%0AName:${name}%0AMobile:${mobile}%0AAddress:${address}%0ATotal:₹${total+DELIVERY}`;
-  window.open("https://wa.me/91XXXXXXXXXX?text="+msg);
+
+  let msg =
+`🛒 VEG X Order
+
+${cart.join("\n")}
+
+Subtotal: ₹${subtotal}
+Delivery: ₹50
+Grand Total: ₹${subtotal + 50}
+
+Address:
+Mobile:`;
+
+  window.open("https://wa.me/7208487215?text="+encodeURIComponent(msg));
 }
 
-const nameField = document.getElementById("name");
-const mobileField = document.getElementById("mobile");
-const addressField = document.getElementById("address");
+renderProducts();
 </script>
 
 </body>
