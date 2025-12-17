@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,39 +9,33 @@
 body{
   font-family: Arial, sans-serif;
   background:#f5f5f5;
-  padding:20px;
+  padding:15px;
 }
-h2{
-  color:#2e7d32;
-}
-input,button{
-  padding:8px;
-  margin:5px 0;
-}
-button{
-  background:#2e7d32;
-  color:#fff;
-  border:none;
-  border-radius:6px;
-  cursor:pointer;
-}
+h2{color:#2e7d32}
 .box{
   background:#fff;
   padding:15px;
   border-radius:10px;
   margin-bottom:15px;
 }
-ul{
-  padding-left:20px;
+input,select,button{
+  width:100%;
+  padding:10px;
+  margin:6px 0;
 }
+button{
+  background:#2e7d32;
+  color:#fff;
+  border:none;
+  border-radius:6px;
+}
+.logout{background:#d32f2f}
 .product{
   display:flex;
-  justify-content:space-between;
-  margin-bottom:6px;
+  gap:6px;
+  align-items:center;
 }
-.logout{
-  background:#d32f2f;
-}
+.product input{flex:1}
 </style>
 </head>
 
@@ -52,120 +45,125 @@ ul{
 
 <!-- LOGIN -->
 <div id="loginBox" class="box">
-  <input type="password" id="password" placeholder="Enter Admin Password">
-  <br>
+  <input type="password" id="password" placeholder="Admin Password">
   <button onclick="login()">Login</button>
 </div>
 
-<!-- ADMIN PANEL -->
+<!-- ADMIN -->
 <div id="adminPanel" style="display:none">
 
-  <div class="box">
-    <button class="logout" onclick="logout()">Logout</button>
-  </div>
+<button class="logout" onclick="logout()">Logout</button>
 
-  <!-- OFFER -->
-  <div class="box">
-    <h3>🏷 Offer Banner</h3>
-    <input id="offerText" placeholder="Eg: Free delivery above ₹499">
-    <br>
-    <button onclick="saveOffer()">Save Offer</button>
-    <p><b>Current:</b> <span id="currentOffer"></span></p>
-  </div>
+<!-- OFFER -->
+<div class="box">
+  <h3>🏷 Offer Banner</h3>
+  <input id="offerText" placeholder="Eg: Free delivery above ₹499">
+  <button onclick="saveOffer()">Save Offer</button>
+</div>
 
-  <!-- DELIVERY AREA -->
-  <div class="box">
-    <h3>📍 Delivery Areas</h3>
-    <input id="newArea" placeholder="Add new area">
-    <br>
-    <button onclick="addArea()">Add Area</button>
-    <ul id="areaList"></ul>
-  </div>
+<!-- SETTINGS -->
+<div class="box">
+  <h3>⚙ Order Settings</h3>
+  <input id="minOrder" type="number" placeholder="Minimum Order ₹">
+  <input id="deliveryCharge" type="number" placeholder="Delivery Charge ₹">
+  <button onclick="saveSettings()">Save Settings</button>
+</div>
 
-  <!-- SETTINGS -->
-  <div class="box">
-    <h3>⚙ Order Settings</h3>
-    <label>Minimum Order (₹):</label><br>
-    <input id="minOrder" type="number"><br><br>
+<!-- ADD PRODUCT -->
+<div class="box">
+  <h3>➕ Add New Product</h3>
+  <input id="pName" placeholder="Product Name">
+  <input id="pWeight" placeholder="Weight (eg 300gm)">
+  <input id="pPrice" type="number" placeholder="Price">
+  <input id="pImage" placeholder="Image file name">
+  <button onclick="addProduct()">Add Product</button>
+</div>
 
-    <label>Delivery Charge (₹):</label><br>
-    <input id="deliveryCharge" type="number"><br><br>
-
-    <button onclick="saveSettings()">Save Settings</button>
-  </div>
+<!-- PRODUCT CONTROL -->
+<div class="box">
+  <h3>📦 Product Control</h3>
+  <div id="productList"></div>
+</div>
 
 </div>
 
 <script>
-/* ===== LOGIN ===== */
-const ADMIN_PASSWORD = "vegx123";
+const ADMIN_PASSWORD="vegx123";
 
+/* LOGIN */
 function login(){
-  const pass = document.getElementById("password").value;
-  if(pass === ADMIN_PASSWORD){
-    document.getElementById("loginBox").style.display="none";
-    document.getElementById("adminPanel").style.display="block";
-    loadData();
-  }else{
-    alert("Wrong password");
-  }
+ if(password.value===ADMIN_PASSWORD){
+  loginBox.style.display="none";
+  adminPanel.style.display="block";
+  loadData();
+ } else alert("Wrong password");
+}
+function logout(){location.reload();}
+
+/* DATA */
+function getProducts(){
+ return JSON.parse(localStorage.getItem("vegx_products")) || [];
+}
+function saveProducts(p){
+ localStorage.setItem("vegx_products",JSON.stringify(p));
+ renderProducts();
 }
 
-function logout(){
-  location.reload();
-}
-
-/* ===== OFFER ===== */
+/* OFFER */
 function saveOffer(){
-  const text = document.getElementById("offerText").value;
-  localStorage.setItem("vegx_offer", text);
-  document.getElementById("currentOffer").innerText = text;
-  alert("Offer saved");
+ localStorage.setItem("vegx_offer",offerText.value);
+ alert("Offer saved");
 }
 
-/* ===== DELIVERY AREAS ===== */
-function addArea(){
-  const area = document.getElementById("newArea").value;
-  if(!area) return;
-  let areas = JSON.parse(localStorage.getItem("vegx_areas")) || [];
-  areas.push(area);
-  localStorage.setItem("vegx_areas", JSON.stringify(areas));
-  document.getElementById("newArea").value="";
-  renderAreas();
-}
-
-function renderAreas(){
-  const list = document.getElementById("areaList");
-  list.innerHTML="";
-  let areas = JSON.parse(localStorage.getItem("vegx_areas")) || [];
-  areas.forEach(a=>{
-    const li = document.createElement("li");
-    li.innerText = a;
-    list.appendChild(li);
-  });
-}
-
-/* ===== SETTINGS ===== */
+/* SETTINGS */
 function saveSettings(){
-  localStorage.setItem("vegx_min_order",
-    document.getElementById("minOrder").value);
-  localStorage.setItem("vegx_delivery_charge",
-    document.getElementById("deliveryCharge").value);
-  alert("Settings saved");
+ localStorage.setItem("vegx_min_order",minOrder.value);
+ localStorage.setItem("vegx_delivery_charge",deliveryCharge.value);
+ alert("Settings saved");
 }
 
-/* ===== LOAD DATA ===== */
+/* ADD PRODUCT */
+function addProduct(){
+ let p=getProducts();
+ p.push({
+  name:pName.value,
+  weight:pWeight.value,
+  price:Number(pPrice.value),
+  image:pImage.value,
+  active:true
+ });
+ saveProducts(p);
+ pName.value=pWeight.value=pPrice.value=pImage.value="";
+}
+
+/* RENDER */
+function renderProducts(){
+ let list=document.getElementById("productList");
+ list.innerHTML="";
+ getProducts().forEach((p,i)=>{
+  list.innerHTML+=`
+   <div class="product">
+    <input value="${p.name}" onchange="edit(${i},'name',this.value)">
+    <input value="${p.price}" type="number" onchange="edit(${i},'price',this.value)">
+    <select onchange="toggle(${i},this.value)">
+      <option value="true" ${p.active?"selected":""}>ON</option>
+      <option value="false" ${!p.active?"selected":""}>OFF</option>
+    </select>
+   </div>`;
+ });
+}
+function edit(i,f,v){
+ let p=getProducts(); p[i][f]=v; saveProducts(p);
+}
+function toggle(i,v){
+ let p=getProducts(); p[i].active=(v==="true"); saveProducts(p);
+}
+
+/* LOAD */
 function loadData(){
-  document.getElementById("currentOffer").innerText =
-    localStorage.getItem("vegx_offer") || "";
-
-  document.getElementById("minOrder").value =
-    localStorage.getItem("vegx_min_order") || 299;
-
-  document.getElementById("deliveryCharge").value =
-    localStorage.getItem("vegx_delivery_charge") || 50;
-
-  renderAreas();
+ minOrder.value=localStorage.getItem("vegx_min_order")||299;
+ deliveryCharge.value=localStorage.getItem("vegx_delivery_charge")||50;
+ renderProducts();
 }
 </script>
 
