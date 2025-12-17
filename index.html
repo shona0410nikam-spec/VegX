@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,8 +59,13 @@ header{
   cursor:pointer;
 }
 .total{
-  font-size:18px;
+  font-size:16px;
   margin:10px;
+}
+.note{
+  margin:10px;
+  color:#d32f2f;
+  font-weight:bold;
 }
 </style>
 </head>
@@ -70,10 +74,14 @@ header{
 
 <header>VEG X – Cleaned & Chopped Vegetables</header>
 
+<div class="note">Minimum Order Value ₹299 | Delivery Charges ₹50</div>
+
 <div id="product-list"></div>
 
 <div class="total">
-  Cart Total: ₹ <span id="cartTotal">0</span>
+  Subtotal: ₹ <span id="cartTotal">0</span><br>
+  Delivery: ₹ <span id="delivery">0</span><br>
+  <b>Grand Total: ₹ <span id="grandTotal">0</span></b>
 </div>
 
 <button class="checkout" onclick="checkout()">Checkout on WhatsApp</button>
@@ -105,11 +113,16 @@ const products = [
   {name:"Ridge Gourd", weight:"300gm", price:60, image:"Cleaned & Chopped Ridge Gourd.jpg"},
   {name:"Sponge Gourd", weight:"300gm", price:40, image:"Cleaned & Cut Sponge Gourd.jpg"},
   {name:"Cauliflower", weight:"300gm", price:60, image:"Cleaned & Chopped Cauliflower.jpg"},
-  {name:"Pulav Mix", weight:"300gm", price:50, image:"Mixed Pulav Vegetables.png"}
+  {name:"Pulav Mix", weight:"300gm", price:50, image:"Mixed Pulav Vegetables.png"},
+
+  /* NEW PRODUCTS */
+  {name:"Fresh Coconut (Grated)", weight:"200gm", price:40, image:"Fresh coconut Grated.jpg"},
+  {name:"Green Chilli", weight:"100gm", price:15, image:"Green Chilli.png"},
+  {name:"Garlic (Peeled)", weight:"100gm", price:35, image:"Garlic Peeled.jpg"}
 ];
 
 let cart = [];
-let total = 0;
+let subtotal = 0;
 
 function renderProducts(){
   let html = "";
@@ -131,28 +144,39 @@ function renderProducts(){
 }
 
 function addToCart(i){
-  let qty = document.getElementById("qty"+i).value;
+  let qty = Number(document.getElementById("qty"+i).value);
   let item = products[i];
   let cost = item.price * qty;
-  total += cost;
-  document.getElementById("cartTotal").innerText = total;
+  subtotal += cost;
   cart.push(`${item.name} ${item.weight} x${qty} = ₹${cost}`);
+  updateTotal();
+}
+
+function updateTotal(){
+  document.getElementById("cartTotal").innerText = subtotal;
+  let delivery = subtotal >= 299 ? 50 : 0;
+  document.getElementById("delivery").innerText = delivery;
+  document.getElementById("grandTotal").innerText = subtotal + delivery;
 }
 
 function checkout(){
-  if(cart.length===0){
-    alert("Cart is empty");
+  if(subtotal < 299){
+    alert("Minimum shopping amount is ₹299");
     return;
   }
+
   let msg =
 `🛒 VEG X Order
 
 ${cart.join("\n")}
 
-Total: ₹${total}
+Subtotal: ₹${subtotal}
+Delivery: ₹50
+Grand Total: ₹${subtotal + 50}
 
 Address:
 Mobile:`;
+
   window.open("https://wa.me/7208487215?text="+encodeURIComponent(msg));
 }
 
