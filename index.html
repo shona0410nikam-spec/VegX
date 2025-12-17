@@ -1,172 +1,133 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>VEG X – Admin Panel</title>
+<title>VEG X – Fresh Vegetables</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-body{
-  font-family: Arial, sans-serif;
-  background:#f5f5f5;
-  padding:20px;
-}
-h2{
-  color:#2e7d32;
-}
-input,button{
-  padding:8px;
-  margin:5px 0;
-}
-button{
-  background:#2e7d32;
-  color:#fff;
-  border:none;
-  border-radius:6px;
-  cursor:pointer;
-}
-.box{
-  background:#fff;
-  padding:15px;
-  border-radius:10px;
-  margin-bottom:15px;
-}
-ul{
-  padding-left:20px;
-}
-.product{
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:6px;
-}
-.logout{
-  background:#d32f2f;
-}
+body{font-family:Arial;background:#f5f5f5;margin:0}
+header{background:#2e7d32;color:#fff;padding:15px;font-size:20px;font-weight:bold;text-align:center}
+.offer{background:#ff9800;color:#fff;text-align:center;padding:10px;font-weight:bold}
+.product{background:#fff;margin:10px;padding:10px;border-radius:10px;display:flex;gap:10px;align-items:center}
+.product img{width:90px;height:90px;border-radius:8px;object-fit:cover}
+.product input{width:50px}
+.product button{background:#2e7d32;color:#fff;border:none;padding:8px 12px;border-radius:6px}
+.summary{background:#fff;margin:10px;padding:10px;border-radius:10px;font-size:16px}
+.checkout{background:#2e7d32;color:#fff;border:none;width:95%;margin:10px;padding:15px;font-size:18px;border-radius:10px}
+.form{background:#fff;margin:10px;padding:10px;border-radius:10px}
+.form input,.form textarea,.form select{width:100%;margin-bottom:8px;padding:8px}
 </style>
 </head>
 
 <body>
 
-<h2>🔐 VEG X Admin Panel</h2>
+<header>🥬 VEG X – Fresh Vegetables</header>
 
-<!-- LOGIN -->
-<div id="loginBox" class="box">
-  <input type="password" id="password" placeholder="Enter Admin Password">
-  <br>
-  <button onclick="login()">Login</button>
+<div class="offer">🔥 Minimum Order ₹299 | Delivery Charge ₹50</div>
+
+<div id="product-list"></div>
+
+<div class="summary">
+  Cart Total: ₹ <span id="total">0</span><br>
+  Delivery: ₹50<br>
+  <b>Payable: ₹ <span id="payable">0</span></b>
 </div>
 
-<!-- ADMIN PANEL -->
-<div id="adminPanel" style="display:none">
+<div class="form">
+  <input id="name" placeholder="Customer Name">
+  <input id="mobile" placeholder="Mobile Number">
+  <textarea id="address" placeholder="Address"></textarea>
 
-  <div class="box">
-    <button class="logout" onclick="logout()">Logout</button>
-  </div>
-
-  <!-- OFFER -->
-  <div class="box">
-    <h3>🏷 Offer Banner</h3>
-    <input id="offerText" placeholder="Eg: Free delivery above ₹499">
-    <br>
-    <button onclick="saveOffer()">Save Offer</button>
-    <p><b>Current:</b> <span id="currentOffer"></span></p>
-  </div>
-
-  <!-- DELIVERY AREA -->
-  <div class="box">
-    <h3>📍 Delivery Areas</h3>
-    <input id="newArea" placeholder="Add new area">
-    <br>
-    <button onclick="addArea()">Add Area</button>
-    <ul id="areaList"></ul>
-  </div>
-
-  <!-- SETTINGS -->
-  <div class="box">
-    <h3>⚙ Order Settings</h3>
-    <label>Minimum Order (₹):</label><br>
-    <input id="minOrder" type="number"><br><br>
-
-    <label>Delivery Charge (₹):</label><br>
-    <input id="deliveryCharge" type="number"><br><br>
-
-    <button onclick="saveSettings()">Save Settings</button>
-  </div>
-
+  <select id="area">
+    <option>Kalyan</option>
+    <option>Dombivli</option>
+    <option>Bhiwandi</option>
+  </select>
 </div>
+
+<button class="checkout" onclick="checkout()">Checkout on WhatsApp</button>
 
 <script>
-/* ===== LOGIN ===== */
-const ADMIN_PASSWORD = "vegx123";
+const MIN_ORDER = 299;
+const DELIVERY = 50;
+const WHATSAPP = "7208487215";
 
-function login(){
-  const pass = document.getElementById("password").value;
-  if(pass === ADMIN_PASSWORD){
-    document.getElementById("loginBox").style.display="none";
-    document.getElementById("adminPanel").style.display="block";
-    loadData();
-  }else{
-    alert("Wrong password");
-  }
-}
+const products = [
+  {n:"Onion",w:"1kg",p:35,i:"Onion.png"},
+  {n:"Potato",w:"1kg",p:30,i:"Potato.png"},
+  {n:"Tomato",w:"1kg",p:35,i:"Tomato.png"},
 
-function logout(){
-  location.reload();
-}
+  {n:"French Beans",w:"300gm",p:50,i:"Cleaned & Chopped French Beans.jpg"},
+  {n:"Cluster Beans",w:"300gm",p:60,i:"Cleaned & Chopped Cluster Beans.jpg"},
+  {n:"Drumstick",w:"300gm",p:40,i:"Cleaned & Chopped Drumstick.png"},
+  {n:"Green Peas",w:"300gm",p:55,i:"Cleaned & Shelled Green Peas .jpg"},
+  {n:"Lady Finger",w:"300gm",p:60,i:"Cleaned & Chopped Lady Finger .jpg"},
 
-/* ===== OFFER ===== */
-function saveOffer(){
-  const text = document.getElementById("offerText").value;
-  localStorage.setItem("vegx_offer", text);
-  document.getElementById("currentOffer").innerText = text;
-  alert("Offer saved");
-}
+  {n:"Pudina",w:"100gm",p:15,i:"Cleaned Pudina.jpg"},
+  {n:"Coriander",w:"200gm",p:20,i:"Cleaned coriander.png"},
+  {n:"Palak",w:"200gm",p:20,i:"Cleaned Palak.png"},
+  {n:"Methi",w:"200gm",p:20,i:"Cleaned methi.png"},
 
-/* ===== DELIVERY AREAS ===== */
-function addArea(){
-  const area = document.getElementById("newArea").value;
-  if(!area) return;
-  let areas = JSON.parse(localStorage.getItem("vegx_areas")) || [];
-  areas.push(area);
-  localStorage.setItem("vegx_areas", JSON.stringify(areas));
-  document.getElementById("newArea").value="";
-  renderAreas();
-}
+  {n:"Lemon",w:"3 pcs",p:15,i:"Lemon.jpg"},
+  {n:"Capsicum",w:"300gm",p:30,i:"Cleaned & Chopped Capsicum Green.jpg"},
+  {n:"Pumpkin",w:"300gm",p:30,i:"Cleaned and cut Red Pumpkin.png"},
+  {n:"Ridge Gourd",w:"300gm",p:60,i:"Cleaned & Chopped Ridge Gourd.jpg"},
+  {n:"Sponge Gourd",w:"300gm",p:40,i:"Cleaned & Cut Sponge Gourd.jpg"},
+  {n:"Cauliflower",w:"300gm",p:60,i:"Cleaned & Chopped Cauliflower.jpg"},
+  {n:"Pulav Mix",w:"300gm",p:50,i:"Mixed Pulav Vegetables.png"},
 
-function renderAreas(){
-  const list = document.getElementById("areaList");
-  list.innerHTML="";
-  let areas = JSON.parse(localStorage.getItem("vegx_areas")) || [];
-  areas.forEach(a=>{
-    const li = document.createElement("li");
-    li.innerText = a;
-    list.appendChild(li);
+  {n:"Fresh Coconut",w:"200gm",p:40,i:"Fresh coconut Grated.jpg"},
+  {n:"Green Chilli",w:"100gm",p:15,i:"Green Chilli.png"},
+  {n:"Garlic Peeled",w:"100gm",p:35,i:"Garlic Peeled.jpg"}
+];
+
+let cart=[], total=0;
+
+function render(){
+  let html="";
+  products.forEach((x,i)=>{
+    html+=`
+    <div class="product">
+      <img src="images/products/${x.i}">
+      <div>
+        <b>${x.n}</b><br>
+        ${x.w} – ₹${x.p}<br>
+        Qty <input type="number" id="q${i}" value="1" min="1">
+      </div>
+      <button onclick="add(${i})">Add</button>
+    </div>`;
   });
+  document.getElementById("product-list").innerHTML=html;
+}
+render();
+
+function add(i){
+  let q=+document.getElementById("q"+i).value;
+  total += products[i].p * q;
+  cart.push(`${products[i].n} x${q}`);
+  document.getElementById("total").innerText=total;
+  document.getElementById("payable").innerText=total + DELIVERY;
 }
 
-/* ===== SETTINGS ===== */
-function saveSettings(){
-  localStorage.setItem("vegx_min_order",
-    document.getElementById("minOrder").value);
-  localStorage.setItem("vegx_delivery_charge",
-    document.getElementById("deliveryCharge").value);
-  alert("Settings saved");
-}
+function checkout(){
+  if(total < MIN_ORDER){
+    alert("Minimum order ₹299 required");
+    return;
+  }
+  let msg = `VEG X ORDER
+${cart.join("\n")}
+Total: ₹${total + DELIVERY}
 
-/* ===== LOAD DATA ===== */
-function loadData(){
-  document.getElementById("currentOffer").innerText =
-    localStorage.getItem("vegx_offer") || "";
+Name: ${name.value}
+Mobile: ${mobile.value}
+Area: ${area.value}
+Address: ${address.value}`;
 
-  document.getElementById("minOrder").value =
-    localStorage.getItem("vegx_min_order") || 299;
-
-  document.getElementById("deliveryCharge").value =
-    localStorage.getItem("vegx_delivery_charge") || 50;
-
-  renderAreas();
+  window.open("https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent(msg));
 }
 </script>
 
 </body>
-  </html>
+</html>
