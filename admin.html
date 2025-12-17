@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,13 +7,42 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-body{font-family:Arial;background:#f5f5f5;padding:20px}
-h2{color:#2e7d32}
-input,button{padding:8px;margin:5px 0;width:100%}
-button{background:#2e7d32;color:#fff;border:none;border-radius:6px}
-.box{background:#fff;padding:15px;border-radius:10px;margin-bottom:15px}
-.product{display:flex;gap:10px;align-items:center;margin-bottom:8px}
-.product input{width:60px}
+body{
+  font-family: Arial, sans-serif;
+  background:#f5f5f5;
+  padding:20px;
+}
+h2{
+  color:#2e7d32;
+}
+input,button{
+  padding:8px;
+  margin:5px 0;
+}
+button{
+  background:#2e7d32;
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+}
+.box{
+  background:#fff;
+  padding:15px;
+  border-radius:10px;
+  margin-bottom:15px;
+}
+ul{
+  padding-left:20px;
+}
+.product{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:6px;
+}
+.logout{
+  background:#d32f2f;
+}
 </style>
 </head>
 
@@ -20,33 +50,124 @@ button{background:#2e7d32;color:#fff;border:none;border-radius:6px}
 
 <h2>🔐 VEG X Admin Panel</h2>
 
+<!-- LOGIN -->
 <div id="loginBox" class="box">
   <input type="password" id="password" placeholder="Enter Admin Password">
+  <br>
   <button onclick="login()">Login</button>
 </div>
 
+<!-- ADMIN PANEL -->
 <div id="adminPanel" style="display:none">
 
   <div class="box">
-    <h3>🔥 Offer Banner</h3>
-    <input id="offerText" placeholder="Example: Free delivery above ₹499">
-    <button onclick="saveOffer()">Save Offer</button>
+    <button class="logout" onclick="logout()">Logout</button>
   </div>
 
+  <!-- OFFER -->
   <div class="box">
-    <h3>🚚 Delivery Areas</h3>
+    <h3>🏷 Offer Banner</h3>
+    <input id="offerText" placeholder="Eg: Free delivery above ₹499">
+    <br>
+    <button onclick="saveOffer()">Save Offer</button>
+    <p><b>Current:</b> <span id="currentOffer"></span></p>
+  </div>
+
+  <!-- DELIVERY AREA -->
+  <div class="box">
+    <h3>📍 Delivery Areas</h3>
     <input id="newArea" placeholder="Add new area">
+    <br>
     <button onclick="addArea()">Add Area</button>
     <ul id="areaList"></ul>
   </div>
 
+  <!-- SETTINGS -->
   <div class="box">
-    <h3>🥕 Products Control</h3>
-    <div id="productList"></div>
+    <h3>⚙ Order Settings</h3>
+    <label>Minimum Order (₹):</label><br>
+    <input id="minOrder" type="number"><br><br>
+
+    <label>Delivery Charge (₹):</label><br>
+    <input id="deliveryCharge" type="number"><br><br>
+
+    <button onclick="saveSettings()">Save Settings</button>
   </div>
 
 </div>
 
-<script src="admin.js"></script>
+<script>
+/* ===== LOGIN ===== */
+const ADMIN_PASSWORD = "vegx123";
+
+function login(){
+  const pass = document.getElementById("password").value;
+  if(pass === ADMIN_PASSWORD){
+    document.getElementById("loginBox").style.display="none";
+    document.getElementById("adminPanel").style.display="block";
+    loadData();
+  }else{
+    alert("Wrong password");
+  }
+}
+
+function logout(){
+  location.reload();
+}
+
+/* ===== OFFER ===== */
+function saveOffer(){
+  const text = document.getElementById("offerText").value;
+  localStorage.setItem("vegx_offer", text);
+  document.getElementById("currentOffer").innerText = text;
+  alert("Offer saved");
+}
+
+/* ===== DELIVERY AREAS ===== */
+function addArea(){
+  const area = document.getElementById("newArea").value;
+  if(!area) return;
+  let areas = JSON.parse(localStorage.getItem("vegx_areas")) || [];
+  areas.push(area);
+  localStorage.setItem("vegx_areas", JSON.stringify(areas));
+  document.getElementById("newArea").value="";
+  renderAreas();
+}
+
+function renderAreas(){
+  const list = document.getElementById("areaList");
+  list.innerHTML="";
+  let areas = JSON.parse(localStorage.getItem("vegx_areas")) || [];
+  areas.forEach(a=>{
+    const li = document.createElement("li");
+    li.innerText = a;
+    list.appendChild(li);
+  });
+}
+
+/* ===== SETTINGS ===== */
+function saveSettings(){
+  localStorage.setItem("vegx_min_order",
+    document.getElementById("minOrder").value);
+  localStorage.setItem("vegx_delivery_charge",
+    document.getElementById("deliveryCharge").value);
+  alert("Settings saved");
+}
+
+/* ===== LOAD DATA ===== */
+function loadData(){
+  document.getElementById("currentOffer").innerText =
+    localStorage.getItem("vegx_offer") || "";
+
+  document.getElementById("minOrder").value =
+    localStorage.getItem("vegx_min_order") || 299;
+
+  document.getElementById("deliveryCharge").value =
+    localStorage.getItem("vegx_delivery_charge") || 50;
+
+  renderAreas();
+}
+</script>
+
 </body>
 </html>
