@@ -7,13 +7,43 @@
 
 <style>
 body{font-family:Arial;background:#f5f5f5;margin:0}
-header{background:#2e7d32;color:#fff;padding:15px;font-size:20px;text-align:center}
-.container{padding:15px}
-.card{background:#fff;border-radius:10px;padding:10px;margin-bottom:12px;display:flex;gap:10px}
-.card img{width:90px;height:90px;border-radius:8px;object-fit:cover}
-.total{background:#fff;padding:15px;border-radius:10px;margin-top:15px}
-input,textarea{padding:8px;width:100%;margin-bottom:8px}
-.checkout{background:#ff9800;color:#fff;border:none;padding:14px;width:100%;font-size:16px;border-radius:8px}
+header{background:#2e7d32;color:#fff;padding:15px;text-align:center;font-size:20px}
+.container{padding:12px}
+.card{
+ background:#fff;
+ border-radius:10px;
+ padding:10px;
+ margin-bottom:12px;
+ display:flex;
+ gap:10px;
+ align-items:center;
+}
+.card img{
+ width:80px;
+ height:80px;
+ object-fit:cover;
+ border-radius:8px;
+}
+input[type=number]{
+ width:60px;
+ padding:5px;
+}
+.total{
+ background:#fff;
+ padding:15px;
+ border-radius:10px;
+ margin-top:15px;
+}
+.checkout{
+ background:#ff9800;
+ color:#fff;
+ border:none;
+ width:100%;
+ padding:14px;
+ font-size:16px;
+ border-radius:8px;
+ margin-top:10px;
+}
 </style>
 </head>
 
@@ -24,78 +54,70 @@ input,textarea{padding:8px;width:100%;margin-bottom:8px}
 <div class="container" id="productList"></div>
 
 <div class="container">
-  <div class="total">
-    <p>Subtotal: ₹<span id="subtotal">0</span></p>
-    <p>Delivery: ₹50</p>
-    <h3>Total: ₹<span id="total">0</span></h3>
+ <div class="total">
+  <p>Subtotal: ₹<span id="subtotal">0</span></p>
+  <p>Delivery: ₹50</p>
+  <h3>Total: ₹<span id="total">50</span></h3>
 
-    <input id="name" placeholder="Your Name">
-    <input id="mobile" placeholder="Mobile Number">
-    <textarea id="address" placeholder="Delivery Address"></textarea>
+  <input placeholder="Your Name"><br><br>
+  <input placeholder="Mobile Number"><br><br>
+  <textarea placeholder="Delivery Address"></textarea><br><br>
 
-    <button class="checkout" onclick="checkout()">Checkout on WhatsApp</button>
-  </div>
+  <button class="checkout">Checkout on WhatsApp</button>
+ </div>
 </div>
 
 <script>
 const products = [
- {name:"Cleaned & Chopped Drumstick", weight:"300gm", price:60, image:"images/drumstick.png"},
- {name:"Potato", weight:"1kg", price:60, image:"images/potato.png"},
- {name:"Onion", weight:"1kg", price:40, image:"images/onion.png"},
- {name:"Tomato", weight:"500gm", price:30, image:"images/tomato.png"},
- {name:"Lemon", weight:"3 pcs", price:20, image:"images/lemon.jpg"},
- {name:"Cleaned Methi", weight:"300gm", price:60, image:"images/methi.png"},
- {name:"French Beans", weight:"300gm", price:60, image:"images/frenchbeans.jpg"},
- {name:"Mixed Pulav Vegetables", weight:"300gm", price:60, image:"images/mixedveg.png"},
- {name:"Cleaned Pudina", weight:"300gm", price:20, image:"images/pudina.jpg"},
- {name:"Cleaned Palak", weight:"200gm", price:60, image:"images/palak.png"},
- {name:"Cleaned Coriander", weight:"100gm", price:20, image:"images/coriander.png"},
- {name:"Capsicum Green", weight:"300gm", price:60, image:"images/capsicum.jpg"},
- {name:"Red Pumpkin", weight:"300gm", price:60, image:"images/pumpkin.png"},
- {name:"Sponge Gourd", weight:"300gm", price:60, image:"images/spongegourd.jpg"},
- {name:"Ridge Gourd", weight:"300gm", price:60, image:"images/ridgegourd.jpg"},
- {name:"Green Peas", weight:"300gm", price:60, image:"images/peas.jpg"},
- {name:"Carrot", weight:"300gm", price:50, image:"images/carrot.png"},
- {name:"Bottle Gourd", weight:"300gm", price:60, image:"images/bottlegourd.png"},
- {name:"Bitter Gourd", weight:"300gm", price:60, image:"images/bittergourd.png"},
- {name:"Cauliflower", weight:"300gm", price:60, image:"images/cauliflower.jpg"},
- {name:"Lady Finger", weight:"300gm", price:50, image:"images/ladyfinger.jpg"},
- {name:"Cluster Beans", weight:"300gm", price:60, image:"images/clusterbeans.jpg"},
- {name:"Fresh Coconut Grated", weight:"200gm", price:60, image:"images/coconut.jpg"},
- {name:"Green Chilli", weight:"100gm", price:20, image:"images/chilli.png"}
+ {name:"Cleaned & Chopped Drumstick",weight:"300gm",price:60,image:"images/products/Cleaned & Chopped Drumstick.png"},
+ {name:"Potato",weight:"1kg",price:60,image:"images/products/Potato.png"},
+ {name:"Onion",weight:"1kg",price:40,image:"images/products/Onion.png"},
+ {name:"Tomato",weight:"500gm",price:30,image:"images/products/Tomato.png"},
+ {name:"Lemon",weight:"3 pcs",price:20,image:"images/products/Lemon.jpg"},
+ {name:"Cleaned Methi",weight:"300gm",price:60,image:"images/products/Cleaned methi.png"},
+ {name:"French Beans",weight:"300gm",price:60,image:"images/products/Cleaned & Chopped French Beans.jpg"},
+ {name:"Mixed Pulav Vegetables",weight:"300gm",price:60,image:"images/products/Mixed Pulav Vegetables.png"},
+ {name:"Cleaned Pudina",weight:"300gm",price:20,image:"images/products/Cleaned Pudina.jpg"},
+ {name:"Cleaned Palak",weight:"200gm",price:60,image:"images/products/Cleaned Palak.png"},
+ {name:"Cleaned Coriander",weight:"100gm",price:20,image:"images/products/Cleaned coriander.png"},
+ {name:"Capsicum Green",weight:"300gm",price:60,image:"images/products/Cleaned & Chopped Capsicum Green.jpg"},
+ {name:"Red Pumpkin",weight:"300gm",price:60,image:"images/products/Cleaned and cut Red Pumpkin.png"},
+ {name:"Sponge Gourd",weight:"300gm",price:60,image:"images/products/Cleaned & Cut Sponge Gourd.jpg"},
+ {name:"Ridge Gourd",weight:"300gm",price:60,image:"images/products/Cleaned & Chopped Ridg Gourd.jpg"},
+ {name:"Green Peas",weight:"300gm",price:60,image:"images/products/Cleaned & Shelled Green Peas .jpg"},
+ {name:"Carrot",weight:"300gm",price:50,image:"images/products/Cleaned & Chopped Carrot .png"},
+ {name:"Bottle Gourd",weight:"300gm",price:60,image:"images/products/Cleaned & Chopped Bottle Gourd.png"},
+ {name:"Bitter Gourd",weight:"300gm",price:60,image:"images/products/Cleaned & Chopped Bitter Gourd.png"},
+ {name:"Cauliflower",weight:"300gm",price:60,image:"images/products/Cleaned & Chopped Cauliflower.jpg"},
+ {name:"Lady Finger",weight:"300gm",price:50,image:"images/products/Cleaned & Chopped Lady Finger .jpg"},
+ {name:"Cluster Beans",weight:"300gm",price:60,image:"images/products/Cleaned & Chopped Cluster Beans.jpg"},
+ {name:"Fresh Coconut Grated",weight:"200gm",price:60,image:"images/products/Fresh coconut Grated.jpg"},
+ {name:"Green Chilli",weight:"100gm",price:20,image:"images/products/Green Chilli.png"}
 ];
 
-const list = document.getElementById("productList");
 let subtotal = 0;
+const list = document.getElementById("productList");
 
 products.forEach((p,i)=>{
-  const div = document.createElement("div");
-  div.className="card";
-  div.innerHTML=`
-    <img src="${p.image}">
-    <div>
-      <b>${p.name}</b><br>
-      ${p.weight} - ₹${p.price}<br>
-      Qty: <input type="number" min="0" value="0" onchange="update(${i},this.value)">
-    </div>`;
-  list.appendChild(div);
+ const div=document.createElement("div");
+ div.className="card";
+ div.innerHTML=`
+  <img src="${p.image}">
+  <div>
+   <b>${p.name}</b><br>
+   ${p.weight} - ₹${p.price}<br>
+   Qty: <input type="number" min="0" value="0" onchange="update()">
+  </div>`;
+ list.appendChild(div);
 });
 
-function update(i,qty){
-  products[i].qty = Number(qty);
-  subtotal = 0;
-  products.forEach(p=> subtotal += (p.qty||0)*p.price);
-  document.getElementById("subtotal").innerText=subtotal;
-  document.getElementById("total").innerText=subtotal+50;
-}
-
-function checkout(){
-  let msg="VEG X Order:%0A";
-  products.forEach(p=>{
-    if(p.qty>0) msg+=`${p.name} (${p.weight}) x ${p.qty} = ₹${p.qty*p.price}%0A`;
-  });
-  msg+=`%0ATotal: ₹${subtotal+50}`;
-  window.open(`https://wa.me/917208487215?text=${msg}`);
+function update(){
+ subtotal=0;
+ document.querySelectorAll("input[type=number]").forEach((q,i)=>{
+  subtotal+=q.value*products[i].price;
+ });
+ document.getElementById("subtotal").innerText=subtotal;
+ document.getElementById("total").innerText=subtotal+50;
 }
 </script>
 
