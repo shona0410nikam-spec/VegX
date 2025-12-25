@@ -41,20 +41,8 @@ input{padding:8px;width:100%;margin-bottom:8px}
 
 <script>
 /* ===== PRODUCTS ===== */
-let products = JSON.parse(localStorage.getItem("vegx_products"));
-
-if(!products){
-  products = [
-    {
-      name:"Cleaned & Chopped Cabbage",
-      weight:"300gm",
-      price:40,
-      image:"images/cabbage.png",
-      active:true
-    }
-  ];
-  localStorage.setItem("vegx_products",JSON.stringify(products));
-}
+<script src="Products.js"></script>
+<script src="script.js"></script>
 
 /* ===== RENDER ===== */
 const list = document.getElementById("productList");
