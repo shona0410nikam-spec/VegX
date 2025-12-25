@@ -1,78 +1,103 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>VEG X – Cleaned & Chopped Vegetables</title>
+<title>VEG X - Cleaned & Chopped Vegetables</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 body{font-family:Arial;background:#f5f5f5;margin:0}
-header{background:#2e7d32;color:#fff;padding:15px;font-size:20px}
+header{background:#2e7d32;color:#fff;padding:15px;font-size:20px;text-align:center}
 .container{padding:15px}
 .card{background:#fff;border-radius:10px;padding:10px;margin-bottom:12px;display:flex;gap:10px}
 .card img{width:90px;height:90px;border-radius:8px;object-fit:cover}
-.btn{background:#2e7d32;color:#fff;border:none;padding:8px 12px;border-radius:6px}
-input{padding:8px;width:100%;margin-bottom:8px}
 .total{background:#fff;padding:15px;border-radius:10px;margin-top:15px}
+input,textarea{padding:8px;width:100%;margin-bottom:8px}
 .checkout{background:#ff9800;color:#fff;border:none;padding:14px;width:100%;font-size:16px;border-radius:8px}
 </style>
 </head>
 
 <body>
 
-<header>🥬 VEG X – Cleaned & Chopped Vegetables</header>
+<header>🥬 VEG X - Cleaned & Chopped Vegetables</header>
 
 <div class="container" id="productList"></div>
 
 <div class="container">
   <div class="total">
     <p>Subtotal: ₹<span id="subtotal">0</span></p>
-    <p>Delivery: ₹<span id="delivery">50</span></p>
+    <p>Delivery: ₹50</p>
     <h3>Total: ₹<span id="total">0</span></h3>
 
-    <input placeholder="Your Name">
-    <input placeholder="Mobile Number">
-    <textarea placeholder="Delivery Address"></textarea>
+    <input id="name" placeholder="Your Name">
+    <input id="mobile" placeholder="Mobile Number">
+    <textarea id="address" placeholder="Delivery Address"></textarea>
 
-    <button class="checkout">Checkout on WhatsApp</button>
+    <button class="checkout" onclick="checkout()">Checkout on WhatsApp</button>
   </div>
 </div>
 
 <script>
-/* ===== PRODUCTS ===== */
-<script src="Products.js"></script>
-<script src="script.js"></script>
+const products = [
+ {name:"Cleaned & Chopped Drumstick", weight:"300gm", price:60, image:"images/drumstick.png"},
+ {name:"Potato", weight:"1kg", price:60, image:"images/potato.png"},
+ {name:"Onion", weight:"1kg", price:40, image:"images/onion.png"},
+ {name:"Tomato", weight:"500gm", price:30, image:"images/tomato.png"},
+ {name:"Lemon", weight:"3 pcs", price:20, image:"images/lemon.jpg"},
+ {name:"Cleaned Methi", weight:"300gm", price:60, image:"images/methi.png"},
+ {name:"French Beans", weight:"300gm", price:60, image:"images/frenchbeans.jpg"},
+ {name:"Mixed Pulav Vegetables", weight:"300gm", price:60, image:"images/mixedveg.png"},
+ {name:"Cleaned Pudina", weight:"300gm", price:20, image:"images/pudina.jpg"},
+ {name:"Cleaned Palak", weight:"200gm", price:60, image:"images/palak.png"},
+ {name:"Cleaned Coriander", weight:"100gm", price:20, image:"images/coriander.png"},
+ {name:"Capsicum Green", weight:"300gm", price:60, image:"images/capsicum.jpg"},
+ {name:"Red Pumpkin", weight:"300gm", price:60, image:"images/pumpkin.png"},
+ {name:"Sponge Gourd", weight:"300gm", price:60, image:"images/spongegourd.jpg"},
+ {name:"Ridge Gourd", weight:"300gm", price:60, image:"images/ridgegourd.jpg"},
+ {name:"Green Peas", weight:"300gm", price:60, image:"images/peas.jpg"},
+ {name:"Carrot", weight:"300gm", price:50, image:"images/carrot.png"},
+ {name:"Bottle Gourd", weight:"300gm", price:60, image:"images/bottlegourd.png"},
+ {name:"Bitter Gourd", weight:"300gm", price:60, image:"images/bittergourd.png"},
+ {name:"Cauliflower", weight:"300gm", price:60, image:"images/cauliflower.jpg"},
+ {name:"Lady Finger", weight:"300gm", price:50, image:"images/ladyfinger.jpg"},
+ {name:"Cluster Beans", weight:"300gm", price:60, image:"images/clusterbeans.jpg"},
+ {name:"Fresh Coconut Grated", weight:"200gm", price:60, image:"images/coconut.jpg"},
+ {name:"Green Chilli", weight:"100gm", price:20, image:"images/chilli.png"}
+];
 
-/* ===== RENDER ===== */
 const list = document.getElementById("productList");
 let subtotal = 0;
 
 products.forEach((p,i)=>{
-  if(!p.active) return;
-
   const div = document.createElement("div");
   div.className="card";
   div.innerHTML=`
     <img src="${p.image}">
     <div>
       <b>${p.name}</b><br>
-      ${p.weight} – ₹${p.price}<br>
-      Qty: <input type="number" value="0" min="0" onchange="update(${i},this.value)">
-    </div>
-  `;
+      ${p.weight} - ₹${p.price}<br>
+      Qty: <input type="number" min="0" value="0" onchange="update(${i},this.value)">
+    </div>`;
   list.appendChild(div);
 });
 
 function update(i,qty){
+  products[i].qty = Number(qty);
   subtotal = 0;
-  document.querySelectorAll("input[type=number]").forEach((q,idx)=>{
-    subtotal += q.value * products[idx].price;
-  });
+  products.forEach(p=> subtotal += (p.qty||0)*p.price);
   document.getElementById("subtotal").innerText=subtotal;
   document.getElementById("total").innerText=subtotal+50;
+}
+
+function checkout(){
+  let msg="VEG X Order:%0A";
+  products.forEach(p=>{
+    if(p.qty>0) msg+=`${p.name} (${p.weight}) x ${p.qty} = ₹${p.qty*p.price}%0A`;
+  });
+  msg+=`%0ATotal: ₹${subtotal+50}`;
+  window.open(`https://wa.me/91XXXXXXXXXX?text=${msg}`);
 }
 </script>
 
 </body>
-  </html>
+</html>
