@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,6 +16,7 @@ header{background:#2e7d32;color:#fff;padding:12px;text-align:center;font-weight:
 .total-box{background:#fff;margin:10px;padding:10px;border-radius:8px}
 input,textarea,button{width:100%;padding:10px;margin-top:6px;border-radius:6px;border:1px solid #ccc}
 button{background:#ff9800;color:#fff;font-size:16px;border:none}
+.free{color:green;font-weight:bold}
 </style>
 </head>
 
@@ -34,6 +36,7 @@ button{background:#ff9800;color:#fff;font-size:16px;border:none}
 <p>Subtotal: ₹<span id="subtotal">0</span></p>
 <p>Delivery: ₹<span id="delivery">50</span></p>
 <h3>Total: ₹<span id="total">0</span></h3>
+<p id="freeMsg"></p>
 
 <input id="name" placeholder="Your Name">
 <input id="mobile" placeholder="Mobile Number">
@@ -44,7 +47,7 @@ button{background:#ff9800;color:#fff;font-size:16px;border:none}
 
 <script>
 const deliveryCharge = 50;
-const freeDeliveryAbove = 399;
+const freeLimit = 399;
 
 const products = [
 {name:"Drumstick", weight:"300gm", price:60, img:"Cleaned & Chopped Drumstick.png"},
@@ -78,7 +81,7 @@ const box = document.getElementById("products");
 products.forEach((p,i)=>{
 box.innerHTML += `
 <div class="product">
-<img src="images/products/${p.img}" onerror="this.src='images/products/default.png'">
+<img src="images/products/${p.img}">
 <div>
 <b>${p.name}</b><br>
 ${p.weight} – ₹${p.price}
@@ -92,30 +95,21 @@ let subtotal = 0;
 document.querySelectorAll(".qty").forEach(q=>{
 subtotal += q.value * products[q.dataset.i].price;
 });
+
+let delivery = subtotal >= freeLimit ? 0 : deliveryCharge;
+
 document.getElementById("subtotal").innerText = subtotal;
-document.getElementById("delivery").innerText = subtotal>=freeDeliveryAbove?0:deliveryCharge;
-document.getElementById("total").innerText = subtotal + (subtotal>=freeDeliveryAbove?0:deliveryCharge);
+document.getElementById("delivery").innerText = delivery;
+document.getElementById("total").innerText = subtotal + delivery;
+
+document.getElementById("freeMsg").innerHTML =
+subtotal >= freeLimit
+? "<span class='free'>🎉 Free Delivery Applied</span>"
+: `Add ₹${freeLimit-subtotal} more for FREE delivery`;
 }
 
 function checkout(){
-let msg = "VEG X Order:%0A";
-let subtotal = 0;
-
-document.querySelectorAll(".qty").forEach(q=>{
-if(q.value>0){
-let p = products[q.dataset.i];
-msg += `${p.name} (${p.weight}) x ${q.value} = ₹${p.price*q.value}%0A`;
-subtotal += p.price*q.value;
-}
-});
-
-let delivery = subtotal>=freeDeliveryAbove?0:deliveryCharge;
-let total = subtotal+delivery;
-
-msg += `%0ASubtotal: ₹${subtotal}%0ADelivery: ₹${delivery}%0ATotal: ₹${total}%0A`;
-msg += `%0AName: ${name.value}%0AMobile: ${mobile.value}%0AAddress: ${address.value}`;
-
-window.open(`https://wa.me/917208487215?text=${msg}`,"_blank");
+alert("WhatsApp integration next step 🚀");
 }
 </script>
 
