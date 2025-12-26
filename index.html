@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,24 +8,24 @@
 <style>
 body{font-family:Arial;margin:0;background:#f5f5f5}
 header{background:#2e7d32;color:#fff;padding:12px;text-align:center;font-weight:bold}
-.banner{background:#ffe082;padding:10px;text-align:center;font-size:14px}
-.product{background:#fff;margin:8px;padding:10px;border-radius:8px;display:flex;align-items:center}
-.product img{width:70px;height:70px;border-radius:8px;object-fit:cover;margin-right:10px}
-.qty{margin-left:auto;width:60px}
+.banner{background:#ffeb99;padding:10px;text-align:center;font-size:14px}
+.product{background:#fff;margin:8px;border-radius:8px;padding:10px;display:flex;align-items:center}
+.product img{width:70px;height:70px;border-radius:6px;object-fit:cover;margin-right:10px}
+.qty{margin-left:auto;width:60px;padding:6px}
 .total-box{background:#fff;margin:10px;padding:10px;border-radius:8px}
-input,textarea,button{width:100%;padding:10px;margin-top:6px;border-radius:6px;border:1px solid #ccc}
-button{background:#ff9800;color:#fff;font-size:16px;border:none}
+input,textarea,button{width:100%;padding:10px;margin-top:6px;font-size:15px}
+button{background:#ff9800;color:#fff;border:none;border-radius:6px;font-weight:bold}
 .free{color:green;font-weight:bold}
 </style>
 </head>
 
 <body>
 
-<header>🥬 VEG X – Cleaned & Chopped Vegetables</header>
+<header>🥬 VEG X - Cleaned & Chopped Vegetables</header>
 
 <div class="banner">
-🚚 Free Delivery on orders ₹399 & above<br>
-🔥 Fresh | Hygienic | Same Day Delivery<br>
+🔥 Free Delivery on orders ₹399 & above <br>
+🥗 Fresh | Hygienic | Same Day Delivery <br>
 📲 Order on WhatsApp – Easy & Fast
 </div>
 
@@ -35,8 +34,8 @@ button{background:#ff9800;color:#fff;font-size:16px;border:none}
 <div class="total-box">
 <p>Subtotal: ₹<span id="subtotal">0</span></p>
 <p>Delivery: ₹<span id="delivery">50</span></p>
-<h3>Total: ₹<span id="total">0</span></h3>
 <p id="freeMsg"></p>
+<h3>Total: ₹<span id="total">0</span></h3>
 
 <input id="name" placeholder="Your Name">
 <input id="mobile" placeholder="Mobile Number">
@@ -47,70 +46,109 @@ button{background:#ff9800;color:#fff;font-size:16px;border:none}
 
 <script>
 const deliveryCharge = 50;
-const freeLimit = 399;
+const freeDeliveryAbove = 399;
 
 const products = [
-{name:"Drumstick", weight:"300gm", price:60, img:"Cleaned & Chopped Drumstick.png"},
-{name:"Potato", weight:"1kg", price:60, img:"Potato.png"},
-{name:"Onion", weight:"1kg", price:40, img:"Onion.png"},
-{name:"Tomato", weight:"500gm", price:30, img:"Tomato.png"},
-{name:"Lemon", weight:"3 pcs", price:20, img:"Lemon.jpg"},
-{name:"Methi", weight:"300gm", price:60, img:"Cleaned methi.png"},
-{name:"French Beans", weight:"300gm", price:60, img:"Cleaned & Chopped French Beans.jpg"},
-{name:"Mixed Pulav Veg", weight:"300gm", price:60, img:"Mixed Pulav Vegetables.png"},
-{name:"Pudina", weight:"300gm", price:20, img:"Cleaned Pudina.jpg"},
-{name:"Palak", weight:"200gm", price:60, img:"Cleaned Palak.png"},
-{name:"Coriander", weight:"100gm", price:20, img:"Cleaned coriander.png"},
-{name:"Capsicum Green", weight:"300gm", price:60, img:"Cleaned & Chopped Capsicum Green.jpg"},
-{name:"Red Pumpkin", weight:"300gm", price:60, img:"Cleaned and cut Red Pumpkin.png"},
-{name:"Sponge Gourd", weight:"300gm", price:60, img:"Cleaned & Cut Sponge Gourd.jpg"},
-{name:"Ridge Gourd", weight:"300gm", price:60, img:"Cleaned & Chopped Ridg Gourd.jpg"},
-{name:"Green Peas", weight:"300gm", price:60, img:"Cleaned & Shelled Green Peas .jpg"},
-{name:"Carrot", weight:"300gm", price:50, img:"Cleaned & Chopped Carrot .png"},
-{name:"Bottle Gourd", weight:"300gm", price:60, img:"Cleaned & Chopped Bottle Gourd.png"},
-{name:"Bitter Gourd", weight:"300gm", price:60, img:"Cleaned & Chopped Bitter Gourd.png"},
-{name:"Cauliflower", weight:"300gm", price:60, img:"Cleaned & Chopped Cauliflower.jpg"},
-{name:"Lady Finger", weight:"300gm", price:50, img:"Cleaned & Chopped Lady Finger .jpg"},
-{name:"Cluster Beans", weight:"300gm", price:60, img:"Cleaned & Chopped Cluster Beans.jpg"},
-{name:"Fresh Coconut Grated", weight:"200gm", price:60, img:"Fresh coconut Grated.jpg"},
-{name:"Green Chilli", weight:"100gm", price:20, img:"Green Chilli.png"}
+ {name:"Drumstick",weight:"300gm",price:60,img:"images/products/Cleaned & Chopped Drumstick.png"},
+ {name:"Potato",weight:"1kg",price:60,img:"images/products/Potato.png"},
+ {name:"Onion",weight:"1kg",price:40,img:"images/products/Onion.png"},
+ {name:"Tomato",weight:"500gm",price:30,img:"images/products/Tomato.png"},
+ {name:"Lemon",weight:"3 pcs",price:20,img:"images/products/Lemon.jpg"},
+ {name:"Methi",weight:"300gm",price:60,img:"images/products/Cleaned methi.png"},
+ {name:"French Beans",weight:"300gm",price:60,img:"images/products/Cleaned & Chopped French Beans.jpg"},
+ {name:"Mixed Pulav Veg",weight:"300gm",price:60,img:"images/products/Mixed Pulav Vegetables.png"},
+ {name:"Pudina",weight:"300gm",price:20,img:"images/products/Cleaned Pudina.jpg"},
+ {name:"Palak",weight:"200gm",price:60,img:"images/products/Cleaned Palak.png"},
+ {name:"Coriander",weight:"100gm",price:20,img:"images/products/Cleaned coriander.png"},
+ {name:"Capsicum Green",weight:"300gm",price:60,img:"images/products/Cleaned & Chopped Capsicum Green.jpg"},
+ {name:"Red Pumpkin",weight:"300gm",price:60,img:"images/products/Cleaned and cut Red Pumpkin.png"},
+ {name:"Sponge Gourd",weight:"300gm",price:60,img:"images/products/Cleaned & Cut Sponge Gourd.jpg"},
+ {name:"Ridge Gourd",weight:"300gm",price:60,img:"images/products/Cleaned & Chopped Ridge Gourd.jpg"},
+ {name:"Green Peas",weight:"300gm",price:60,img:"images/products/Cleaned & Shelled Green Peas.jpg"},
+ {name:"Carrot",weight:"300gm",price:50,img:"images/products/Cleaned & Chopped Carrot.png"},
+ {name:"Bottle Gourd",weight:"300gm",price:60,img:"images/products/Cleaned & Chopped Bottle Gourd.png"},
+ {name:"Bitter Gourd",weight:"300gm",price:60,img:"images/products/Cleaned & Chopped Bitter Gourd.png"},
+ {name:"Cauliflower",weight:"300gm",price:60,img:"images/products/Cleaned & Chopped Cauliflower.jpg"},
+ {name:"Lady Finger",weight:"300gm",price:50,img:"images/products/Cleaned & Chopped Lady Finger.jpg"},
+ {name:"Cluster Beans",weight:"300gm",price:60,img:"images/products/Cleaned & Chopped Cluster Beans.jpg"},
+ {name:"Fresh Coconut Grated",weight:"200gm",price:60,img:"images/products/Fresh coconut Grated.jpg"},
+ {name:"Green Chilli",weight:"100gm",price:20,img:"images/products/Green Chilli.png"}
 ];
 
 const box = document.getElementById("products");
 
 products.forEach((p,i)=>{
-box.innerHTML += `
-<div class="product">
-<img src="images/products/${p.img}">
-<div>
-<b>${p.name}</b><br>
-${p.weight} – ₹${p.price}
-</div>
-<input class="qty" type="number" min="0" value="0" data-i="${i}" onchange="calc()">
-</div>`;
+ box.innerHTML += `
+ <div class="product">
+   <img src="${p.img}">
+   <div>
+     <b>${p.name}</b><br>
+     ${p.weight} – ₹${p.price}
+   </div>
+   <input type="number" min="0" value="0" class="qty" data-i="${i}" onchange="calc()">
+ </div>`;
 });
 
 function calc(){
-let subtotal = 0;
-document.querySelectorAll(".qty").forEach(q=>{
-subtotal += q.value * products[q.dataset.i].price;
-});
+ let subtotal = 0;
+ document.querySelectorAll(".qty").forEach(q=>{
+   subtotal += q.value * products[q.dataset.i].price;
+ });
 
-let delivery = subtotal >= freeLimit ? 0 : deliveryCharge;
+ let delivery = subtotal >= freeDeliveryAbove ? 0 : deliveryCharge;
 
-document.getElementById("subtotal").innerText = subtotal;
-document.getElementById("delivery").innerText = delivery;
-document.getElementById("total").innerText = subtotal + delivery;
+ document.getElementById("subtotal").innerText = subtotal;
+ document.getElementById("delivery").innerText = delivery;
+ document.getElementById("total").innerText = subtotal + delivery;
 
-document.getElementById("freeMsg").innerHTML =
-subtotal >= freeLimit
-? "<span class='free'>🎉 Free Delivery Applied</span>"
-: `Add ₹${freeLimit-subtotal} more for FREE delivery`;
+ document.getElementById("freeMsg").innerHTML =
+ subtotal >= freeDeliveryAbove
+ ? "<span class='free'>🎉 Free Delivery Applied</span>"
+ : `Add ₹${freeDeliveryAbove - subtotal} more for FREE delivery`;
 }
 
 function checkout(){
-alert("WhatsApp integration next step 🚀");
+ let name = nameInput();
+ let mobile = mobileInput();
+ let address = addressInput();
+
+ if(!name || !mobile || !address){
+   alert("कृपया नाव, मोबाइल आणि पत्ता भरा");
+   return;
+ }
+
+ let subtotal = 0;
+ let message = "🛒 *VEG X Order*\n\n";
+
+ document.querySelectorAll(".qty").forEach(q=>{
+   if(q.value > 0){
+     let p = products[q.dataset.i];
+     let price = q.value * p.price;
+     subtotal += price;
+     message += `• ${p.name} (${p.weight}) x ${q.value} = ₹${price}\n`;
+   }
+ });
+
+ if(subtotal === 0){
+   alert("कृपया किमान एक item select करा");
+   return;
+ }
+
+ let delivery = subtotal >= freeDeliveryAbove ? 0 : deliveryCharge;
+ let total = subtotal + delivery;
+
+ message += `\nSubtotal: ₹${subtotal}`;
+ message += `\nDelivery: ₹${delivery}`;
+ message += `\n*Total: ₹${total}*\n\n`;
+ message += `👤 ${name}\n📞 ${mobile}\n🏠 ${address}`;
+
+ let whatsappNumber = "917028487215"; // तुझा नंबर
+ window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`,"_blank");
 }
+
+function nameInput(){return document.getElementById("name").value.trim()}
+function mobileInput(){return document.getElementById("mobile").value.trim()}
+function addressInput(){return document.getElementById("address").value.trim()}
 </script>
 
 </body>
