@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VegX – Fresh Cut Vegetables</title>
 
-  <!-- ✅ CSS LINK (हेच तू विचारलेला code) -->
+  <!-- CSS -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -13,26 +13,26 @@
 
   <!-- HEADER -->
   <header class="header">
-    <h1>🥦 VegX</h1>
+    <h1>🥬 VegX</h1>
     <p>Fresh Cleaned & Cut Vegetables</p>
     <p class="whatsapp">📞 WhatsApp Order: <strong>72084 87215</strong></p>
   </header>
 
   <!-- PRODUCT LIST -->
-  <main class="product-list" id="productList">
+  <main class="product-list" id="product-list">
     <!-- Products JS मधून येतील -->
   </main>
 
   <!-- CART / CHECKOUT -->
   <footer class="checkout">
     <div class="total">
-      <span>Total:</span>
-      <strong>₹<span id="totalAmount">0</span></strong>
+      <span>Total :</span>
+      <strong>₹ <span id="totalAmount">0</span></strong>
     </div>
 
     <p class="min-order">⚠️ Minimum Order ₹399</p>
 
-    <button id="checkoutBtn" class="checkout-btn">
+    <button class="checkout-btn" onclick="placeOrder()">
       WhatsApp वर Order करा
     </button>
 
@@ -41,8 +41,8 @@
     </p>
   </footer>
 
-  <!-- JS FILE -->
-  <script src="js/products.js"></script>
+  <!-- JS -->
+  <script src="js/app.js"></script>
 
 </body>
-</html>
+</html>:
