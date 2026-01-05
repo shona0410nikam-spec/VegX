@@ -1,126 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="mr">
 <head>
-<meta charset="UTF-8">
-<title>VEG X – Cleaned & Chopped Vegetables</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VegX – Fresh Cut Vegetables</title>
 
-<link rel="stylesheet" href="css/style.css">
-
+  <!-- ✅ CSS LINK (हेच तू विचारलेला code) -->
+  <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
-<header>VEG X – Cleaned & Chopped Vegetables</header>
+  <!-- HEADER -->
+  <header class="header">
+    <h1>🥦 VegX</h1>
+    <p>Fresh Cleaned & Cut Vegetables</p>
+    <p class="whatsapp">📞 WhatsApp Order: <strong>72084 87215</strong></p>
+  </header>
 
-<div id="product-list"></div>
+  <!-- PRODUCT LIST -->
+  <main class="product-list" id="productList">
+    <!-- Products JS मधून येतील -->
+  </main>
 
-<div class="cart-summary">
-  <p>Cart Total: ₹ <span id="cartTotal">0</span></p>
-  <p>Delivery: ₹ <span id="deliveryCharges">50</span></p>
-  <p>Total Payable: ₹ <span id="totalPayable">0</span></p>
-</div>
+  <!-- CART / CHECKOUT -->
+  <footer class="checkout">
+    <div class="total">
+      <span>Total:</span>
+      <strong>₹<span id="totalAmount">0</span></strong>
+    </div>
 
-<div class="customer-details">
-  <input type="text" id="custName" placeholder="Your Name">
-  <input type="text" id="custMobile" placeholder="Mobile Number">
-  <input type="text" id="custAddress" placeholder="Address">
-  <select id="paymentMode">
-    <option value="COD">Cash on Delivery</option>
-    <option value="UPI">UPI Payment</option>
-  </select>
-</div>
+    <p class="min-order">⚠️ Minimum Order ₹399</p>
 
-<button class="checkout" onclick="checkout()">Checkout on WhatsApp</button>
+    <button id="checkoutBtn" class="checkout-btn">
+      WhatsApp वर Order करा
+    </button>
 
-<script src="js/products.js"></script>
-<script>
-let cart = [];
-let total = 0;
-let minOrder = 399;
-let deliveryCharge = 50;
+    <p class="payment-info">
+      Payment Options: <strong>COD / UPI</strong>
+    </p>
+  </footer>
 
-function renderProducts(){
-  let html = "";
-  products.forEach((p,i)=>{
-    html += `
-      <div class="product">
-        <img src="images/products/${p.image}" alt="${p.name}">
-        <div class="product-details">
-          <b>${p.name}</b><br>
-          ${p.weight} – ₹${p.price}<br>
-          Qty:
-          <button onclick="changeQty(${i}, -1)">−</button>
-          <input type="number" id="qty${i}" class="qty" value="1" min="1">
-          <button onclick="changeQty(${i}, 1)">+</button>
-        </div>
-        <button class="add-btn" onclick="addToCart(${i})">Add</button>
-      </div>
-    `;
-  });
-  document.getElementById("product-list").innerHTML = html;
-}
-
-function changeQty(i, delta){
-  let qtyInput = document.getElementById("qty"+i);
-  let val = parseInt(qtyInput.value) + delta;
-  if(val < 1) val = 1;
-  qtyInput.value = val;
-}
-
-function addToCart(i){
-  let qty = parseInt(document.getElementById("qty"+i).value);
-  let item = products[i];
-  let cost = item.price * qty;
-  cart.push({name:item.name, weight:item.weight, qty:qty, price:item.price, total:cost});
-  updateCart();
-}
-
-function updateCart(){
-  total = cart.reduce((acc, item) => acc + item.total, 0);
-  let delivery = total >= minOrder ? 0 : deliveryCharge;
-  document.getElementById("cartTotal").innerText = total;
-  document.getElementById("deliveryCharges").innerText = delivery;
-  document.getElementById("totalPayable").innerText = total + delivery;
-}
-
-function checkout(){
-  if(cart.length===0){
-    alert("Cart is empty");
-    return;
-  }
-  const name = document.getElementById("custName").value;
-  const mobile = document.getElementById("custMobile").value;
-  const address = document.getElementById("custAddress").value;
-  const payment = document.getElementById("paymentMode").value;
-
-  if(!name || !mobile || !address){
-    alert("Please fill all details");
-    return;
-  }
-
-  let delivery = total >= minOrder ? 0 : deliveryCharge;
-  let msg = `🛒 VEG X Order
-Customer: ${name}
-Mobile: ${mobile}
-Address: ${address}
-Payment: ${payment}
-
-Order Details:
-`;
-
-  cart.forEach(item=>{
-    msg += `${item.name} ${item.weight} x${item.qty} = ₹${item.total}\n`;
-  });
-
-  msg += `\nCart Total: ₹${total}
-Delivery: ₹${delivery}
-Total Payable: ₹${total + delivery}`;
-
-  window.open("https://wa.me/917208487215?text="+encodeURIComponent(msg));
-}
-
-renderProducts();
-</script>
+  <!-- JS FILE -->
+  <script src="js/products.js"></script>
 
 </body>
 </html>
