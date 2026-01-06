@@ -1,201 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>VEG X – Fresh Vegetables</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VegX – Fresh Vegetables</title>
 
-<style>
-body{
-  margin:0;
-  font-family:Arial, sans-serif;
-  background:#f4f4f4;
-}
-header{
-  background:#2e7d32;
-  color:#fff;
-  padding:14px;
-  text-align:center;
-  font-size:20px;
-  font-weight:bold;
-}
-.product{
-  background:#fff;
-  margin:10px;
-  padding:10px;
-  border-radius:10px;
-  display:flex;
-  gap:10px;
-}
-.product img{
-  width:80px;
-  height:80px;
-  object-fit:cover;
-  border-radius:8px;
-}
-.product-info{
-  flex:1;
-}
-.qty-box{
-  display:flex;
-  align-items:center;
-  gap:6px;
-  margin-top:6px;
-}
-.qty-box button{
-  width:28px;
-  height:28px;
-  border:none;
-  background:#2e7d32;
-  color:#fff;
-  border-radius:50%;
-  font-size:18px;
-}
-.qty-box span{
-  min-width:20px;
-  text-align:center;
-}
-.cart-box, .customer-box{
-  background:#fff;
-  margin:10px;
-  padding:12px;
-  border-radius:10px;
-}
-input, textarea{
-  width:100%;
-  padding:10px;
-  margin-top:8px;
-  border:1px solid #ccc;
-  border-radius:6px;
-}
-.checkout{
-  background:#ff9800;
-  color:#fff;
-  border:none;
-  width:94%;
-  margin:10px;
-  padding:14px;
-  font-size:18px;
-  border-radius:10px;
-}
-.note{
-  color:red;
-  font-size:14px;
-  margin-top:6px;
-}
-</style>
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
 
-<header>🥦 VEG X – Fresh Vegetables</header>
+  <!-- HEADER -->
+  <header>
+    <h1>🥦 VegX</h1>
+    <p>Fresh Cleaned & Cut Vegetables</p>
+    <p>📞 WhatsApp Order: <b>72084 87215</b></p>
+  </header>
 
-<div id="productList"></div>
+  <!-- CUSTOMER DETAILS -->
+  <section class="customer">
+    <input type="text" id="name" placeholder="Customer Name">
+    <input type="tel" id="mobile" placeholder="Mobile Number">
+    <textarea id="address" placeholder="Delivery Address"></textarea>
+  </section>
 
-<div class="cart-box">
-  <b>Cart Total: ₹ <span id="total">0</span></b>
-  <div class="note">Minimum order ₹399 required</div>
-</div>
+  <!-- PRODUCTS -->
+  <section class="products" id="product-list">
+    <!-- Products JS मधून auto येतील -->
+  </section>
 
-<div class="customer-box">
-  <h3>Customer Details</h3>
-  <input id="name" placeholder="Your Name">
-  <input id="mobile" placeholder="Mobile Number">
-  <textarea id="address" placeholder="Delivery Address"></textarea>
+  <!-- FOOTER / CART -->
+  <footer class="cart">
+    <p>Total: ₹<span id="totalAmount">0</span></p>
+    <p class="min">⚠️ Minimum Order ₹399</p>
 
-  <p>
-    <b>Payment Mode:</b><br>
-    <input type="radio" name="pay" value="COD" checked> Cash on Delivery  
-    <input type="radio" name="pay" value="UPI"> UPI
-  </p>
-</div>
+    <button class="checkout" onclick="placeOrder()">
+      Order on WhatsApp
+    </button>
 
-<button class="checkout" onclick="checkout()">Order on WhatsApp</button>
+    <p class="payment">Payment Options: COD / UPI</p>
+  </footer>
 
-<script>
-const products = [
- {name:"Drumstick",weight:"300gm",price:60,img:"Cleaned & Chopped Drumstick.png"},
- {name:"Potato",weight:"1kg",price:40,img:"Potato.png"},
- {name:"Onion",weight:"1kg",price:40,img:"Onion.png"},
- {name:"Tomato",weight:"500gm",price:30,img:"Tomato.png"},
- {name:"Lemon",weight:"3 pcs",price:20,img:"Lemon.jpg"},
- {name:"Methi",weight:"300gm",price:60,img:"Cleaned methi.png"},
- {name:"French Beans",weight:"300gm",price:60,img:"Cleaned & Chopped French Beans.jpg"},
- {name:"Pulav Mix",weight:"300gm",price:60,img:"Mixed Pulav Vegetables.png"},
- {name:"Pudina",weight:"300gm",price:20,img:"Cleaned Pudina.jpg"},
- {name:"Palak",weight:"200gm",price:60,img:"Cleaned Palak.png"},
- {name:"Coriander",weight:"100gm",price:20,img:"Cleaned coriander.png"},
- {name:"Capsicum",weight:"300gm",price:60,img:"Cleaned & Chopped Capsicum Green.jpg"},
- {name:"Red Pumpkin",weight:"300gm",price:60,img:"Cleaned and cut Red Pumpkin.png"},
- {name:"Sponge Gourd",weight:"300gm",price:60,img:"Cleaned & Cut Sponge Gourd.jpg"},
- {name:"Ridge Gourd",weight:"300gm",price:60,img:"Cleaned & Chopped Ridg Gourd.jpg"},
- {name:"Green Peas",weight:"300gm",price:60,img:"Cleaned & Shelled Green Peas .jpg"},
- {name:"Carrot",weight:"300gm",price:50,img:"Cleaned & Chopped Carrot .png"},
- {name:"Bottle Gourd",weight:"300gm",price:60,img:"Cleaned & Chopped Bottle Gourd.png"},
- {name:"Bitter Gourd",weight:"300gm",price:60,img:"Cleaned & Chopped Bitter Gourd.png"},
- {name:"Cauliflower",weight:"300gm",price:60,img:"Cleaned & Chopped Cauliflower.jpg"},
- {name:"Lady Finger",weight:"300gm",price:50,img:"Cleaned & Chopped Lady Finger .jpg"},
- {name:"Cluster Beans",weight:"300gm",price:60,img:"Cleaned & Chopped Cluster Beans.jpg"},
- {name:"Fresh Coconut",weight:"200gm",price:60,img:"Fresh coconut Grated.jpg"},
- {name:"Green Chilli",weight:"100gm",price:20,img:"Green Chilli.png"},
- {name:"Peeled Garlic",weight:"100gm",price:30,img:"Peeled Garlic.png"}
-];
-
-let cart = {};
-let total = 0;
-
-function render(){
- let html="";
- products.forEach((p,i)=>{
-  cart[i]=0;
-  html+=`
-   <div class="product">
-    <img src="images/${p.img}">
-    <div class="product-info">
-     <b>${p.name}</b><br>
-     ${p.weight} – ₹${p.price}
-     <div class="qty-box">
-      <button onclick="changeQty(${i},-1)">−</button>
-      <span id="q${i}">0</span>
-      <button onclick="changeQty(${i},1)">+</button>
-     </div>
-    </div>
-   </div>`;
- });
- document.getElementById("productList").innerHTML=html;
-}
-
-function changeQty(i,val){
- cart[i]=Math.max(0,cart[i]+val);
- document.getElementById("q"+i).innerText=cart[i];
- total=0;
- for(let k in cart) total+=cart[k]*products[k].price;
- document.getElementById("total").innerText=total;
-}
-
-function checkout(){
- if(total<399){ alert("Minimum order ₹399 required"); return; }
- let name=nameEl.value, mobile=mobileEl.value, address=addressEl.value;
- if(!name||!mobile||!address){ alert("Please fill customer details"); return; }
- let pay=document.querySelector('input[name="pay"]:checked').value;
-
- let msg="VEG X Order\n\n";
- for(let i in cart){
-  if(cart[i]>0){
-   msg+=`${products[i].name} x${cart[i]} = ₹${cart[i]*products[i].price}\n`;
-  }
- }
- msg+=`\nTotal: ₹${total}\nPayment: ${pay}\n\nName: ${name}\nMobile: ${mobile}\nAddress: ${address}`;
-
- window.open("https://wa.me/7208487215?text="+encodeURIComponent(msg));
-}
-
-const nameEl=document.getElementById("name");
-const mobileEl=document.getElementById("mobile");
-const addressEl=document.getElementById("address");
-
-render();
-</script>
+  <!-- ONLY ONE JS FILE -->
+  <script src="js/app.js"></script>
 
 </body>
-  </html>
+</html>
