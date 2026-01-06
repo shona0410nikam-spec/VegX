@@ -1,30 +1,48 @@
 const products = [
- { id:"potato", name:"Potato 1 kg", price:40, image:"images/potato.png" },
- { id:"onion", name:"Onion 1 kg", price:40, image:"images/onion.png" },
- { id:"tomato", name:"Tomato 500 g", price:30, image:"images/tomato.png" },
- { id:"carrot", name:"Carrot 300 g", price:50, image:"images/carrot.png" },
- { id:"cabbage", name:"Cabbage 1 pc", price:40, image:"images/cabbage.png" },
- { id:"cauliflower", name:"Cauliflower 1 pc", price:50, image:"images/cauliflower.png" },
- { id:"capsicum", name:"Capsicum 300 g", price:60, image:"images/capsicum.png" },
- { id:"ladyfinger", name:"Lady Finger 300 g", price:50, image:"images/lady-finger.png" },
- { id:"frenchbeans", name:"French Beans 300 g", price:60, image:"images/french-beans.png" },
- { id:"clusterbeans", name:"Cluster Beans 300 g", price:60, image:"images/cluster-beans.png" },
-
- { id:"drumstick", name:"Drumstick 300 g", price:60, image:"images/cleaned-chopped-drumstick.png" },
- { id:"bittergourd", name:"Bitter Gourd 300 g", price:50, image:"images/bitter-gourd.png" },
- { id:"ridgegourd", name:"Ridge Gourd 300 g", price:50, image:"images/ridge-gourd.png" },
- { id:"spongegourd", name:"Sponge Gourd 300 g", price:50, image:"images/sponge-gourd.png" },
- { id:"pumpkin", name:"Pumpkin 500 g", price:40, image:"images/red-pumpkin.png" },
-
- { id:"palak", name:"Palak 300 g", price:30, image:"images/palak.png" },
- { id:"methi", name:"Methi 300 g", price:30, image:"images/methi.png" },
- { id:"coriander", name:"Coriander", price:20, image:"images/coriander.png" },
- { id:"pudina", name:"Pudina", price:20, image:"images/pudina.png" },
-
- { id:"greenchilli", name:"Green Chilli", price:20, image:"images/green-chilli.png" },
- { id:"garlic", name:"Garlic 250 g", price:60, image:"images/peeled-garlic.png" },
- { id:"lemon", name:"Lemon (3 pcs)", price:20, image:"images/lemon.png" },
- { id:"coconut", name:"Fresh Coconut", price:40, image:"images/fresh-coconut.png" },
-
- { id:"pulavmix", name:"Pulav Mix", price:40, image:"images/mixed-pulav-vegetables.png" }
+  { id: 1, name: "Cleaned & Chopped Drumstick", weight: "300gm", price: 60, image: "images/drumstick.png" },
+  { id: 2, name: "Potato", weight: "1kg", price: 40, image: "images/potato.png" },
+  { id: 3, name: "Onion", weight: "1kg", price: 40, image: "images/onion.png" },
+  { id: 4, name: "Tomato", weight: "500gm", price: 30, image: "images/tomato.png" },
+  { id: 5, name: "Lemon", weight: "3 pc", price: 20, image: "images/lemon.jpg" },
+  { id: 6, name: "Cleaned Methi", weight: "300gm", price: 60, image: "images/methi.png" },
+  { id: 7, name: "French Beans (Chopped)", weight: "300gm", price: 60, image: "images/french-beans.jpg" },
+  { id: 8, name: "Mixed Pulav Vegetables", weight: "300gm", price: 60, image: "images/pulav-mix.png" },
+  { id: 9, name: "Cleaned Pudina", weight: "300gm", price: 20, image: "images/pudina.jpg" },
+  { id: 10, name: "Cleaned Palak", weight: "200gm", price: 60, image: "images/palak.png" },
+  { id: 11, name: "Cleaned Coriander", weight: "100gm", price: 20, image: "images/coriander.png" },
+  { id: 12, name: "Capsicum Green (Chopped)", weight: "300gm", price: 60, image: "images/capsicum.jpg" },
+  { id: 13, name: "Red Pumpkin (Cut)", weight: "300gm", price: 60, image: "images/pumpkin.png" },
+  { id: 14, name: "Sponge Gourd (Cut)", weight: "300gm", price: 60, image: "images/sponge-gourd.jpg" },
+  { id: 15, name: "Ridge Gourd (Chopped)", weight: "300gm", price: 60, image: "images/ridge-gourd.jpg" },
+  { id: 16, name: "Green Peas (Shelled)", weight: "300gm", price: 60, image: "images/green-peas.jpg" },
+  { id: 17, name: "Carrot (Chopped)", weight: "300gm", price: 50, image: "images/carrot.png" },
+  { id: 18, name: "Bottle Gourd (Chopped)", weight: "300gm", price: 60, image: "images/bottle-gourd.png" },
+  { id: 19, name: "Bitter Gourd (Chopped)", weight: "300gm", price: 60, image: "images/bitter-gourd.png" },
+  { id: 20, name: "Cauliflower (Chopped)", weight: "300gm", price: 60, image: "images/cauliflower.jpg" },
+  { id: 21, name: "Lady Finger (Chopped)", weight: "300gm", price: 50, image: "images/ladyfinger.jpg" },
+  { id: 22, name: "Cluster Beans (Chopped)", weight: "300gm", price: 60, image: "images/cluster-beans.jpg" },
+  { id: 23, name: "Fresh Coconut Grated", weight: "200gm", price: 60, image: "images/coconut.jpg" },
+  { id: 24, name: "Green Chilli", weight: "100gm", price: 20, image: "images/green-chilli.png" },
+  { id: 25, name: "Peeled Garlic", weight: "100gm", price: 30, image: "images/garlic.png" }
 ];
+
+const productList = document.getElementById("product-list");
+
+products.forEach(product => {
+  const div = document.createElement("div");
+  div.className = "product";
+
+  div.innerHTML = `
+    <img src="${product.image}" alt="${product.name}">
+    <h3>${product.name}</h3>
+    <p>${product.weight}</p>
+    <p>₹${product.price}</p>
+    <div class="qty">
+      <button>-</button>
+      <span>0</span>
+      <button>+</button>
+    </div>
+  `;
+
+  productList.appendChild(div);
+});
