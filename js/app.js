@@ -16,7 +16,7 @@ const products = [
   { id: 15, name: "Ridge Gourd (Chopped)", weight: "300gm", price: 60, image: "images/ridge-gourd.png" },
   { id: 16, name: "Green Peas (Shelled)", weight: "300gm", price: 60, image: "images/green-peas.png" },
   { id: 17, name: "Carrot (Chopped)", weight: "300gm", price: 50, image: "images/carrot.png" },
-  { id: 18, name: "Bottle Gourd (Chopped)", weight: "300gm", price: 60, image: "images/bottle-gourd.png" },
+  { id: 18, name: "Bottle Gourd (Chopped)", weight: "300gm", price: 50, image: "images/bottle-gourd.png" },
   { id: 19, name: "Bitter Gourd (Chopped)", weight: "300gm", price: 60, image: "images/bitter-gourd.png" },
   { id: 20, name: "Cauliflower (Chopped)", weight: "300gm", price: 60, image: "images/cauliflower.png" },
   { id: 21, name: "Lady Finger (Chopped)", weight: "300gm", price: 50, image: "images/lady-finger.png" },
