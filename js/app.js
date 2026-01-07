@@ -1,192 +1,43 @@
 const products = [
-  {
-    id: 1,
-    title: "Potato",
-    desc: "Fresh Potato 1kg",
-    price: 40,
-    image: "./images/potato.png"
-  },
-  {
-    id: 2,
-    title: "Onion",
-    desc: "Fresh Onion 1kg",
-    price: 40,
-    image: "./images/onion.png"
-  },
-  {
-    id: 3,
-    title: "Tomato",
-    desc: "Fresh Tomato 500gm",
-    price: 30,
-    image: "./images/tomato.png"
-  },
-  {
-    id: 4,
-    title: "Carrot",
-    desc: "Cleaned & Chopped 300gm",
-    price: 50,
-    image: "./images/carrot.png"
-  },
-  {
-    id: 5,
-    title: "Cabbage",
-    desc: "Fresh Cabbage",
-    price: 40,
-    image: "./images/cabbage.png"
-  },
-  {
-    id: 6,
-    title: "Capsicum",
-    desc: "Cleaned & Chopped 300gm",
-    price: 60,
-    image: "./images/capsicum.png"
-  },
-  {
-    id: 7,
-    title: "Cauliflower",
-    desc: "Cleaned & Chopped 300gm",
-    price: 60,
-    image: "./images/cauliflower.png"
-  },
-  {
-    id: 8,
-    title: "French Beans",
-    desc: "Cleaned & Chopped 300gm",
-    price: 60,
-    image: "./images/french-beans.png"
-  },
-  {
-    id: 9,
-    title: "Green Peas",
-    desc: "Cleaned & Shelled 300gm",
-    price: 60,
-    image: "./images/green-peas.png"
-  },
-  {
-    id: 10,
-    title: "Fresh Coconut",
-    desc: "Grated Coconut 200gm",
-    price: 60,
-    image: "./images/coconut.png"
-  },
-  {
-    id: 11,
-    title: "Pulav Mix",
-    desc: "Mixed Pulav Vegetables 300gm",
-    price: 60,
-    image: "./images/pulav-mix.png"
-  },
-  {
-    id: 12,
-    title: "Drumstick",
-    desc: "Cleaned & Chopped 300gm",
-    price: 60,
-    image: "./images/drumstick.png"
-  },
-  {
-    id: 13,
-    title: "Methi",
-    desc: "Cleaned Methi 300gm",
-    price: 60,
-    image: "./images/methi.png"
-  },
-  {
-    id: 14,
-    title: "Pudina",
-    desc: "Cleaned Pudina 300gm",
-    price: 20,
-    image: "./images/pudina.png"
-  },
-  {
-    id: 15,
-    title: "Palak",
-    desc: "Cleaned Palak 200gm",
-    price: 60,
-    image: "./images/palak.png"
-  },
-  {
-    id: 16,
-    title: "Coriander",
-    desc: "Cleaned Coriander 100gm",
-    price: 20,
-    image: "./images/coriander.png"
-  },
-  {
-    id: 17,
-    title: "Pumpkin",
-    desc: "Cleaned & Cut Red Pumpkin 300gm",
-    price: 60,
-    image: "./images/pumpkin.png"
-  },
-  {
-    id: 18,
-    title: "Sponge Gourd",
-    desc: "Cleaned & Chopped 300gm",
-    price: 60,
-    image: "./images/sponge-gourd.png"
-  },
-  {
-    id: 19,
-    title: "Ridge Gourd",
-    desc: "Cleaned & Chopped 300gm",
-    price: 60,
-    image: "./images/ridge-gourd.png"
-  },
-  {
-    id: 20,
-    title: "Bottle Gourd",
-    desc: "Cleaned & Chopped 300gm",
-    price: 60,
-    image: "./images/bottle-gourd.png"
-  },
-  {
-    id: 21,
-    title: "Bitter Gourd",
-    desc: "Cleaned & Chopped 300gm",
-    price: 60,
-    image: "./images/bitter-gourd.png"
-  },
-  {
-    id: 22,
-    title: "Lady Finger",
-    desc: "Cleaned & Chopped 300gm",
-    price: 50,
-    image: "./images/lady-finger.png"
-  },
-  {
-    id: 23,
-    title: "Cluster Beans",
-    desc: "Cleaned & Chopped 300gm",
-    price: 60,
-    image: "./images/cluster-beans.png"
-  },
-  {
-    id: 24,
-    title: "Green Chilli",
-    desc: "Fresh Green Chilli 100gm",
-    price: 20,
-    image: "./images/green-chilli.png"
-  },
-  {
-    id: 25,
-    title: "Garlic",
-    desc: "Peeled Garlic 100gm",
-    price: 30,
-    image: "./images/garlic.png"
-  }
+  { name: "Potato", desc: "Fresh Potato 1kg", price: 40, img: "potato.png" },
+  { name: "Onion", desc: "Fresh Onion 1kg", price: 40, img: "onion.png" },
+  { name: "Tomato", desc: "Fresh Tomato 500gm", price: 30, img: "tomato.png" },
+  { name: "Carrot", desc: "Cleaned & Chopped 300gm", price: 50, img: "carrot.png" },
+  { name: "Cabbage", desc: "Fresh Cabbage", price: 40, img: "cabbage.png" },
+  { name: "Capsicum", desc: "Cleaned & Chopped 300gm", price: 60, img: "capsicum.png" },
+  { name: "Cauliflower", desc: "Cleaned & Chopped 300gm", price: 60, img: "cauliflower.png" },
+  { name: "French Beans", desc: "Cleaned & Chopped 300gm", price: 60, img: "french-beans.png" },
+  { name: "Green Peas", desc: "Cleaned & Shelled 300gm", price: 60, img: "green-peas.png" },
+  { name: "Fresh Coconut", desc: "Grated Coconut 200gm", price: 60, img: "coconut.png" },
+  { name: "Pulav Mix", desc: "Mixed Pulav Vegetables 300gm", price: 60, img: "pulav-mix.png" },
+
+  { name: "Drumstick", desc: "Cleaned & Chopped 300gm", price: 60, img: "drumstick.png" },
+  { name: "Methi", desc: "Cleaned Methi 300gm", price: 60, img: "methi.png" },
+  { name: "Pudina", desc: "Cleaned Pudina 300gm", price: 20, img: "pudina.png" },
+  { name: "Palak", desc: "Cleaned Palak 200gm", price: 60, img: "palak.png" },
+  { name: "Coriander", desc: "Cleaned Coriander 100gm", price: 20, img: "coriander.png" },
+  { name: "Pumpkin", desc: "Cleaned & Cut 300gm", price: 60, img: "pumpkin.png" },
+  { name: "Sponge Gourd", desc: "Cleaned & Chopped 300gm", price: 60, img: "sponge-gourd.png" },
+  { name: "Ridge Gourd", desc: "Cleaned & Chopped 300gm", price: 60, img: "ridge-gourd.png" },
+  { name: "Bottle Gourd", desc: "Cleaned & Chopped 300gm", price: 60, img: "bottle-gourd.png" },
+  { name: "Bitter Gourd", desc: "Cleaned & Chopped 300gm", price: 60, img: "bitter-gourd.png" },
+  { name: "Lady Finger", desc: "Cleaned & Chopped 300gm", price: 50, img: "lady-finger.png" },
+  { name: "Cluster Beans", desc: "Cleaned & Chopped 300gm", price: 60, img: "cluster-beans.png" },
+  { name: "Green Chilli", desc: "Fresh Green Chilli 100gm", price: 20, img: "green-chilli.png" },
+  { name: "Garlic", desc: "Peeled Garlic 100gm", price: 30, img: "garlic.png" }
 ];
 
-const productContainer = document.getElementById("product-list");
+const container = document.getElementById("product-list");
 
-products.forEach(product => {
+products.forEach(p => {
   const card = document.createElement("div");
   card.className = "product-card";
 
   card.innerHTML = `
-    <img src="${product.image}" alt="${product.title}">
-    <h3>${product.title}</h3>
-    <p>${product.desc}</p>
-    <div class="price">₹${product.price}</div>
+    <img src="images/${p.img}" alt="${p.name}">
+    <h3>${p.name}</h3>
+    <p>${p.desc}</p>
+    <strong>₹${p.price}</strong>
     <div class="qty">
       <button>-</button>
       <span>0</span>
@@ -194,5 +45,5 @@ products.forEach(product => {
     </div>
   `;
 
-  productContainer.appendChild(card);
+  container.appendChild(card);
 });
