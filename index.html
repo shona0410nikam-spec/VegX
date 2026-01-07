@@ -1,48 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VegX – Fresh Vegetables</title>
-
-  <!-- CSS -->
+  <meta charset="UTF-8">
+  <title>VegX - Fresh Vegetables</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <h1>🥦 VegX</h1>
-    <p>Fresh Cleaned & Cut Vegetables</p>
-    <p>📞 WhatsApp Order: <b>72084 87215</b></p>
-  </header>
+<header>
+  <h1>🥦 VegX</h1>
+  <p>Fresh Cleaned & Cut Vegetables</p>
+  <p>📞 WhatsApp Order: <b>72084 87215</b></p>
+</header>
 
-  <!-- CUSTOMER DETAILS -->
-  <section class="customer">
-    <input type="text" id="name" placeholder="Customer Name">
-    <input type="tel" id="mobile" placeholder="Mobile Number">
-    <textarea id="address" placeholder="Delivery Address"></textarea>
-  </section>
+<section class="customer">
+  <input id="name" placeholder="Customer Name">
+  <input id="mobile" placeholder="Mobile Number">
+  <textarea id="address" placeholder="Delivery Address"></textarea>
 
-  <!-- PRODUCTS -->
-  <section class="products" id="product-list">
-    <!-- Products JS मधून auto येतील -->
-  </section>
+  <p><b>Total: ₹<span id="total">0</span></b></p>
+  <p>⚠️ Minimum Order ₹399</p>
 
-  <!-- FOOTER / CART -->
-  <footer class="cart">
-    <p>Total: ₹<span id="totalAmount">0</span></p>
-    <p class="min">⚠️ Minimum Order ₹399</p>
+  <button onclick="checkout()">Order on WhatsApp</button>
+  <p>Payment Options: COD / UPI</p>
+</section>
 
-    <button class="checkout" onclick="placeOrder()">
-      Order on WhatsApp
-    </button>
+<!-- 🔴 हा section खूप महत्वाचा -->
+<section class="products" id="product-list">
+  <!-- Products JS मधून येतील -->
+</section>
 
-    <p class="payment">Payment Options: COD / UPI</p>
-  </footer>
-
-  <!-- ONLY ONE JS FILE -->
-  <script src="js/app.js"></script>
+<!-- ✅ JS शेवटीच असायलाच हवा -->
+<script src="js/app.js"></script>
 
 </body>
 </html>
