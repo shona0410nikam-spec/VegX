@@ -1,26 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>VegX – Fresh Vegetables</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8">
+<title>VegX</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header class="header">
-  <h1>🥬 VegX</h1>
-  <p>Fresh Cleaned & Chopped Vegetables</p>
-  <p class="phone">📞 Order on WhatsApp: <b>72084 87215</b></p>
-</header>
+<h2 class="title">VegX – Fresh Vegetables</h2>
 
-<main>
-  <!-- ❗ ONLY ONE container -->
-  <div id="product-list" class="product-grid"></div>
-</main>
+<div id="productList" class="products"></div>
 
-<script src="js/app.js"></script>
+<div class="cart">
+  <h3>Cart Total ₹ <span id="cartTotal">0</span></h3>
+</div>
+
+<script src="app.js"></script>
 </body>
 </html>
