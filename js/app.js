@@ -1,52 +1,66 @@
 const products = [
-  { name: "Potato", desc: "Fresh Potato 1kg", price: 40, img: "potato.png" },
-  { name: "Onion", desc: "Fresh Onion 1kg", price: 40, img: "onion.png" },
-  { name: "Tomato", desc: "Fresh Tomato 500gm", price: 30, img: "tomato.png" },
-  { name: "Carrot", desc: "Cleaned & Chopped 300gm", price: 50, img: "carrot.png" },
-  { name: "Cabbage", desc: "Fresh Cabbage", price: 40, img: "cabbage.png" },
-  { name: "Capsicum", desc: "Cleaned & Chopped 300gm", price: 60, img: "capsicum.png" },
-  { name: "Cauliflower", desc: "Cleaned & Chopped 300gm", price: 60, img: "cauliflower.png" },
-  { name: "French Beans", desc: "Cleaned & Chopped 300gm", price: 60, img: "french-beans.png" },
-  { name: "Green Peas", desc: "Cleaned & Shelled 300gm", price: 60, img: "green-peas.png" },
-  { name: "Lady Finger", desc: "Cleaned & Chopped 300gm", price: 50, img: "lady-finger.png" },
-  { name: "Cluster Beans", desc: "Cleaned & Chopped 300gm", price: 60, img: "cluster-beans.png" },
-
-  { name: "Fresh Coconut", desc: "Grated Coconut 200gm", price: 60, img: "fresh-coconut.png" },
-  { name: "Pulav Mix", desc: "Mixed Pulav Vegetables 300gm", price: 60, img: "mixed-pulav-vegetables.png" },
-
-  { name: "Drumstick", desc: "Cleaned & Chopped 300gm", price: 60, img: "cleaned-chopped-drumstick.png" },
-  { name: "Methi", desc: "Cleaned Methi 300gm", price: 60, img: "methi.png" },
-  { name: "Pudina", desc: "Cleaned Pudina 300gm", price: 20, img: "pudina.png" },
-  { name: "Palak", desc: "Cleaned Palak 200gm", price: 60, img: "palak.png" },
-  { name: "Coriander", desc: "Cleaned Coriander 100gm", price: 20, img: "coriander.png" },
-
-  { name: "Red Pumpkin", desc: "Cleaned & Cut 300gm", price: 60, img: "red-pumpkin.png" },
-  { name: "Sponge Gourd", desc: "Cleaned & Chopped 300gm", price: 60, img: "sponge-gourd.png" },
-  { name: "Ridge Gourd", desc: "Cleaned & Chopped 300gm", price: 60, img: "ridge-gourd.png" },
-  { name: "Bottle Gourd", desc: "Cleaned & Chopped 300gm", price: 60, img: "bottle-gourd.png" },
-  { name: "Bitter Gourd", desc: "Cleaned & Chopped 300gm", price: 60, img: "bitter-gourd.png" },
-
-  { name: "Green Chilli", desc: "Fresh Green Chilli 100gm", price: 20, img: "green-chilli.png" },
-  { name: "Garlic", desc: "Peeled Garlic 100gm", price: 30, img: "peeled-garlic.png" }
+ {name:"Potato", price:30, img:"potato.jpg", desc:"Fresh potato"},
+ {name:"Onion", price:35, img:"onion.jpg", desc:"Fresh onion"},
+ {name:"Tomato", price:40, img:"tomato.jpg", desc:"Fresh tomato"},
+ {name:"Carrot", price:50, img:"carrot.jpg", desc:"Fresh carrot"},
+ {name:"Cabbage", price:30, img:"cabbage.jpg", desc:"Fresh cabbage"},
+ {name:"Capsicum", price:60, img:"capsicum.jpg", desc:"Fresh capsicum"},
+ {name:"Cauliflower", price:45, img:"cauliflower.jpg", desc:"Cleaned cauliflower"},
+ {name:"French Bean", price:55, img:"french-bean.jpg", desc:"Fresh beans"},
+ {name:"Green Peas", price:70, img:"green-peas.jpg", desc:"Fresh peas"},
+ {name:"Coconut", price:40, img:"coconut.jpg", desc:"Fresh coconut"},
+ {name:"Pulav Mix", price:80, img:"pulav-mix.jpg", desc:"Ready pulav mix"},
+ {name:"Drumstick", price:60, img:"drumstick.jpg", desc:"Fresh drumstick"},
+ {name:"Grated Coconut", price:50, img:"grated-coconut.jpg", desc:"Grated coconut"},
+ {name:"Pumpkin", price:35, img:"pumpkin.jpg", desc:"Fresh pumpkin"},
+ {name:"Bitter Gourd", price:45, img:"bitter-gourd.jpg", desc:"Fresh bitter gourd"},
+ {name:"Peeled Garlic", price:90, img:"peeled-garlic.jpg", desc:"Peeled garlic"},
 ];
 
-const container = document.getElementById("product-list");
+let cart = [];
+let total = 0;
+let quantities = {};
 
-products.forEach(p => {
-  const card = document.createElement("div");
-  card.className = "product-card";
+const productList = document.getElementById("productList");
 
-  card.innerHTML = `
+products.forEach((p,i)=>{
+  productList.innerHTML += `
+  <div class="product">
     <img src="images/${p.img}" alt="${p.name}">
-    <h3>${p.name}</h3>
+    <h4>${p.name}</h4>
     <p>${p.desc}</p>
-    <strong>₹${p.price}</strong>
-    <div class="qty">
-      <button>-</button>
-      <span>0</span>
-      <button>+</button>
-    </div>
-  `;
+    <p>₹ ${p.price}</p>
 
-  container.appendChild(card);
+    <div class="qty-box">
+      <button onclick="decreaseQty(${i})">−</button>
+      <span id="qty-${i}">1</span>
+      <button onclick="increaseQty(${i})">+</button>
+    </div>
+
+    <button class="add-btn" onclick="addToCart(${i})">Add</button>
+  </div>
+  `;
 });
+
+function increaseQty(i){
+  if(!quantities[i]) quantities[i]=1;
+  quantities[i]++;
+  document.getElementById(`qty-${i}`).innerText = quantities[i];
+}
+
+function decreaseQty(i){
+  if(!quantities[i]) quantities[i]=1;
+  if(quantities[i]>1){
+    quantities[i]--;
+    document.getElementById(`qty-${i}`).innerText = quantities[i];
+  }
+}
+
+function addToCart(i){
+  const qty = quantities[i] || 1;
+  total += products[i].price * qty;
+  document.getElementById("cartTotal").innerText = total;
+
+  quantities[i]=1;
+  document.getElementById(`qty-${i}`).innerText = 1;
+}
