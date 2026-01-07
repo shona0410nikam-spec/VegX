@@ -1,38 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>VegX - Fresh Vegetables</title>
-  <link rel="stylesheet" href="css/style.css">
-</head>
 
+  <!-- CSS -->
+  <link rel="stylesheet" href="./css/style.css">
+</head>
 <body>
 
-<header>
-  <h1>🥦 VegX</h1>
-  <p>Fresh Cleaned & Cut Vegetables</p>
-  <p>📞 WhatsApp Order: <b>72084 87215</b></p>
-</header>
+  <header>
+    <h1>🥬 VegX</h1>
+    <p>Fresh Cleaned & Cut Vegetables</p>
+    <p>📞 WhatsApp Order: <b>72084 87215</b></p>
+  </header>
 
-<section class="customer">
-  <input id="name" placeholder="Customer Name">
-  <input id="mobile" placeholder="Mobile Number">
-  <textarea id="address" placeholder="Delivery Address"></textarea>
+  <!-- Customer Details -->
+  <section class="customer">
+    <input id="name" placeholder="Customer Name">
+    <input id="mobile" placeholder="Mobile Number">
+    <textarea id="address" placeholder="Delivery Address"></textarea>
 
-  <p><b>Total: ₹<span id="total">0</span></b></p>
-  <p>⚠️ Minimum Order ₹399</p>
+    <p><b>Total: ₹<span id="total">0</span></b></p>
+    <p>⚠️ Minimum Order ₹399</p>
 
-  <button onclick="checkout()">Order on WhatsApp</button>
-  <p>Payment Options: COD / UPI</p>
-</section>
+    <button onclick="checkout()">Order on WhatsApp</button>
+    <p>Payment Options: COD / UPI</p>
+  </section>
 
-<!-- 🔴 हा section खूप महत्वाचा -->
-<section class="products" id="product-list">
-  <!-- Products JS मधून येतील -->
-</section>
+  <!-- Products -->
+  <section class="products" id="product-list">
+    <!-- Products JS मधून येतील -->
+  </section>
 
-<!-- ✅ JS शेवटीच असायलाच हवा -->
-<script src="js/app.js"></script>
+  <!-- JS (IMPORTANT: body च्या शेवटीच) -->
+  <script src="./js/app.js"></script>
 
 </body>
 </html>
