@@ -1,85 +1,198 @@
-alert("app.js loaded ✅");
-
-const WHATSAPP_NUMBER = "7208487215";
-const MIN_ORDER = 399;
-
 const products = [
-  { id: 1, name: "Potato", price: 40, image: "./images/potato.png" },
-  { id: 2, name: "Onion", price: 40, image: "./images/onion.png" },
-  { id: 3, name: "Tomato", price: 30, image: "./images/tomato.png" },
-  { id: 4, name: "Carrot", price: 50, image: "./images/carrot.png" },
-  { id: 5, name: "Cabbage", price: 40, image: "./images/cabbage.png" },
-  { id: 6, name: "Capsicum", price: 60, image: "./images/capsicum.png" },
-  { id: 7, name: "Cauliflower", price: 40, image: "./images/cauliflower.png" },
-  { id: 8, name: "French Beans", price: 60, image: "./images/french-beans.png" },
-  { id: 9, name: "Green Peas", price: 60, image: "./images/green-peas.png" },
-  { id: 10, name: "Fresh Coconut", price: 60, image: "./images/fresh-coconut.png" },
-  { id: 11, name: "Pulav Mix", price: 60, image: "./images/mixed-pulav-vegetables.png" }
+  {
+    id: 1,
+    title: "Potato",
+    desc: "Fresh Potato 1kg",
+    price: 40,
+    image: "./images/potato.png"
+  },
+  {
+    id: 2,
+    title: "Onion",
+    desc: "Fresh Onion 1kg",
+    price: 40,
+    image: "./images/onion.png"
+  },
+  {
+    id: 3,
+    title: "Tomato",
+    desc: "Fresh Tomato 500gm",
+    price: 30,
+    image: "./images/tomato.png"
+  },
+  {
+    id: 4,
+    title: "Carrot",
+    desc: "Cleaned & Chopped 300gm",
+    price: 50,
+    image: "./images/carrot.png"
+  },
+  {
+    id: 5,
+    title: "Cabbage",
+    desc: "Fresh Cabbage",
+    price: 40,
+    image: "./images/cabbage.png"
+  },
+  {
+    id: 6,
+    title: "Capsicum",
+    desc: "Cleaned & Chopped 300gm",
+    price: 60,
+    image: "./images/capsicum.png"
+  },
+  {
+    id: 7,
+    title: "Cauliflower",
+    desc: "Cleaned & Chopped 300gm",
+    price: 60,
+    image: "./images/cauliflower.png"
+  },
+  {
+    id: 8,
+    title: "French Beans",
+    desc: "Cleaned & Chopped 300gm",
+    price: 60,
+    image: "./images/french-beans.png"
+  },
+  {
+    id: 9,
+    title: "Green Peas",
+    desc: "Cleaned & Shelled 300gm",
+    price: 60,
+    image: "./images/green-peas.png"
+  },
+  {
+    id: 10,
+    title: "Fresh Coconut",
+    desc: "Grated Coconut 200gm",
+    price: 60,
+    image: "./images/coconut.png"
+  },
+  {
+    id: 11,
+    title: "Pulav Mix",
+    desc: "Mixed Pulav Vegetables 300gm",
+    price: 60,
+    image: "./images/pulav-mix.png"
+  },
+  {
+    id: 12,
+    title: "Drumstick",
+    desc: "Cleaned & Chopped 300gm",
+    price: 60,
+    image: "./images/drumstick.png"
+  },
+  {
+    id: 13,
+    title: "Methi",
+    desc: "Cleaned Methi 300gm",
+    price: 60,
+    image: "./images/methi.png"
+  },
+  {
+    id: 14,
+    title: "Pudina",
+    desc: "Cleaned Pudina 300gm",
+    price: 20,
+    image: "./images/pudina.png"
+  },
+  {
+    id: 15,
+    title: "Palak",
+    desc: "Cleaned Palak 200gm",
+    price: 60,
+    image: "./images/palak.png"
+  },
+  {
+    id: 16,
+    title: "Coriander",
+    desc: "Cleaned Coriander 100gm",
+    price: 20,
+    image: "./images/coriander.png"
+  },
+  {
+    id: 17,
+    title: "Pumpkin",
+    desc: "Cleaned & Cut Red Pumpkin 300gm",
+    price: 60,
+    image: "./images/pumpkin.png"
+  },
+  {
+    id: 18,
+    title: "Sponge Gourd",
+    desc: "Cleaned & Chopped 300gm",
+    price: 60,
+    image: "./images/sponge-gourd.png"
+  },
+  {
+    id: 19,
+    title: "Ridge Gourd",
+    desc: "Cleaned & Chopped 300gm",
+    price: 60,
+    image: "./images/ridge-gourd.png"
+  },
+  {
+    id: 20,
+    title: "Bottle Gourd",
+    desc: "Cleaned & Chopped 300gm",
+    price: 60,
+    image: "./images/bottle-gourd.png"
+  },
+  {
+    id: 21,
+    title: "Bitter Gourd",
+    desc: "Cleaned & Chopped 300gm",
+    price: 60,
+    image: "./images/bitter-gourd.png"
+  },
+  {
+    id: 22,
+    title: "Lady Finger",
+    desc: "Cleaned & Chopped 300gm",
+    price: 50,
+    image: "./images/lady-finger.png"
+  },
+  {
+    id: 23,
+    title: "Cluster Beans",
+    desc: "Cleaned & Chopped 300gm",
+    price: 60,
+    image: "./images/cluster-beans.png"
+  },
+  {
+    id: 24,
+    title: "Green Chilli",
+    desc: "Fresh Green Chilli 100gm",
+    price: 20,
+    image: "./images/green-chilli.png"
+  },
+  {
+    id: 25,
+    title: "Garlic",
+    desc: "Peeled Garlic 100gm",
+    price: 30,
+    image: "./images/garlic.png"
+  }
 ];
 
-let cart = {};
-let totalAmount = 0;
+const productContainer = document.getElementById("product-list");
 
-const productList = document.getElementById("product-list");
-
-products.forEach(p => {
+products.forEach(product => {
   const card = document.createElement("div");
   card.className = "product-card";
 
   card.innerHTML = `
-    <img src="${p.image}" alt="${p.name}">
-    <h3>${p.name}</h3>
-    <p>₹${p.price}</p>
+    <img src="${product.image}" alt="${product.title}">
+    <h3>${product.title}</h3>
+    <p>${product.desc}</p>
+    <div class="price">₹${product.price}</div>
     <div class="qty">
-      <button onclick="updateQty(${p.id}, ${p.price}, -1)">-</button>
-      <span id="qty-${p.id}">0</span>
-      <button onclick="updateQty(${p.id}, ${p.price}, 1)">+</button>
+      <button>-</button>
+      <span>0</span>
+      <button>+</button>
     </div>
   `;
 
-  productList.appendChild(card);
+  productContainer.appendChild(card);
 });
-
-function updateQty(id, price, change) {
-  if (!cart[id]) cart[id] = { qty: 0, price };
-  cart[id].qty += change;
-  if (cart[id].qty < 0) cart[id].qty = 0;
-
-  document.getElementById(`qty-${id}`).innerText = cart[id].qty;
-  calculateTotal();
-}
-
-function calculateTotal() {
-  totalAmount = 0;
-  for (let id in cart) {
-    totalAmount += cart[id].qty * cart[id].price;
-  }
-  document.getElementById("total").innerText = totalAmount;
-}
-
-function checkout() {
-  if (totalAmount < MIN_ORDER) {
-    alert("Minimum order ₹" + MIN_ORDER);
-    return;
-  }
-
-  let name = document.getElementById("name").value;
-  let mobile = document.getElementById("mobile").value;
-  let address = document.getElementById("address").value;
-
-  let message = `VegX Order%0AName: ${name}%0AMobile: ${mobile}%0AAddress: ${address}%0A%0A`;
-
-  for (let id in cart) {
-    if (cart[id].qty > 0) {
-      const p = products.find(x => x.id == id);
-      message += `${p.name} x ${cart[id].qty}%0A`;
-    }
-  }
-
-  message += `%0ATotal: ₹${totalAmount}`;
-
-  window.open(
-    `https://wa.me/91${WHATSAPP_NUMBER}?text=${message}`,
-    "_blank"
-  );
-}
