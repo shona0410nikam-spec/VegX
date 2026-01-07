@@ -1,69 +1,91 @@
-
 const products = [
-  { name:"Potato", desc:"Fresh Potato 1kg", price:30, img:"potato.png" },
-  { name:"Onion", desc:"Fresh Onion 1kg", price:35, img:"onion.png" },
-  { name:"Tomato", desc:"Fresh Tomato 1kg", price:40, img:"tomato.png" },
-  { name:"Carrot", desc:"Fresh Carrot", price:50, img:"carrot.png" },
-  { name:"Cabbage", desc:"Fresh Cabbage", price:30, img:"cabbage.png" },
-  { name:"Capsicum", desc:"Fresh Capsicum", price:60, img:"capsicum.png" },
-  { name:"Cauliflower", desc:"Cleaned Cauliflower", price:45, img:"cauliflower.png" },
-  { name:"French Bean", desc:"Fresh Beans", price:55, img:"french-beans.png" },
-  { name:"Green Peas", desc:"Fresh Peas", price:70, img:"green-peas.png" },
-  { name:"Coconut", desc:"Fresh Coconut", price:40, img:"fresh-coconut.png" },
+  {name:"Potato", price:30, img:"images/potato.png"},
+  {name:"Onion", price:35, img:"images/onion.png"},
+  {name:"Tomato", price:40, img:"images/tomato.png"},
+  {name:"Carrot", price:50, img:"images/carrot.png"},
+  {name:"Cabbage", price:30, img:"images/cabbage.png"},
+  {name:"Capsicum", price:60, img:"images/capsicum.png"},
+  {name:"Cauliflower", price:45, img:"images/cauliflower.png"},
+  {name:"French Bean", price:55, img:"images/french-bean.png"},
+  {name:"Green Peas", price:70, img:"images/green-peas.png"},
+  {name:"Coconut", price:40, img:"images/coconut.png"},
+
+  {name:"Pulav Mix", price:80, img:"images/pulav-mix.png"},
+  {name:"Drumstick", price:60, img:"images/drumstick.png"},
+  {name:"Grated Coconut", price:50, img:"images/grated-coconut.png"},
+  {name:"Pumpkin", price:30, img:"images/pumpkin.png"},
+  {name:"Bitter Gourd", price:45, img:"images/bitter-gourd.png"},
+  {name:"Garlic", price:120, img:"images/garlic.png"},
+  {name:"Ginger", price:80, img:"images/ginger.png"},
+  {name:"Green Chilli", price:40, img:"images/green-chilli.png"},
+  {name:"Coriander", price:20, img:"images/coriander.png"},
+  {name:"Mint", price:20, img:"images/mint.png"},
+  {name:"Beetroot", price:45, img:"images/beetroot.png"},
+  {name:"Radish", price:30, img:"images/radish.png"},
+  {name:"Lemon", price:10, img:"images/lemon.png"},
+  {name:"Spinach", price:25, img:"images/spinach.png"},
+  {name:"Brinjal", price:35, img:"images/brinjal.png"}
 ];
 
-let cartTotal = 0;
+let cart = {};
 
-const list = document.getElementById("product-list");
-const totalSpan = document.getElementById("cart-total");
+const productsDiv = document.getElementById("products");
 
-products.forEach(p => {
-  let qty = 0;
-
-  const card = document.createElement("div");
-  card.className = "product-card";
-
-  card.innerHTML = `
-    <img src="images/${p.img}" alt="${p.name}">
-    <h3>${p.name}</h3>
-    <p>${p.desc}</p>
-    <strong>₹${p.price}</strong>
-
-    <div class="qty">
-      <button>-</button>
-      <span>0</span>
-      <button>+</button>
+products.forEach((p, i) => {
+  productsDiv.innerHTML += `
+    <div class="product">
+      <img src="${p.img}" alt="${p.name}">
+      <h4>${p.name}</h4>
+      <p>₹ ${p.price}</p>
+      <div class="qty-box">
+        <button onclick="changeQty(${i}, -1)">-</button>
+        <span id="qty-${i}">0</span>
+        <button onclick="changeQty(${i}, 1)">+</button>
+      </div>
     </div>
   `;
-
-  const [minus, span, plus] = card.querySelectorAll("button, span");
-
-  plus.onclick = () => {
-    qty++;
-    span.textContent = qty;
-    cartTotal += p.price;
-    totalSpan.textContent = cartTotal;
-  };
-
-  minus.onclick = () => {
-    if(qty > 0){
-      qty--;
-      span.textContent = qty;
-      cartTotal -= p.price;
-      totalSpan.textContent = cartTotal;
-    }
-  };
-
-  list.appendChild(card);
 });
 
-// WhatsApp Checkout
-document.getElementById("checkout").onclick = () => {
-  const name = document.getElementById("cust-name").value;
-  const mobile = document.getElementById("cust-mobile").value;
-  const address = document.getElementById("cust-address").value;
+function changeQty(i, delta) {
+  cart[i] = (cart[i] || 0) + delta;
+  if (cart[i] < 0) cart[i] = 0;
+  document.getElementById(`qty-${i}`).innerText = cart[i];
+  updateTotal();
+}
 
-  const msg = `Order from VegX%0AName: ${name}%0AMobile: ${mobile}%0AAddress: ${address}%0ATotal: ₹${cartTotal}`;
+function updateTotal() {
+  let total = 0;
+  for (let i in cart) {
+    total += cart[i] * products[i].price;
+  }
+  document.getElementById("cartTotal").innerText = total;
+}
 
-  window.open(`https://wa.me/917208487215?text=${msg}`, "_blank");
-};
+function checkout() {
+  const name = document.getElementById("customerName").value;
+  const mobile = document.getElementById("customerMobile").value;
+  const address = document.getElementById("customerAddress").value;
+  const total = document.getElementById("cartTotal").innerText;
+
+  if (!name || !mobile || !address) {
+    alert("Please fill all customer details");
+    return;
+  }
+
+  if (total < 399) {
+    alert("Minimum order value is ₹399");
+    return;
+  }
+
+  let message = `VegX Order\n\nName: ${name}\nMobile: ${mobile}\nAddress: ${address}\n\nOrder:\n`;
+
+  for (let i in cart) {
+    if (cart[i] > 0) {
+      message += `${products[i].name} x ${cart[i]}\n`;
+    }
+  }
+
+  message += `\nTotal: ₹${total}`;
+
+  window.open(`https://wa.me/917208487215?text=${encodeURIComponent(message)}`);
+}
