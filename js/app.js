@@ -25,7 +25,8 @@ const products = [
   {name:"Green Chilli", price:40, img:"images/green-chilli.png"},
   {name:"Coriander", price:20, img:"images/coriander.png"},
   {name:"Mint", price:20, img:"images/pudina.png"},
-  {name:"Spinach", price:25, img:"images/palak.png"}
+  {name:"Spinach", price:25, img:"images/palak.png"},
+  {name:"Methi", price:20, img:"images/methi.png"}
 ];
 
 let cart = {};
@@ -38,7 +39,7 @@ products.forEach((p, i) => {
       <h4>${p.name}</h4>
       <p>₹ ${p.price}</p>
       <div class="qty-box">
-        <button onclick="changeQty(${i}, -1)">-</button>
+        <button onclick="changeQty(${i}, -1)">−</button>
         <span id="qty-${i}">0</span>
         <button onclick="changeQty(${i}, 1)">+</button>
       </div>
