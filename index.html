@@ -1,28 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VegX – Fresh Vegetables</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>VegX - Fresh Vegetables</title>
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <h1>🥦 VegX – Fresh Vegetables</h1>
+<h1>🥦 VegX – Fresh Vegetables</h1>
 
-  <div>
-    <strong>Cart Total: ₹ <span id="cart-total">0</span></strong>
-  </div>
+<div id="product-list"></div>
 
-  <h2>Customer Details</h2>
-  <input type="text" id="name" placeholder="Full Name">
-  <input type="text" id="mobile" placeholder="Mobile Number">
-  <input type="text" id="address" placeholder="Delivery Address">
+<h2>Cart Total: ₹ <span id="cart-total">0</span></h2>
 
-  <div id="products" class="products"></div>
+<h3>Customer Details</h3>
+<input type="text" id="name" placeholder="Full Name">
+<input type="text" id="mobile" placeholder="Mobile Number">
+<textarea id="address" placeholder="Delivery Address"></textarea>
 
-  <button onclick="checkoutWhatsApp()">Checkout on WhatsApp</button>
+<button onclick="checkoutWhatsApp()">Checkout on WhatsApp</button>
 
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
