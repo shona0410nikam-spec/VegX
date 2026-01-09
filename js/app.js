@@ -1,98 +1,128 @@
+/* ===============================
+   VegX – FINAL SCRIPT.JS
+   =============================== */
+
 const products = [
+  { name: "Potato", price: 40, image: "images/potato.png" },
+  { name: "Onion", price: 40, image: "images/onion.png" },
+  { name: "Tomato", price: 30, image: "images/tomato.png" },
+  { name: "Lemon (3 pc)", price: 20, image: "images/lemon.png" },
 
-  // 🥔 Normal Vegetables
-  { name: "Potato", price: 40, img: "images/potato.png" },
-  { name: "Onion", price: 40, img: "images/onion.png" },
-  { name: "Tomato", price: 30, img: "images/tomato.png" },
-  { name: "Lemon", price: 20, img: "images/lemon.png" },
+  { name: "Methi (cleaned)", price: 60, image: "images/methi.png" },
+  { name: "Pudina (cleaned)", price: 20, image: "images/pudina.png" },
+  { name: "Palak (cleaned)", price: 60, image: "images/palak.png" },
+  { name: "Coriander (cleaned)", price: 20, image: "images/coriander.png" },
 
-  // 🌿 Leafy Vegetables (cleaned only)
-  { name: "Methi (cleaned)", price: 60, img: "images/methi.png" },
-  { name: "Pudina (cleaned)", price: 20, img: "images/pudina.png" },
-  { name: "Palak (cleaned)", price: 60, img: "images/palak.png" },
-  { name: "Coriander (cleaned)", price: 20, img: "images/coriander.png" },
+  { name: "Drumstick (cleaned & chopped)", price: 60, image: "images/cleaned-chopped-drumstick.png" },
+  { name: "French Beans (cleaned & chopped)", price: 60, image: "images/frenchbeans.png" },
+  { name: "Capsicum Green (cleaned & chopped)", price: 60, image: "images/capsicum.png" },
+  { name: "Red Pumpkin (cleaned & cut)", price: 60, image: "images/red-pumpkin.png" },
+  { name: "Sponge Gourd (cleaned & cut)", price: 60, image: "images/sponge-gourd.png" },
+  { name: "Ridge Gourd (cleaned & chopped)", price: 60, image: "images/ridge-gourd.png" },
+  { name: "Carrot (cleaned & chopped)", price: 50, image: "images/carrot.png" },
+  { name: "Bottle Gourd (cleaned & chopped)", price: 60, image: "images/bottle-gourd.png" },
+  { name: "Bitter Gourd (cleaned & chopped)", price: 60, image: "images/bitter-gourd.png" },
+  { name: "Cauliflower (cleaned & chopped)", price: 60, image: "images/cauliflower.png" },
+  { name: "Lady Finger (cleaned & chopped)", price: 50, image: "images/lady-finger.png" },
+  { name: "Cluster Beans (cleaned & chopped)", price: 60, image: "images/cluster-beans.png" },
 
-  // 🥕 Cleaned & Chopped Vegetables
-  { name: "Drumstick (cleaned & chopped)", price: 60, img: "images/cleaned-chopped-drumstick.png" },
-  { name: "French Beans (cleaned & chopped)", price: 60, img: "images/frenchbeans.png" },
-  { name: "Capsicum Green (cleaned & chopped)", price: 60, img: "images/capsicum.png" },
-  { name: "Red Pumpkin (cleaned & cut)", price: 60, img: "images/red-pumpkin.png" },
-  { name: "Sponge Gourd (cleaned & cut)", price: 60, img: "images/sponge-gourd.png" },
-  { name: "Ridge Gourd (cleaned & chopped)", price: 60, img: "images/ridge-gourd.png" },
-  { name: "Carrot (cleaned & chopped)", price: 50, img: "images/carrot.png" },
-  { name: "Bottle Gourd (cleaned & chopped)", price: 60, img: "images/bottle-gourd.png" },
-  { name: "Bitter Gourd (cleaned & chopped)", price: 60, img: "images/bitter-gourd.png" },
-  { name: "Cauliflower (cleaned & chopped)", price: 60, img: "images/cauliflower.png" },
-  { name: "Lady Finger (cleaned & chopped)", price: 50, img: "images/lady-finger.png" },
-  { name: "Cluster Beans (cleaned & chopped)", price: 60, img: "images/cluster-beans.png" },
-
-  // 🌱 Special
-  { name: "Green Peas (cleaned & shelled)", price: 60, img: "images/green-peas.png" },
-  { name: "Mixed Pulav Vegetables", price: 60, img: "images/mixed-pulav-vegetables.png" },
-  { name: "Fresh Coconut (grated)", price: 60, img: "images/fresh-coconut.png" },
-  { name: "Green Chilli", price: 20, img: "images/green-chilli.png" },
-  { name: "Garlic (peeled)", price: 30, img: "images/peeled-garlic.png" }
-
+  { name: "Green Peas (cleaned & shelled)", price: 60, image: "images/green-peas.png" },
+  { name: "Mixed Pulav Vegetables", price: 60, image: "images/mixed-pulav-vegetables.png" },
+  { name: "Fresh Coconut (grated)", price: 60, image: "images/fresh-coconut.png" },
+  { name: "Green Chilli", price: 20, image: "images/green-chilli.png" },
+  { name: "Garlic (peeled)", price: 30, image: "images/peeled-garlic.png" }
 ];
 
-let cart = {};
+let cart = [];
+
+/* ---------- Render Products ---------- */
 const productsDiv = document.getElementById("products");
 
-products.forEach((p, i) => {
+products.forEach((p, index) => {
   productsDiv.innerHTML += `
     <div class="product">
-      <img src="${p.img}" alt="${p.name}">
+      <img src="${p.image}" alt="${p.name}">
       <h4>${p.name}</h4>
       <p>₹ ${p.price}</p>
       <div class="qty-box">
-        <button onclick="changeQty(${i}, -1)">−</button>
-        <span id="qty-${i}">0</span>
-        <button onclick="changeQty(${i}, 1)">+</button>
+        <button onclick="changeQty(${index}, -1)">-</button>
+        <span id="qty-${index}">0</span>
+        <button onclick="changeQty(${index}, 1)">+</button>
       </div>
     </div>
   `;
 });
 
-function changeQty(i, delta) {
-  cart[i] = (cart[i] || 0) + delta;
-  if (cart[i] < 0) cart[i] = 0;
-  document.getElementById(`qty-${i}`).innerText = cart[i];
-  updateTotal();
-}
+/* ---------- Quantity Change ---------- */
+function changeQty(index, delta) {
+  const qtySpan = document.getElementById(`qty-${index}`);
+  let qty = parseInt(qtySpan.innerText) + delta;
+  if (qty < 0) qty = 0;
+  qtySpan.innerText = qty;
 
-function updateTotal() {
-  let total = 0;
-  for (let i in cart) {
-    total += cart[i] * products[i].price;
+  const product = products[index];
+  const existing = cart.find(item => item.name === product.name);
+
+  if (existing) {
+    existing.qty = qty;
+    if (qty === 0) {
+      cart = cart.filter(item => item.name !== product.name);
+    }
+  } else if (qty > 0) {
+    cart.push({ ...product, qty });
   }
-  document.getElementById("cartTotal").innerText = total;
+
+  updateCartTotal();
 }
 
-function checkout() {
-  const name = document.getElementById("customerName").value.trim();
-  const mobile = document.getElementById("customerMobile").value.trim();
-  const address = document.getElementById("customerAddress").value.trim();
-  const total = Number(document.getElementById("cartTotal").innerText);
+/* ---------- Cart Total ---------- */
+function updateCartTotal() {
+  let total = 0;
+  cart.forEach(item => {
+    total += item.price * item.qty;
+  });
+  document.getElementById("cart-total").innerText = total;
+}
+
+/* ---------- WhatsApp Checkout ---------- */
+function checkoutWhatsApp() {
+  const name = document.getElementById("name").value.trim();
+  const mobile = document.getElementById("mobile").value.trim();
+  const address = document.getElementById("address").value.trim();
 
   if (!name || !mobile || !address) {
     alert("Please fill all customer details");
     return;
   }
 
-  if (total < 399) {
-    alert("Minimum order value is ₹399");
+  if (cart.length === 0) {
+    alert("Cart is empty");
     return;
   }
 
-  let msg = `VegX Order%0AName: ${name}%0AMobile: ${mobile}%0AAddress: ${address}%0A%0AOrder:%0A`;
+  let orderText = "";
+  let total = 0;
 
-  for (let i in cart) {
-    if (cart[i] > 0) {
-      msg += `${products[i].name} x ${cart[i]}%0A`;
-    }
+  cart.forEach(item => {
+    orderText += `${item.name} x ${item.qty}\n`;
+    total += item.price * item.qty;
+  });
+
+  if (total < 399) {
+    alert("Minimum order value ₹399");
+    return;
   }
 
-  msg += `%0ATotal: ₹${total}`;
+  const message =
+`VegX Order
+Name: ${name}
+Mobile: ${mobile}
+Address: ${address}
 
-  window.open(`https://wa.me/917208487215?text=${msg}`, "_blank");
+Order:
+${orderText}
+Total: ₹${total}`;
+
+  const url = `https://wa.me/917208487215?text=${encodeURIComponent(message)}`;
+  window.open(url, "_blank");
 }
