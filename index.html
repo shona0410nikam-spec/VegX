@@ -1,25 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>VegX - Fresh Vegetables</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>VegX – Fresh Vegetables</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
 <h1>🥦 VegX – Fresh Vegetables</h1>
 
-<div id="product-list"></div>
-
 <h2>Cart Total: ₹ <span id="cart-total">0</span></h2>
+
+<div id="product-list"></div>
 
 <h3>Customer Details</h3>
 <input type="text" id="name" placeholder="Full Name">
 <input type="text" id="mobile" placeholder="Mobile Number">
-<textarea id="address" placeholder="Delivery Address"></textarea>
+<textarea id="address" placeholder placeholder="Delivery Address"></textarea>
 
-<button onclick="checkoutWhatsApp()">Checkout on WhatsApp</button>
+<button class="checkout-btn" onclick="checkoutWhatsApp()">
+  Checkout on WhatsApp
+</button>
+
+<p class="note">* Minimum order value ₹399</p>
 
 <script src="script.js"></script>
 </body>
