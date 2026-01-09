@@ -1,8 +1,32 @@
 const productsData = [
-  { id: 1, name: "Tomato", price: 40, img: "images/tomato.png" },
-  { id: 2, name: "Potato", price: 30, img: "images/potato.png" },
-  { id: 3, name: "Onion", price: 35, img: "images/onion.png" },
-  { id: 4, name: "Cabbage", price: 25, img: "images/cabbage.png" }
+  {
+    id: 1,
+    name: "Onion",
+    desc: "Cleaned & Chopped",
+    price: 35,
+    img: "images/onion.png"
+  },
+  {
+    id: 2,
+    name: "Potato",
+    desc: "Cleaned & Chopped",
+    price: 30,
+    img: "images/potato.png"
+  },
+  {
+    id: 3,
+    name: "Tomato",
+    desc: "Cleaned & Chopped",
+    price: 40,
+    img: "images/tomato.png"
+  },
+  {
+    id: 4,
+    name: "Cabbage",
+    desc: "Cleaned & Chopped",
+    price: 25,
+    img: "images/cabbage.png"
+  }
 ];
 
 let cart = {};
@@ -18,10 +42,11 @@ function loadProducts() {
       <div class="product">
         <img src="${p.img}" alt="${p.name}">
         <h3>${p.name}</h3>
+        <div class="desc">${p.desc}</div>
         <p>₹ ${p.price} / kg</p>
 
         <div class="qty">
-          <button onclick="updateQty(${p.id}, -1)">-</button>
+          <button onclick="updateQty(${p.id}, -1)">−</button>
           <span id="qty-${p.id}">0</span>
           <button onclick="updateQty(${p.id}, 1)">+</button>
         </div>
@@ -38,19 +63,17 @@ function updateQty(id, change) {
 
 function updateTotal() {
   let total = 0;
-
   productsData.forEach(p => {
     total += cart[p.id] * p.price;
   });
-
   document.getElementById("cartTotal").innerText = total;
 }
 
 function checkout() {
-  const name = document.getElementById("customerName").value;
-  const mobile = document.getElementById("customerMobile").value;
-  const address = document.getElementById("customerAddress").value;
-  const slot = document.getElementById("deliverySlot").value;
+  const name = customerName.value;
+  const mobile = customerMobile.value;
+  const address = customerAddress.value;
+  const slot = deliverySlot.value;
 
   let total = 0;
   let orderText = "";
@@ -68,21 +91,19 @@ function checkout() {
   }
 
   const message =
-`New VegX Order
+`VegX Order
 Name: ${name}
 Mobile: ${mobile}
 Address: ${address}
 
-Order:
 ${orderText}
-
 Delivery Slot: ${slot}
 Total: ₹${total}`;
 
-  const whatsappUrl =
-    "https://wa.me/917208487215?text=" + encodeURIComponent(message);
-
-  window.open(whatsappUrl, "_blank");
+  window.open(
+    "https://wa.me/91XXXXXXXXXX?text=" + encodeURIComponent(message),
+    "_blank"
+  );
 }
 
 loadProducts();
