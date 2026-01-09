@@ -1,22 +1,45 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 10px;
+}
+
 .products {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 12px;
+  margin-top: 20px;
 }
 
 .product {
   border: 1px solid #ccc;
   padding: 8px;
   text-align: center;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .product img {
   width: 80px;
   height: auto;
+  margin-bottom: 6px;
 }
 
 .qty-box {
   display: flex;
   justify-content: center;
   gap: 8px;
+  margin-top: 6px;
+}
+
+.qty-box button {
+  padding: 2px 8px;
+  cursor: pointer;
+}
+
+input {
+  margin: 4px 0;
+  padding: 6px;
+  width: calc(100% - 14px);
+  max-width: 300px;
+  display: block;
 }
