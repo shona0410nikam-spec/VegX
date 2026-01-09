@@ -36,11 +36,10 @@ const productsDiv = document.getElementById("products");
 products.forEach((p, i) => {
   productsDiv.innerHTML += `
     <div class="product">
-      <img src="${p.image}">
+      <img src="${p.image}" alt="${p.name}">
       <h4>${p.name}</h4>
       <small>${p.weight}</small>
       <p>₹${p.price}</p>
-
       <div class="qty-box">
         <button onclick="updateQty(${i}, -1)">-</button>
         <span id="qty-${i}">0</span>
@@ -57,7 +56,6 @@ function updateQty(i, change) {
   qtyEl.innerText = qty;
 
   let item = cart.find(x => x.name === products[i].name);
-
   if (item) {
     item.qty = qty;
     if (qty === 0) cart = cart.filter(x => x.qty > 0);
@@ -79,27 +77,21 @@ function checkoutWhatsApp() {
   const address = document.getElementById("address").value;
 
   if (!name || !mobile || !address) {
-    alert("Customer details fill करा");
+    alert("Please fill customer details");
     return;
   }
 
   let total = cart.reduce((s, x) => s + x.price * x.qty, 0);
-
   if (total < 399) {
     alert("Minimum order ₹399");
     return;
   }
 
   let msg = `VegX Order\nName: ${name}\nMobile: ${mobile}\nAddress: ${address}\n\nOrder:\n`;
-
   cart.forEach(x => {
     msg += `${x.name} (${x.weight}) x ${x.qty}\n`;
   });
-
   msg += `\nTotal: ₹${total}`;
 
-  window.open(
-    `https://wa.me/917208487215?text=${encodeURIComponent(msg)}`,
-    "_blank"
-  );
+  window.open(`https://wa.me/917208487215?text=${encodeURIComponent(msg)}`, "_blank");
 }
