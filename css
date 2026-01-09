@@ -1,45 +1,30 @@
 body {
-  font-family: Arial, sans-serif;
-  margin: 10px;
+    font-family: Arial, sans-serif;
+    padding: 10px;
 }
 
-.products {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 12px;
-  margin-top: 20px;
+#product-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
 }
 
 .product {
-  border: 1px solid #ccc;
-  padding: 8px;
-  text-align: center;
-  border-radius: 6px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
 }
 
 .product img {
-  width: 80px;
-  height: auto;
-  margin-bottom: 6px;
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
 }
 
-.qty-box {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 6px;
-}
-
-.qty-box button {
-  padding: 2px 8px;
-  cursor: pointer;
-}
-
-input {
-  margin: 4px 0;
-  padding: 6px;
-  width: calc(100% - 14px);
-  max-width: 300px;
-  display: block;
+button {
+    background: green;
+    color: white;
+    padding: 8px;
+    border: none;
+    cursor: pointer;
 }
