@@ -4,40 +4,45 @@
   <meta charset="UTF-8" />
   <title>VegX – Fresh Vegetables</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="style.css" />
+
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
-<header class="header">
-  <h1>VegX – Fresh Vegetables</h1>
-  <div class="cart">
-    Cart Total: ₹ <span id="cartTotal">0</span>
+  <header class="header">
+    <h1>🥦 VegX – Fresh Vegetables</h1>
+    <div class="cart">
+      Cart Total: ₹ <span id="cartTotal">0</span>
+    </div>
+  </header>
+
+  <!-- PRODUCTS -->
+  <div id="products" class="products"></div>
+
+  <!-- CHECKOUT -->
+  <div class="checkout">
+    <h2>Customer Details</h2>
+
+    <input type="text" id="customerName" placeholder="Full Name" />
+    <input type="tel" id="customerMobile" placeholder="Mobile Number" />
+    <textarea id="customerAddress" placeholder="Delivery Address"></textarea>
+
+    <label class="slot">
+      Delivery Slot:
+      <select id="deliverySlot">
+        <option value="Tomorrow 12 PM – 3 PM">
+          Tomorrow (12 PM – 3 PM)
+        </option>
+      </select>
+    </label>
+
+    <button class="checkout-btn" onclick="checkout()">
+      Checkout on WhatsApp
+    </button>
+
+    <p class="note">* Minimum order value ₹399</p>
   </div>
-</header>
 
-<div id="products" class="products"></div>
-
-<div class="checkout">
-  <h2>Customer Details</h2>
-
-  <input type="text" id="customerName" placeholder="Full Name">
-  <input type="tel" id="customerMobile" placeholder="Mobile Number">
-  <textarea id="customerAddress" placeholder="Delivery Address"></textarea>
-
-  <label class="slot">
-    Delivery Slot:
-    <select id="deliverySlot">
-      <option>Tomorrow (12 PM – 3 PM)</option>
-    </select>
-  </label>
-
-  <button class="checkout-btn" onclick="checkout()">
-    Checkout on WhatsApp
-  </button>
-
-  <p class="note">* Minimum order value ₹399</p>
-</div>
-
-<script src="script.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
