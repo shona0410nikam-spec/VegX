@@ -1,32 +1,33 @@
 const products = [
-  { name: "Potato", price: 40, image: "images/potato.png" },
-  { name: "Onion", price: 40, image: "images/onion.png" },
-  { name: "Tomato", price: 30, image: "images/tomato.png" },
-  { name: "Lemon", price: 20, image: "images/lemon.png" },
+  { name: "Potato", weight: "1kg", price: 40, image: "images/potato.png" },
+  { name: "Onion", weight: "1kg", price: 40, image: "images/onion.png" },
+  { name: "Tomato", weight: "500gm", price: 30, image: "images/tomato.png" },
+  { name: "Lemon", weight: "3 pcs", price: 20, image: "images/lemon.png" },
 
-  { name: "Methi", price: 60, image: "images/methi.png" },
-  { name: "Pudina", price: 20, image: "images/pudina.png" },
-  { name: "Palak", price: 60, image: "images/palak.png" },
-  { name: "Coriander", price: 20, image: "images/coriander.png" },
+  { name: "Cleaned Methi", weight: "300gm", price: 60, image: "images/methi.png" },
+  { name: "Cleaned Pudina", weight: "300gm", price: 20, image: "images/pudina.png" },
+  { name: "Cleaned Palak", weight: "200gm", price: 60, image: "images/palak.png" },
+  { name: "Cleaned Coriander", weight: "100gm", price: 20, image: "images/coriander.png" },
 
-  { name: "Drumstick", price: 60, image: "images/cleaned-chopped-drumstick.png" },
-  { name: "French Beans", price: 60, image: "images/french-beans.png" },
-  { name: "Capsicum", price: 60, image: "images/capsicum.png" },
-  { name: "Red Pumpkin", price: 60, image: "images/red-pumpkin.png" },
-  { name: "Sponge Gourd", price: 60, image: "images/sponge-gourd.png" },
-  { name: "Ridge Gourd", price: 60, image: "images/ridge-gourd.png" },
-  { name: "Carrot", price: 50, image: "images/carrot.png" },
-  { name: "Bottle Gourd", price: 60, image: "images/bottle-gourd.png" },
-  { name: "Bitter Gourd", price: 60, image: "images/bitter-gourd.png" },
-  { name: "Cauliflower", price: 60, image: "images/cauliflower.png" },
-  { name: "Lady Finger", price: 50, image: "images/lady-finger.png" },
-  { name: "Cluster Beans", price: 60, image: "images/cluster-beans.png" },
+  { name: "Cleaned & Chopped Drumstick", weight: "300gm", price: 60, image: "images/cleaned-chopped-drumstick.png" },
+  { name: "Cleaned & Chopped French Beans", weight: "300gm", price: 60, image: "images/french-beans.png" },
+  { name: "Cleaned & Chopped Capsicum (Green)", weight: "300gm", price: 60, image: "images/capsicum.png" },
+  { name: "Cleaned & Cut Red Pumpkin", weight: "300gm", price: 60, image: "images/red-pumpkin.png" },
+  { name: "Cleaned & Cut Sponge Gourd", weight: "300gm", price: 60, image: "images/sponge-gourd.png" },
+  { name: "Cleaned & Chopped Ridge Gourd", weight: "300gm", price: 60, image: "images/ridge-gourd.png" },
 
-  { name: "Green Peas", price: 60, image: "images/green-peas.png" },
-  { name: "Mixed Pulav Vegetables", price: 60, image: "images/mixed-pulav-vegetables.png" },
-  { name: "Fresh Coconut (Grated)", price: 60, image: "images/fresh-coconut.png" },
-  { name: "Green Chilli", price: 20, image: "images/green-chilli.png" },
-  { name: "Garlic", price: 30, image: "images/peeled-garlic.png" }
+  { name: "Cleaned & Shelled Green Peas", weight: "300gm", price: 60, image: "images/green-peas.png" },
+  { name: "Cleaned & Chopped Carrot", weight: "300gm", price: 50, image: "images/carrot.png" },
+  { name: "Cleaned & Chopped Bottle Gourd", weight: "300gm", price: 60, image: "images/bottle-gourd.png" },
+  { name: "Cleaned & Chopped Bitter Gourd", weight: "300gm", price: 60, image: "images/bitter-gourd.png" },
+  { name: "Cleaned & Chopped Cauliflower", weight: "300gm", price: 60, image: "images/cauliflower.png" },
+  { name: "Cleaned & Chopped Lady Finger", weight: "300gm", price: 50, image: "images/lady-finger.png" },
+  { name: "Cleaned & Chopped Cluster Beans", weight: "300gm", price: 60, image: "images/cluster-beans.png" },
+
+  { name: "Mixed Pulav Vegetables", weight: "300gm", price: 60, image: "images/mixed-pulav-vegetables.png" },
+  { name: "Fresh Coconut (Grated)", weight: "200gm", price: 60, image: "images/fresh-coconut.png" },
+  { name: "Green Chilli", weight: "100gm", price: 20, image: "images/green-chilli.png" },
+  { name: "Peeled Garlic", weight: "100gm", price: 30, image: "images/peeled-garlic.png" }
 ];
 
 let cart = [];
@@ -43,7 +44,8 @@ function renderProducts() {
       <div class="product">
         <img src="${p.image}" alt="${p.name}">
         <h3>${p.name}</h3>
-        <p>₹${p.price}</p>
+        <p class="weight">${p.weight}</p>
+        <p class="price">₹${p.price}</p>
         <button onclick="addToCart(${i})">Add</button>
       </div>
     `;
@@ -66,7 +68,7 @@ function renderCart() {
   let total = 0;
 
   cart.forEach(item => {
-    cartDiv.innerHTML += `<p>${item.name} - ₹${item.price}</p>`;
+    cartDiv.innerHTML += `<p>${item.name} (${item.weight}) - ₹${item.price}</p>`;
     total += item.price;
   });
 
@@ -77,10 +79,8 @@ function renderCart() {
    WHATSAPP CHECKOUT
 ===================== */
 function checkoutWhatsApp() {
-  const total = cart.reduce((sum, p) => sum + p.price, 0);
-
-  if (total < 399) {
-    alert("Minimum order ₹399");
+  if (cart.length === 0) {
+    alert("Cart is empty");
     return;
   }
 
@@ -93,21 +93,24 @@ function checkoutWhatsApp() {
     return;
   }
 
-  let msg = `VegX Order\n\n`;
-  msg += `Name: ${name}\n`;
-  msg += `Mobile: ${mobile}\n`;
-  msg += `Address: ${address}\n\nItems:\n`;
+  let message = `🛒 *VegX Order*\n\n`;
+  message += `👤 Name: ${name}\n`;
+  message += `📞 Mobile: ${mobile}\n`;
+  message += `📍 Address: ${address}\n\n`;
+  message += `🧾 Items:\n`;
 
-  cart.forEach(p => {
-    msg += `${p.name} - ₹${p.price}\n`;
+  let total = 0;
+  cart.forEach(item => {
+    message += `• ${item.name} (${item.weight}) - ₹${item.price}\n`;
+    total += item.price;
   });
 
-  msg += `\nTotal: ₹${total}`;
+  message += `\n💰 *Total: ₹${total}*`;
 
-  const phone = "917208487215";
-  const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+  const whatsappNumber = "917208487215"; // ✅ YOUR NUMBER
+  const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
 
-  window.location.href = url;
+  window.open(url, "_blank");
 }
 
 /* =====================
