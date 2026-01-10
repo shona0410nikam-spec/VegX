@@ -1,17 +1,32 @@
 const products = [
-  {name:"Potato", desc:"Fresh", weight:"1kg", price:40, image:"potato.png"},
-  {name:"Onion", desc:"Fresh", weight:"1kg", price:40, image:"onion.png"},
-  {name:"Tomato", desc:"Fresh", weight:"500gm", price:30, image:"tomato.png"},
-  {name:"Lemon", desc:"Fresh", weight:"3 pc", price:20, image:"lemon.png"},
-  {name:"Methi", desc:"Cleaned", weight:"300gm", price:60, image:"methi.png"},
-  {name:"Pudina", desc:"Cleaned", weight:"300gm", price:20, image:"pudina.png"},
-  {name:"Palak", desc:"Cleaned", weight:"200gm", price:60, image:"palak.png"},
-  {name:"Coriander", desc:"Cleaned", weight:"100gm", price:20, image:"coriander.png"},
-  {name:"Drumstick", desc:"Cleaned & Chopped", weight:"300gm", price:60, image:"cleaned-chopped-drumstick.png"},
-  {name:"French Beans", desc:"Cleaned & Chopped", weight:"300gm", price:60, image:"french-beans.png"},
-  {name:"Capsicum", desc:"Cleaned & Chopped", weight:"300gm", price:60, image:"capsicum.png"},
-  {name:"Carrot", desc:"Cleaned & Chopped", weight:"300gm", price:50, image:"carrot.png"},
-  {name:"Cauliflower", desc:"Cleaned & Chopped", weight:"300gm", price:60, image:"cauliflower.png"}
+  { name:"Potato", price:40 },
+  { name:"Onion", price:40 },
+  { name:"Tomato", price:30 },
+  { name:"Lemon", price:20 },
+
+  { name:"Methi", price:60 },
+  { name:"Pudina", price:20 },
+  { name:"Palak", price:60 },
+  { name:"Coriander", price:20 },
+
+  { name:"Drumstick", price:60 },
+  { name:"French Beans", price:60 },
+  { name:"Capsicum", price:60 },
+  { name:"Red Pumpkin", price:60 },
+  { name:"Sponge Gourd", price:60 },
+  { name:"Ridge Gourd", price:60 },
+  { name:"Carrot", price:50 },
+  { name:"Bottle Gourd", price:60 },
+  { name:"Bitter Gourd", price:60 },
+  { name:"Cauliflower", price:60 },
+  { name:"Lady Finger", price:50 },
+  { name:"Cluster Beans", price:60 },
+
+  { name:"Green Peas", price:60 },
+  { name:"Mixed Pulav Vegetables", price:60 },
+  { name:"Fresh Coconut (Grated)", price:60 },
+  { name:"Green Chilli", price:20 },
+  { name:"Garlic", price:30 }
 ];
 
 let cart = [];
@@ -19,12 +34,11 @@ let cart = [];
 function renderProducts(){
   const list = document.getElementById("product-list");
   list.innerHTML = "";
-  products.forEach((p,i)=>{
+
+  products.forEach((p, i) => {
     list.innerHTML += `
       <div class="product">
-        <img src="images/${p.image}">
         <h3>${p.name}</h3>
-        <p>${p.desc} • ${p.weight}</p>
         <p><strong>₹${p.price}</strong></p>
         <button onclick="addToCart(${i})">Add</button>
       </div>
@@ -32,35 +46,60 @@ function renderProducts(){
   });
 }
 
-function addToCart(i){
-  cart.push(products[i]);
+function addToCart(index){
+  cart.push(products[index]);
   renderCart();
 }
 
 function renderCart(){
+  const cartDiv = document.getElementById("cart-items");
+  const totalSpan = document.getElementById("cart-total");
+
+  cartDiv.innerHTML = "";
   let total = 0;
-  const div = document.getElementById("cart-items");
-  div.innerHTML = "";
-  cart.forEach(p=>{
-    total += p.price;
-    div.innerHTML += `<p>${p.name} – ₹${p.price}</p>`;
+
+  cart.forEach(item => {
+    cartDiv.innerHTML += `<p>${item.name} – ₹${item.price}</p>`;
+    total += item.price;
   });
-  document.getElementById("cart-total").innerText = total;
+
+  totalSpan.innerText = total;
 }
 
 function checkoutWhatsApp(){
-  let total = cart.reduce((s,p)=>s+p.price,0);
-  if(total < 399){ alert("Minimum order ₹399"); return; }
 
-  const name = customer-name.value;
-  const mobile = customer-mobile.value;
-  const address = customer-address.value;
+  let total = cart.reduce((sum, p) => sum + p.price, 0);
 
-  let msg = `VegX Order\nName: ${name}\nMobile: ${mobile}\nAddress: ${address}\n\n`;
-  cart.forEach(p=> msg += `${p.name} - ₹${p.price}\n`);
+  if(total < 399){
+    alert("Minimum order ₹399");
+    return;
+  }
+
+  const name = document.getElementById("customer-name").value.trim();
+  const mobile = document.getElementById("customer-mobile").value.trim();
+  const address = document.getElementById("customer-address").value.trim();
+
+  if(!name || !mobile || !address){
+    alert("Please fill all details");
+    return;
+  }
+
+  let msg = `VegX Order\n`;
+  msg += `Name: ${name}\n`;
+  msg += `Mobile: ${mobile}\n`;
+  msg += `Address: ${address}\n\n`;
+  msg += `Items:\n`;
+
+  cart.forEach(p => {
+    msg += `${p.name} - ₹${p.price}\n`;
+  });
+
   msg += `\nTotal: ₹${total}`;
 
-  window.open(`https://wa.me/917208487215?text=${encodeURIComponent(msg)}`);
+  const phone = "917208487215";
+  const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+
+  window.open(url, "_blank");
 }
 
 renderProducts();
