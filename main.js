@@ -3,14 +3,16 @@ const products = [
   { name: "Onion", price: 40, image: "images/onion.png" },
   { name: "Tomato", price: 30, image: "images/tomato.png" },
   { name: "Lemon", price: 20, image: "images/lemon.png" },
+
   { name: "Methi", price: 60, image: "images/methi.png" },
   { name: "Pudina", price: 20, image: "images/pudina.png" },
   { name: "Palak", price: 60, image: "images/palak.png" },
   { name: "Coriander", price: 20, image: "images/coriander.png" },
+
   { name: "Drumstick", price: 60, image: "images/drumstick.png" },
   { name: "French Beans", price: 60, image: "images/frenchbeans.png" },
   { name: "Capsicum", price: 60, image: "images/capsicum.png" },
-  { name: "Red Pumpkin", price: 60, image: "images/pumpkin.png" },
+  { name: "Red Pumpkin", price: 60, image: "images/redpumpkin.png" },
   { name: "Sponge Gourd", price: 60, image: "images/spongegourd.png" },
   { name: "Ridge Gourd", price: 60, image: "images/ridgegourd.png" },
   { name: "Carrot", price: 50, image: "images/carrot.png" },
@@ -19,6 +21,7 @@ const products = [
   { name: "Cauliflower", price: 60, image: "images/cauliflower.png" },
   { name: "Lady Finger", price: 50, image: "images/ladyfinger.png" },
   { name: "Cluster Beans", price: 60, image: "images/clusterbeans.png" },
+
   { name: "Green Peas", price: 60, image: "images/greenpeas.png" },
   { name: "Mixed Pulav Vegetables", price: 60, image: "images/mixedveg.png" },
   { name: "Fresh Coconut (Grated)", price: 60, image: "images/coconut.png" },
@@ -28,7 +31,9 @@ const products = [
 
 let cart = [];
 
-// ✅ Render products
+/* ================================
+   RENDER PRODUCTS (FINAL FIX)
+================================ */
 function renderProducts() {
   const list = document.getElementById("product-list");
   list.innerHTML = "";
@@ -36,7 +41,11 @@ function renderProducts() {
   products.forEach((p, i) => {
     list.innerHTML += `
       <div class="product">
-        <img src="${p.image}" alt="${p.name}">
+        <img 
+          src="${p.image}" 
+          alt="${p.name}"
+          onerror="this.onerror=null; this.src='images/default.png';"
+        >
         <h3>${p.name}</h3>
         <p>₹${p.price}</p>
         <button onclick="addToCart(${i})">Add</button>
@@ -45,13 +54,14 @@ function renderProducts() {
   });
 }
 
-// ✅ Add to cart
+/* ================================
+   CART FUNCTIONS
+================================ */
 function addToCart(index) {
   cart.push(products[index]);
   renderCart();
 }
 
-// ✅ Render cart
 function renderCart() {
   const cartDiv = document.getElementById("cart-items");
   const totalSpan = document.getElementById("cart-total");
@@ -67,9 +77,11 @@ function renderCart() {
   totalSpan.innerText = total;
 }
 
-// ✅ WhatsApp checkout FIXED
+/* ================================
+   WHATSAPP CHECKOUT
+================================ */
 function checkoutWhatsApp() {
-  let total = cart.reduce((sum, p) => sum + p.price, 0);
+  const total = cart.reduce((sum, p) => sum + p.price, 0);
 
   if (total < 399) {
     alert("Minimum order ₹399");
@@ -96,12 +108,13 @@ function checkoutWhatsApp() {
 
   msg += `\nTotal: ₹${total}`;
 
-  const phone = "917208487215"; // तुमचा नंबर
+  const phone = "917208487215"; // तुमचा WhatsApp नंबर
   const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
 
-  // 🔥 MAIN FIX
   window.location.href = url;
 }
 
-// ✅ VERY IMPORTANT
+/* ================================
+   INIT
+================================ */
 renderProducts();
