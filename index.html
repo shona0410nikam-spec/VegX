@@ -6,38 +6,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- CSS -->
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header style="display:flex;align-items:center;gap:10px;padding:10px;background:#000;color:#fff;">
-    <img src="images/logo.png" alt="VegX Logo" style="height:60px;">
-    <h1>VegX – Fresh Vegetables</h1>
-  </header>
+<header style="display:flex;align-items:center;gap:10px;padding:10px;background:#000;color:#fff;">
+  <img src="images/logo.png" alt="VegX Logo" style="height:60px;">
+  <h1>VegX – Fresh Vegetables</h1>
+</header>
 
-  <!-- ✅ PRODUCTS WILL LOAD HERE (MOST IMPORTANT) -->
-  <div id="product-list"></div>
+<!-- ✅ PRODUCTS -->
+<div id="product-list"></div>
 
-  <!-- CART -->
-  <div class="cart">
-    <h2>Cart</h2>
+<!-- CART -->
+<div class="cart">
+  <h2>Cart</h2>
 
-    <div id="cart-items"></div>
+  <div id="cart-items"></div>
 
-    <p><strong>Cart Total: ₹ <span id="cart-total">0</span></strong></p>
+  <p><strong>Cart Total: ₹ <span id="cart-total">0</span></strong></p>
 
-    <input type="text" id="customer-name" placeholder="Your Name">
-    <input type="text" id="customer-mobile" placeholder="Mobile Number">
-    <input type="text" id="customer-address" placeholder="Address">
+  <input type="text" id="customer-name" placeholder="Your Name">
+  <input type="text" id="customer-mobile" placeholder="Mobile Number">
+  <input type="text" id="customer-address" placeholder="Address">
 
-    <button onclick="checkoutWhatsApp()">Checkout on WhatsApp</button>
+  <button onclick="checkoutWhatsApp()">Checkout on WhatsApp</button>
 
-    <p style="font-size:12px;color:#777;">Minimum order ₹399</p>
-  </div>
+  <p style="font-size:12px;color:#777;">Minimum order ₹399</p>
+</div>
 
-  <!-- JS -->
-  <script src="js/main.js"></script>
+<!-- ✅ JS (IMPORTANT FIX HERE) -->
+<script src="main.js"></script>
 
 </body>
 </html>
