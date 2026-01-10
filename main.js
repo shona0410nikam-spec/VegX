@@ -9,31 +9,31 @@ const products = [
   { name: "Palak", price: 60, image: "images/palak.png" },
   { name: "Coriander", price: 20, image: "images/coriander.png" },
 
-  { name: "Drumstick", price: 60, image: "images/drumstick.png" },
-  { name: "French Beans", price: 60, image: "images/frenchbeans.png" },
+  { name: "Drumstick", price: 60, image: "images/cleaned-chopped-drumstick.png" },
+  { name: "French Beans", price: 60, image: "images/french-beans.png" },
   { name: "Capsicum", price: 60, image: "images/capsicum.png" },
-  { name: "Red Pumpkin", price: 60, image: "images/redpumpkin.png" },
-  { name: "Sponge Gourd", price: 60, image: "images/spongegourd.png" },
-  { name: "Ridge Gourd", price: 60, image: "images/ridgegourd.png" },
+  { name: "Red Pumpkin", price: 60, image: "images/red-pumpkin.png" },
+  { name: "Sponge Gourd", price: 60, image: "images/sponge-gourd.png" },
+  { name: "Ridge Gourd", price: 60, image: "images/ridge-gourd.png" },
   { name: "Carrot", price: 50, image: "images/carrot.png" },
-  { name: "Bottle Gourd", price: 60, image: "images/bottlegourd.png" },
-  { name: "Bitter Gourd", price: 60, image: "images/bittergourd.png" },
+  { name: "Bottle Gourd", price: 60, image: "images/bottle-gourd.png" },
+  { name: "Bitter Gourd", price: 60, image: "images/bitter-gourd.png" },
   { name: "Cauliflower", price: 60, image: "images/cauliflower.png" },
-  { name: "Lady Finger", price: 50, image: "images/ladyfinger.png" },
-  { name: "Cluster Beans", price: 60, image: "images/clusterbeans.png" },
+  { name: "Lady Finger", price: 50, image: "images/lady-finger.png" },
+  { name: "Cluster Beans", price: 60, image: "images/cluster-beans.png" },
 
-  { name: "Green Peas", price: 60, image: "images/greenpeas.png" },
-  { name: "Mixed Pulav Vegetables", price: 60, image: "images/mixedveg.png" },
-  { name: "Fresh Coconut (Grated)", price: 60, image: "images/coconut.png" },
-  { name: "Green Chilli", price: 20, image: "images/chilli.png" },
-  { name: "Garlic", price: 30, image: "images/garlic.png" }
+  { name: "Green Peas", price: 60, image: "images/green-peas.png" },
+  { name: "Mixed Pulav Vegetables", price: 60, image: "images/mixed-pulav-vegetables.png" },
+  { name: "Fresh Coconut (Grated)", price: 60, image: "images/fresh-coconut.png" },
+  { name: "Green Chilli", price: 20, image: "images/green-chilli.png" },
+  { name: "Garlic", price: 30, image: "images/peeled-garlic.png" }
 ];
 
 let cart = [];
 
-/* ================================
-   RENDER PRODUCTS (FINAL FIX)
-================================ */
+/* =====================
+   RENDER PRODUCTS
+===================== */
 function renderProducts() {
   const list = document.getElementById("product-list");
   list.innerHTML = "";
@@ -41,11 +41,7 @@ function renderProducts() {
   products.forEach((p, i) => {
     list.innerHTML += `
       <div class="product">
-        <img 
-          src="${p.image}" 
-          alt="${p.name}"
-          onerror="this.onerror=null; this.src='images/default.png';"
-        >
+        <img src="${p.image}" alt="${p.name}">
         <h3>${p.name}</h3>
         <p>₹${p.price}</p>
         <button onclick="addToCart(${i})">Add</button>
@@ -54,9 +50,9 @@ function renderProducts() {
   });
 }
 
-/* ================================
-   CART FUNCTIONS
-================================ */
+/* =====================
+   CART
+===================== */
 function addToCart(index) {
   cart.push(products[index]);
   renderCart();
@@ -77,9 +73,9 @@ function renderCart() {
   totalSpan.innerText = total;
 }
 
-/* ================================
+/* =====================
    WHATSAPP CHECKOUT
-================================ */
+===================== */
 function checkoutWhatsApp() {
   const total = cart.reduce((sum, p) => sum + p.price, 0);
 
@@ -108,13 +104,13 @@ function checkoutWhatsApp() {
 
   msg += `\nTotal: ₹${total}`;
 
-  const phone = "917208487215"; // तुमचा WhatsApp नंबर
+  const phone = "917208487215";
   const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
 
   window.location.href = url;
 }
 
-/* ================================
+/* =====================
    INIT
-================================ */
+===================== */
 renderProducts();
