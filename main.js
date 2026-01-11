@@ -20,8 +20,7 @@ const products = [
   { name: "Cleaned & Chopped Carrot", weight: "300gm", price: 50, image: "images/carrot.png" },
   { name: "Cleaned & Chopped Bottle Gourd", weight: "300gm", price: 60, image: "images/bottle-gourd.png" },
 
-  // 🔧 Bitter gourd image FIX (fallback safe)
-  { 
+  {
     name: "Cleaned & Chopped Bitter Gourd",
     weight: "300gm",
     price: 60,
@@ -50,8 +49,7 @@ function renderProducts() {
   products.forEach((p, i) => {
     list.innerHTML += `
       <div class="product">
-        <img src="${p.image}" alt="${p.name}"
-             onerror="this.src='images/logo.png'">
+        <img src="${p.image}" alt="${p.name}">
         <h3>${p.name}</h3>
         <p class="weight">${p.weight}</p>
         <p class="price">₹${p.price}</p>
@@ -95,7 +93,6 @@ function checkoutWhatsApp() {
 
   const total = cart.reduce((sum, item) => sum + item.price, 0);
 
-  // ✅ MINIMUM ORDER FIX
   if (total < 399) {
     alert("Minimum order amount is ₹399");
     return;
@@ -110,23 +107,19 @@ function checkoutWhatsApp() {
     return;
   }
 
-  let message = `🛒 *VegX Order*\n\n`;
-  message += `👤 Name: ${name}\n`;
-  message += `📞 Mobile: ${mobile}\n`;
-  message += `📍 Address: ${address}\n\n`;
+  let message = `VegX Fresh Vegetables Order\n\n`;
+  message += `Name: ${name}\n`;
+  message += `Mobile: ${mobile}\n`;
+  message += `Address: ${address}\n\n`;
 
-  message += `🧾 *Items:*\n`;
+  message += `Items:\n`;
   cart.forEach(item => {
-    message += `• ${item.name} (${item.weight}) - ₹${item.price}\n`;
+    message += `- ${item.name} (${item.weight}) : ₹${item.price}\n`;
   });
 
-  message += `\n💰 *Total: ₹${total}*`;
-
-  // ✅ DELIVERY SLOT
-  message += `\n\n🚚 *Delivery Slot:* Next Day 12 PM – 3 PM`;
-
-  // ✅ PAYMENT MODE
-  message += `\n💳 *Payment Mode:* Cash on Delivery / UPI`;
+  message += `\nTotal Amount: ₹${total}\n\n`;
+  message += `Delivery Slot: Next Day 12 PM to 3 PM\n`;
+  message += `Payment Mode: Cash on Delivery / UPI (GPay / PhonePe / Paytm)`;
 
   const whatsappNumber = "917208487215";
   const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
