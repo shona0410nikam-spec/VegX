@@ -19,7 +19,15 @@ const products = [
   { name: "Cleaned & Shelled Green Peas", weight: "300gm", price: 60, image: "images/green-peas.png" },
   { name: "Cleaned & Chopped Carrot", weight: "300gm", price: 50, image: "images/carrot.png" },
   { name: "Cleaned & Chopped Bottle Gourd", weight: "300gm", price: 60, image: "images/bottle-gourd.png" },
-  { name: "Cleaned & Chopped Bitter Gourd", weight: "300gm", price: 60, image: "images/bitter-gourd.png" },
+
+  // 🔧 Bitter gourd image FIX (fallback safe)
+  { 
+    name: "Cleaned & Chopped Bitter Gourd",
+    weight: "300gm",
+    price: 60,
+    image: "images/bitter-gourd.png"
+  },
+
   { name: "Cleaned & Chopped Cauliflower", weight: "300gm", price: 60, image: "images/cauliflower.png" },
   { name: "Cleaned & Chopped Lady Finger", weight: "300gm", price: 50, image: "images/lady-finger.png" },
   { name: "Cleaned & Chopped Cluster Beans", weight: "300gm", price: 60, image: "images/cluster-beans.png" },
@@ -42,7 +50,8 @@ function renderProducts() {
   products.forEach((p, i) => {
     list.innerHTML += `
       <div class="product">
-        <img src="${p.image}" alt="${p.name}">
+        <img src="${p.image}" alt="${p.name}"
+             onerror="this.src='images/logo.png'">
         <h3>${p.name}</h3>
         <p class="weight">${p.weight}</p>
         <p class="price">₹${p.price}</p>
@@ -84,6 +93,14 @@ function checkoutWhatsApp() {
     return;
   }
 
+  const total = cart.reduce((sum, item) => sum + item.price, 0);
+
+  // ✅ MINIMUM ORDER FIX
+  if (total < 399) {
+    alert("Minimum order amount is ₹399");
+    return;
+  }
+
   const name = document.getElementById("customer-name").value.trim();
   const mobile = document.getElementById("customer-mobile").value.trim();
   const address = document.getElementById("customer-address").value.trim();
@@ -97,19 +114,22 @@ function checkoutWhatsApp() {
   message += `👤 Name: ${name}\n`;
   message += `📞 Mobile: ${mobile}\n`;
   message += `📍 Address: ${address}\n\n`;
-  message += `🧾 Items:\n`;
 
-  let total = 0;
+  message += `🧾 *Items:*\n`;
   cart.forEach(item => {
     message += `• ${item.name} (${item.weight}) - ₹${item.price}\n`;
-    total += item.price;
   });
 
   message += `\n💰 *Total: ₹${total}*`;
 
-  const whatsappNumber = "917208487215"; // ✅ YOUR NUMBER
-  const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+  // ✅ DELIVERY SLOT
+  message += `\n\n🚚 *Delivery Slot:* Next Day 12 PM – 3 PM`;
 
+  // ✅ PAYMENT MODE
+  message += `\n💳 *Payment Mode:* Cash on Delivery / UPI`;
+
+  const whatsappNumber = "917208487215";
+  const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
   window.open(url, "_blank");
 }
 
