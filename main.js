@@ -98,6 +98,10 @@ function checkoutWhatsApp() {
     return;
   }
 
+  // ✅ AUTO 10% DISCOUNT
+  const discount = Math.round(total * 0.10);
+  const finalAmount = total - discount;
+
   const name = document.getElementById("customer-name").value.trim();
   const mobile = document.getElementById("customer-mobile").value.trim();
   const address = document.getElementById("customer-address").value.trim();
@@ -107,22 +111,28 @@ function checkoutWhatsApp() {
     return;
   }
 
-  let message = `VegX Fresh Vegetables Order\n\n`;
-  message += `Name: ${name}\n`;
-  message += `Mobile: ${mobile}\n`;
-  message += `Address: ${address}\n\n`;
+  let message = `🛒 VegX Fresh Vegetables Order\n\n`;
 
-  message += `Items:\n`;
+  message += `👤 Name: ${name}\n`;
+  message += `📞 Mobile: ${mobile}\n`;
+  message += `📍 Address: ${address}\n\n`;
+
+  message += `🧾 Items:\n`;
   cart.forEach(item => {
     message += `- ${item.name} (${item.weight}) : ₹${item.price}\n`;
   });
 
-  message += `\nTotal Amount: ₹${total}\n\n`;
-  message += `Delivery Slot: Next Day 12 PM to 3 PM\n`;
-  message += `Payment Mode: Cash on Delivery / UPI (GPay / PhonePe / Paytm)`;
+  message += `\n💰 Subtotal: ₹${total}`;
+  message += `\n🎉 Discount (10%): -₹${discount}`;
+  message += `\n✅ Final Amount: ₹${finalAmount}\n\n`;
+
+  message += `🚚 Delivery Slot: Next Day 12 PM to 3 PM\n`;
+  message += `💳 Payment Mode: Cash on Delivery / UPI (GPay / PhonePe / Paytm)`;
 
   const whatsappNumber = "917208487215";
+
   const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+
   window.open(url, "_blank");
 }
 
