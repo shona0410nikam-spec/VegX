@@ -20,12 +20,7 @@ const products = [
   { name: "Cleaned & Chopped Carrot", weight: "300gm", price: 50, image: "images/carrot.png" },
   { name: "Cleaned & Chopped Bottle Gourd", weight: "300gm", price: 60, image: "images/bottle-gourd.png" },
 
-  {
-    name: "Cleaned & Chopped Bitter Gourd",
-    weight: "300gm",
-    price: 60,
-    image: "images/bitter-gourd.png"
-  },
+  { name: "Cleaned & Chopped Bitter Gourd", weight: "300gm", price: 60, image: "images/bitter-gourd.png" },
 
   { name: "Cleaned & Chopped Cauliflower", weight: "300gm", price: 60, image: "images/cauliflower.png" },
   { name: "Cleaned & Chopped Lady Finger", weight: "300gm", price: 50, image: "images/lady-finger.png" },
@@ -40,11 +35,11 @@ const products = [
 let cart = [];
 
 /* =====================
-   COUPON CONFIG
+   COUPON SETTINGS
 ===================== */
 
-const VALID_COUPON = "VEGX99"; // तू बदलू शकतोस
-const COUPON_DISCOUNT = 99;   // Flat ₹99 OFF
+const VALID_COUPON = "VEGX100";   // 👉 इथे coupon बदलू शकतोस
+const COUPON_DISCOUNT = 100;     // 👉 Flat ₹100 OFF
 
 /* =====================
    RENDER PRODUCTS
@@ -57,10 +52,10 @@ function renderProducts() {
   products.forEach((p, i) => {
     list.innerHTML += `
       <div class="product">
-        <img src="${p.image}" alt="${p.name}">
+        <img src="${p.image}">
         <h3>${p.name}</h3>
-        <p class="weight">${p.weight}</p>
-        <p class="price">₹${p.price}</p>
+        <p>${p.weight}</p>
+        <p>₹${p.price}</p>
         <button onclick="addToCart(${i})">Add</button>
       </div>
     `;
@@ -84,7 +79,7 @@ function renderCart() {
   let total = 0;
 
   cart.forEach(item => {
-    cartDiv.innerHTML += `<p>${item.name} (${item.weight}) - ₹${item.price}</p>`;
+    cartDiv.innerHTML += `<p>${item.name} - ₹${item.price}</p>`;
     total += item.price;
   });
 
@@ -98,34 +93,43 @@ function renderCart() {
 function checkoutWhatsApp() {
 
   if (cart.length === 0) {
-    alert("Cart is empty");
+    alert("Cart is empty!");
     return;
   }
 
-  let total = cart.reduce((sum, item) => sum + item.price, 0);
+  let total = cart.reduce((sum, i) => sum + i.price, 0);
 
   if (total < 399) {
-    alert("Minimum order amount is ₹399");
+    alert("Minimum order ₹399");
     return;
   }
 
-  const couponInput = document.getElementById("coupon-code");
-  const coupon = couponInput ? couponInput.value.trim().toUpperCase() : "";
+  const coupon = document.getElementById("coupon-code")?.value
+    .trim()
+    .toUpperCase();
 
   let discount = 0;
   let discountText = "";
 
-  const usedCoupon = localStorage.getItem("vegx_coupon_used");
+  const used = localStorage.getItem("vegx_coupon_used");
 
-  /* ===== COUPON LOGIC ===== */
+  /* =====================
+     COUPON LOGIC
+  ===================== */
 
-  if (coupon === VALID_COUPON) {
+  if (coupon) {
 
-    if (usedCoupon === "yes") {
-      alert("Coupon already used!");
+    if (coupon !== VALID_COUPON) {
+      alert("Invalid Coupon Code ❌");
       return;
     }
 
+    if (used === "yes") {
+      alert("Coupon Already Used ❌");
+      return;
+    }
+
+    // ✅ Apply Coupon
     discount = COUPON_DISCOUNT;
     discountText = `🎁 Coupon Discount: -₹${discount}`;
 
@@ -133,52 +137,52 @@ function checkoutWhatsApp() {
 
   } else {
 
-    // ✅ Auto 10% only if no coupon
+    // ✅ Only if NO coupon → 10%
     discount = Math.round(total * 0.10);
     discountText = `🎉 10% Discount: -₹${discount}`;
   }
 
   let finalAmount = total - discount;
-
   if (finalAmount < 0) finalAmount = 0;
 
-  /* ================= */
+  /* ===================== */
 
   const name = document.getElementById("customer-name").value.trim();
   const mobile = document.getElementById("customer-mobile").value.trim();
   const address = document.getElementById("customer-address").value.trim();
 
   if (!name || !mobile || !address) {
-    alert("Please fill all details");
+    alert("Fill all details");
     return;
   }
 
-  /* ================= */
+  /* ===================== */
 
-  let message = `🛒 *VegX Fresh Vegetables Order*\n\n`;
+  let msg = `🛒 *VegX Order*\n\n`;
 
-  message += `👤 Name: ${name}\n`;
-  message += `📞 Mobile: ${mobile}\n`;
-  message += `📍 Address: ${address}\n\n`;
+  msg += `👤 ${name}\n`;
+  msg += `📞 ${mobile}\n`;
+  msg += `📍 ${address}\n\n`;
 
-  message += `🧾 Items:\n`;
+  msg += `🧾 Items:\n`;
 
-  cart.forEach(item => {
-    message += `- ${item.name} (${item.weight}) : ₹${item.price}\n`;
+  cart.forEach(i => {
+    msg += `- ${i.name} : ₹${i.price}\n`;
   });
 
-  message += `\n💰 Subtotal: ₹${total}\n`;
-  message += `${discountText}\n`;
-  message += `✅ Final Amount: ₹${finalAmount}\n\n`;
+  msg += `\nSubtotal: ₹${total}\n`;
+  msg += `${discountText}\n`;
+  msg += `Final: ₹${finalAmount}\n\n`;
 
-  message += `🚚 Delivery: Next Day 12 PM – 3 PM\n`;
-  message += `💳 Payment: COD / UPI\n`;
+  msg += `🚚 Delivery: Next Day\n`;
+  msg += `💳 COD / UPI\n`;
 
-  const whatsappNumber = "917208487215";
+  const number = "917208487215";
 
-  const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-
-  window.open(url, "_blank");
+  window.open(
+    `https://wa.me/${number}?text=${encodeURIComponent(msg)}`,
+    "_blank"
+  );
 }
 
 /* =====================
