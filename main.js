@@ -40,8 +40,16 @@ const products = [
 let cart = [];
 
 /* =====================
+   COUPON CONFIG
+===================== */
+
+const VALID_COUPON = "VEGX99"; // तू बदलू शकतोस
+const COUPON_DISCOUNT = 99;   // Flat ₹99 OFF
+
+/* =====================
    RENDER PRODUCTS
 ===================== */
+
 function renderProducts() {
   const list = document.getElementById("product-list");
   list.innerHTML = "";
@@ -62,6 +70,7 @@ function renderProducts() {
 /* =====================
    CART
 ===================== */
+
 function addToCart(index) {
   cart.push(products[index]);
   renderCart();
@@ -83,24 +92,57 @@ function renderCart() {
 }
 
 /* =====================
-   WHATSAPP CHECKOUT
+   CHECKOUT
 ===================== */
+
 function checkoutWhatsApp() {
+
   if (cart.length === 0) {
     alert("Cart is empty");
     return;
   }
 
-  const total = cart.reduce((sum, item) => sum + item.price, 0);
+  let total = cart.reduce((sum, item) => sum + item.price, 0);
 
   if (total < 399) {
     alert("Minimum order amount is ₹399");
     return;
   }
 
-  // ✅ AUTO 10% DISCOUNT
-  const discount = Math.round(total * 0.10);
-  const finalAmount = total - discount;
+  const couponInput = document.getElementById("coupon-code");
+  const coupon = couponInput ? couponInput.value.trim().toUpperCase() : "";
+
+  let discount = 0;
+  let discountText = "";
+
+  const usedCoupon = localStorage.getItem("vegx_coupon_used");
+
+  /* ===== COUPON LOGIC ===== */
+
+  if (coupon === VALID_COUPON) {
+
+    if (usedCoupon === "yes") {
+      alert("Coupon already used!");
+      return;
+    }
+
+    discount = COUPON_DISCOUNT;
+    discountText = `🎁 Coupon Discount: -₹${discount}`;
+
+    localStorage.setItem("vegx_coupon_used", "yes");
+
+  } else {
+
+    // ✅ Auto 10% only if no coupon
+    discount = Math.round(total * 0.10);
+    discountText = `🎉 10% Discount: -₹${discount}`;
+  }
+
+  let finalAmount = total - discount;
+
+  if (finalAmount < 0) finalAmount = 0;
+
+  /* ================= */
 
   const name = document.getElementById("customer-name").value.trim();
   const mobile = document.getElementById("customer-mobile").value.trim();
@@ -111,23 +153,26 @@ function checkoutWhatsApp() {
     return;
   }
 
-  let message = `🛒 VegX Fresh Vegetables Order\n\n`;
+  /* ================= */
+
+  let message = `🛒 *VegX Fresh Vegetables Order*\n\n`;
 
   message += `👤 Name: ${name}\n`;
   message += `📞 Mobile: ${mobile}\n`;
   message += `📍 Address: ${address}\n\n`;
 
   message += `🧾 Items:\n`;
+
   cart.forEach(item => {
     message += `- ${item.name} (${item.weight}) : ₹${item.price}\n`;
   });
 
-  message += `\n💰 Subtotal: ₹${total}`;
-  message += `\n🎉 Discount (10%): -₹${discount}`;
-  message += `\n✅ Final Amount: ₹${finalAmount}\n\n`;
+  message += `\n💰 Subtotal: ₹${total}\n`;
+  message += `${discountText}\n`;
+  message += `✅ Final Amount: ₹${finalAmount}\n\n`;
 
-  message += `🚚 Delivery Slot: Next Day 12 PM to 3 PM\n`;
-  message += `💳 Payment Mode: Cash on Delivery / UPI (GPay / PhonePe / Paytm)`;
+  message += `🚚 Delivery: Next Day 12 PM – 3 PM\n`;
+  message += `💳 Payment: COD / UPI\n`;
 
   const whatsappNumber = "917208487215";
 
@@ -139,4 +184,5 @@ function checkoutWhatsApp() {
 /* =====================
    INIT
 ===================== */
+
 renderProducts();
